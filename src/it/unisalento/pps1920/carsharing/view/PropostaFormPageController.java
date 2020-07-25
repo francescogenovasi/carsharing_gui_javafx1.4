@@ -181,7 +181,7 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
         //numero posti almeno uno per forza quindi valore di default se non modificato
         if (CommonBusiness.getInstance().maxPostiPrenotabili() < 1){
             //popup impossibile effettuare prenotazioni
-            AlertBox.display("title", "nessuna macchina disponibile");
+            AlertBox.display("Nuova proposta", "nessuna macchina disponibile");
             error = true;
             pos = 1;
         } else {
@@ -196,7 +196,7 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
                 || (oraFine.getValue().equals(VALORE_NULLO)) || (minutoInizio.getValue().equals(VALORE_NULLO)) || (minutoFine.getValue().equals(VALORE_NULLO))
                 || (numPosti.getValue().equals(VALORE_NULLO))){
             //non tutti i campi sono stati inseriti
-            AlertBox.display("title", "campi mancanti");
+            AlertBox.display("Nuova proposta", "campi mancanti");
             error = true;
         } else {
             //sono stati inseriti tutti i campi
@@ -210,7 +210,7 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
             if ((inizio.compareTo(fine) > 0)  || (f.compareTo(inizio) > 0)){//poiche le date sono state sicuramente inserite le posso controllare
                 //maggiore di zero allora la data di fine è precedente alla data di inizio oppure la data di inizio è precedente alla data odierna
                 System.out.println("male");
-                AlertBox.display("eee", "ricontrollare date!");
+                AlertBox.display("Nuova proposta", "ricontrollare date!");
                 error = true;
             } else {
                 cli = cliente.getValue();
