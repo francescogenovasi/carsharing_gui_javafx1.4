@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="rootPaneTabsRicerca" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="500" prefWidth="900" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.pps1920.carsharing.view.TabsRicercaPageController">
+   <children>
+      <TabPane prefHeight="500" prefWidth="1000" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Offerte">
+            <content>
+              <Pane fx:id="tabellaPaneTabsRicerca" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              </Pane>
+            </content>
+          </Tab>
+          <Tab text="Filtri">
+               <content>
+                  <Pane fx:id="filtriGeneralePaneTabsRicerca" prefHeight="339.0" prefWidth="600.0">
+                     <children>
+                        <Pane fx:id="filtriPaneTabsRicerca" prefHeight="393.0" prefWidth="600.0" />
+                        <Button layoutX="24.0" layoutY="407.0" mnemonicParsing="false" onAction="#nuovaRicerca" text="Nuova Ricerca" />
+                     </children>
+                  </Pane>
+               </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</Pane>

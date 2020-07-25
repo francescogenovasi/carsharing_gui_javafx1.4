@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="rootPaneHomePage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.pps1920.carsharing.view.HomePageController">
+   <children>
+      <BorderPane prefHeight="600" prefWidth="1000">
+         <top>
+            <Pane BorderPane.alignment="CENTER">
+               <children>
+                  <Button layoutX="523.0" layoutY="24.0" mnemonicParsing="false" onAction="#loadLoginPage" text="Login" />
+                  <Button layoutX="583.0" layoutY="24.0" mnemonicParsing="false" onAction="#loadRegistrazionePage" text="Registrazione" />
+                  <Label layoutX="142.0" layoutY="17.0" prefHeight="39.0" prefWidth="330.0" text="Carsharing PPS 2019/2020">
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0" startX="0.24761904761904763" startY="0.5285714285714286">
+                           <stops>
+                              <Stop color="#fff200" />
+                              <Stop color="RED" offset="0.8826085239167358" />
+                              <Stop color="WHITE" offset="0.9961685823754789" />
+                              <Stop color="#2600ff" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Label>
+                  <!-- non eliminare questo commento
+
+                  <TextField fx:id="test1" layoutX="14.0" layoutY="24.0" />
+                  <Button layoutX="172.0" layoutY="24.0" mnemonicParsing="false" onAction="#getEnteredText" text="Button" />
+
+                  -->
+               </children>
+            </Pane>
+         </top>
+         <center>
+            <Pane fx:id="tabsPane" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </children>
+</Pane>

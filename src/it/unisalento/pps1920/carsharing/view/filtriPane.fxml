@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+<Pane fx:id="rootPaneFiltriPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="866.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.pps1920.carsharing.view.FiltriPaneController">
+    <children>
+        <ComboBox fx:id="arrivo" layoutX="463.0" layoutY="44.0" prefWidth="150.0" promptText="arrivo" />
+        <ComboBox fx:id="partenza" layoutX="153.0" layoutY="46.0" prefWidth="150.0" promptText="partenza" />
+        <ComboBox fx:id="localita" layoutX="153.0" layoutY="107.0" prefWidth="150.0" promptText="localita" />
+        <DatePicker fx:id="dataInizio" editable="false" layoutX="153.0" layoutY="161.0" prefHeight="25.0" prefWidth="150.0" promptText="Inizio" showWeekNumbers="true" />
+        <DatePicker fx:id="dataFine" editable="false" layoutX="460.0" layoutY="159.0" prefHeight="25.0" prefWidth="150.0" promptText="Fine" />
+        <ComboBox fx:id="modello" layoutX="463.0" layoutY="200.0" prefWidth="150.0" promptText="modello" />
+        <ComboBox fx:id="dimensioneAuto" layoutX="586.0" layoutY="246.0" prefWidth="150.0" promptText="dimensioni" />
+        <ComboBox fx:id="numPosti" layoutX="463.0" layoutY="105.0" prefHeight="25.0" prefWidth="72.0" promptText="0" />
+        <Button fx:id="cercaButton" layoutX="228.0" layoutY="285.0" mnemonicParsing="false" onAction="#risultatiFiltri" text="Cerca" />
+        <Label layoutX="111.0" layoutY="324.0" text="Possono essere vuoti, quando si schiaccia cerca esegue query con dati in input" />
+      <Label layoutX="14.0" layoutY="50.0" text="Stazione Partenza:" />
+      <Label layoutX="354.0" layoutY="48.0" text="Stazione Arrivo:" />
+      <Label layoutX="14.0" layoutY="111.0" text="Località da visitare:" />
+      <Label layoutX="355.0" layoutY="109.0" text="Posti richiesti:" />
+      <Label layoutX="14.0" layoutY="165.0" text="Data inizio:" />
+      <Label layoutX="355.0" layoutY="163.0" text="Data fine:" />
+      <Label layoutX="350.0" layoutY="251.0" text="Dimensione richiesta (solo per auto):" />
+      <Label layoutX="358.0" layoutY="205.0" text="Modello:" />
+      <Button layoutX="407.0" layoutY="285.0" mnemonicParsing="false" onAction="#reset" text="Reset" />
+      <Text layoutX="14.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipologia mezzo" />
+      <Text layoutX="17.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motorizzazione" />
+      <ComboBox fx:id="motorizzazione" layoutX="153.0" layoutY="200.0" prefWidth="150.0" />
+      <ComboBox fx:id="tipologia" layoutX="153.0" layoutY="246.0" prefWidth="150.0" />
+    </children>
+</Pane>

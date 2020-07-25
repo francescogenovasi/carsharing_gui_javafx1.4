@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<?import javafx.scene.image.ImageView?>
+<Pane fx:id="rootPaneRegistrazionePage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450" prefWidth="900" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.pps1920.carsharing.view.RegistrazionePageController">
+    <children>
+        <Button id="buttonRegistrazione" fx:id="buttonRegistrazione" layoutX="197.0" layoutY="315.0" mnemonicParsing="false" onAction="#loadRegistrazione" text="Completa Registrazione" />
+        <Label layoutX="403.0" layoutY="112.0" text="Username" />
+        <Label layoutX="53.0" layoutY="110.0" text="E-mail" />
+        <TextField id="usernameField" fx:id="usernameField" layoutX="554.0" layoutY="105.0" promptText="Username" />
+        <TextField id="emailField" fx:id="emailField" layoutX="195.0" layoutY="107.0" promptText="Email" />
+
+        <Label layoutX="53.0" layoutY="257.0" text="Password" />
+        <Label layoutX="403.0" layoutY="257.0" text="Conferma Password" />
+        <PasswordField id="passwordField" fx:id="passwordField" layoutX="193.0" layoutY="252.0" promptText="Password" />
+        <PasswordField id="checkPasswordField" fx:id="checkPasswordField" layoutX="552.0" layoutY="252.0" promptText="Conferma Password" />
+
+        <Button id="buttonHome" fx:id="buttonHome" layoutX="482.0" layoutY="315.0" mnemonicParsing="false" onAction="#loadFirstPage" prefHeight="25.0" prefWidth="131.0" text="Back Home" />
+        <!-- <Label id="wrongEmail" fx:id="wrongEmail" layoutX="258.0" layoutY="249.0" style="-fx-text-fill: #CB3234" text="Questo indirizzo e-mail è già stato utilizzato" visible="false" /> -->
+        <!-- <Label id="wrongUsername" fx:id="wrongUsername" layoutX="258.0" layoutY="265.0" style="-fx-text-fill: #CB3234" text="Questo username è già stato utilizzato" visible="false" /> -->
+        <Label id="wrongPassword" fx:id="wrongPassword" centerShape="false" layoutX="274.0" layoutY="248.0" style="-fx-text-fill: #CB3234" text="Attenzione! le password non corrispondono" visible="false" />
+        <Label id="failRegistrazione" fx:id="failRegistrazione" layoutX="350.0" layoutY="290.0" style="-fx-text-fill: #CB3234; -fx-font-weight: bold; -fx-font-size: 15" text="Registrazione Fallita" visible="false" />
+        <Label id="passRegistrazione" fx:id="passRegistrazione" layoutX="305.0" layoutY="290.0" style="-fx-text-fill: #00ff00; -fx-font-weight: bold; -fx-font-size: 15" text="Registrazione eseguita con successo" visible="false" />
+      <Label layoutX="53.0" layoutY="71.0" text="Nome" />
+      <Label layoutX="403.0" layoutY="79.0" text="Cognome" />
+      <Label layoutX="53.0" layoutY="144.0" text="Citta" />
+      <Label layoutX="53.0" layoutY="177.0" text="CAP" />
+      <Label layoutX="403.0" layoutY="185.0" text="Telefono" />
+      <Label layoutX="403.0" layoutY="152.0" text="Indirizzo" />
+      <TextField fx:id="cap" layoutX="195.0" layoutY="172.0" promptText="CAP" />
+      <TextField fx:id="citta" layoutX="195.0" layoutY="139.0" promptText="Città" />
+      <TextField fx:id="nome" layoutX="195.0" layoutY="66.0" promptText="Nome" />
+      <TextField fx:id="cognome" layoutX="554.0" layoutY="66.0" promptText="Cognome" />
+      <TextField fx:id="indirizzo" layoutX="554.0" layoutY="139.0" promptText="Indirizzo" />
+      <TextField fx:id="telefono" layoutX="554.0" layoutY="172.0" promptText="Telefono" />
+      <Label layoutX="53.0" layoutY="217.0" text="Età" />
+      <ComboBox fx:id="eta" layoutX="195.0" layoutY="212.0" prefHeight="27.0" prefWidth="160.0" />
+        <ImageView fx:id="imageCliente" fitHeight="200.0" fitWidth="200.0" layoutX="733.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true" />
+        <Button id="buttonFoto" fx:id="buttonFoto" layoutX="803.0" layoutY="315.0" mnemonicParsing="false" onAction="#loadFoto" text="Carica Foto" />
+    </children>
+</Pane>

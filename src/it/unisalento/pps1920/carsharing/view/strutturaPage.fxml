@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+<BorderPane fx:id="borderPaneStrutturaPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500" prefWidth="1000" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.pps1920.carsharing.view.StrutturaPageController">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+            <Menu mnemonicParsing="false" text="Menu comune">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#goHome" text="Home" />
+                  <MenuItem mnemonicParsing="false" onAction="#logout" text="Logout" />
+              </items>
+            </Menu>
+                <Menu fx:id="menuCliente" mnemonicParsing="false" text="Menu utente" visible="false">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#loadPrenotazioniFormPage" text="Nuova Proposta" />
+                        <MenuItem mnemonicParsing="false" onAction="#loadVisualizzaProposte" text="Visualizza proposte di sharing" />
+                        <MenuItem mnemonicParsing="false" onAction="#loadVisualizzaRichieste" text="ConfermaSharing NO" />
+                        <MenuItem mnemonicParsing="false" text="Visualizza pren confermate NO" />
+                        <MenuItem mnemonicParsing="false" text="Modifica/cancella pren confermate NO" />
+                    </items>
+                </Menu>
+            <Menu fx:id="menuAddetto" mnemonicParsing="false" text="Menu Addetto" visible="false">
+              <items>
+                  <MenuItem mnemonicParsing="false" text="Visualizza macchine da preparare NO" />
+                  <MenuItem mnemonicParsing="false" onAction="#loadAggiungiAccessorio" text="Aggiungi Accessorio" />
+                  <MenuItem mnemonicParsing="false" text="Aggiungi Mezzo" onAction="#loadAggiungiMezzo" />
+                  <MenuItem mnemonicParsing="false" text="Aggiungi Modello" onAction="#loadAggiungiModello" />
+              </items>
+            </Menu>
+            <Menu fx:id="menuOperatore" mnemonicParsing="false" text="Menu Operatore" visible="false">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Visualizza pren stazione NO" />
+                  <MenuItem mnemonicParsing="false" text="Visualizza mezzi pronti NO" />
+              </items>
+            </Menu>
+                <Menu fx:id="menuAdmin" mnemonicParsing="false" text="Menu Admin" visible="false">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#loadRegistrazioneAddetto" text="Inserisci Addetto" />
+                        <MenuItem mnemonicParsing="false" onAction="#loadRegistrazioneOperatore" text="Inserisci Operatore" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+   <center>
+      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <Pane fx:id="rootPaneStrutturaPage" prefHeight="468.0" prefWidth="997.0" />
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>
