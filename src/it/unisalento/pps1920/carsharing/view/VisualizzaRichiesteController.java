@@ -1,5 +1,6 @@
 package it.unisalento.pps1920.carsharing.view;
 
+import it.unisalento.pps1920.carsharing.model.Cliente;
 import it.unisalento.pps1920.carsharing.model.TabConfermaRichieste;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -81,24 +82,9 @@ public class VisualizzaRichiesteController {
                             //PropostaCondivisione data = getTableView().getItems().get(getIndex());
                             int data = getTableView().getItems().get(getIndex()).getIdRichiesta();
                             System.out.println("Richiesta selezionata: " + data);
-                            AlertBox.display("prenotazione", "PROFILO");
-
-                            /*FXMLLoader lo = new FXMLLoader(getClass().getResource("richiestaCondivisione.fxml"));
-                            Pane pane = null;
-                            try {
-                                pane = (Pane) lo.load();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            RichiestaCondivisioneController controller = lo.<RichiestaCondivisioneController>getController();
-                            PropostaCondivisione prop = RicercaBusiness.getInstance().ricercaProposta(data);
-                            try {
-                                controller.initialize(prop);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            rootPaneTabellaProposteAltriPage.getChildren().setAll(pane);
-                            rootPaneTabellaProposteAltriPage.setPrefSize(1000, 600);*/
+                            //int idRich = getTableView().getItems().get(getIndex()).getRichiedente().getId();
+                            Cliente c = getTableView().getItems().get(getIndex()).getRichiedente();
+                            AlertBoxProfilo.display("prenotazione", c);
                         });
                     }
 
@@ -138,22 +124,7 @@ public class VisualizzaRichiesteController {
                             System.out.println("Richiesta selezionata: " + data);
                             AlertBox.display("prenotazione", "ACCETTA");
 
-                            /*FXMLLoader lo = new FXMLLoader(getClass().getResource("richiestaCondivisione.fxml"));
-                            Pane pane = null;
-                            try {
-                                pane = (Pane) lo.load();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            RichiestaCondivisioneController controller = lo.<RichiestaCondivisioneController>getController();
-                            PropostaCondivisione prop = RicercaBusiness.getInstance().ricercaProposta(data);
-                            try {
-                                controller.initialize(prop);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            rootPaneTabellaProposteAltriPage.getChildren().setAll(pane);
-                            rootPaneTabellaProposteAltriPage.setPrefSize(1000, 600);*/
+
                         });
                     }
 
@@ -193,22 +164,6 @@ public class VisualizzaRichiesteController {
                             System.out.println("proposta selezionata: " + data);
                             AlertBox.display("prenotazione", "RIFUTA");
 
-                            /*FXMLLoader lo = new FXMLLoader(getClass().getResource("richiestaCondivisione.fxml"));
-                            Pane pane = null;
-                            try {
-                                pane = (Pane) lo.load();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            RichiestaCondivisioneController controller = lo.<RichiestaCondivisioneController>getController();
-                            PropostaCondivisione prop = RicercaBusiness.getInstance().ricercaProposta(data);
-                            try {
-                                controller.initialize(prop);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            rootPaneTabellaProposteAltriPage.getChildren().setAll(pane);
-                            rootPaneTabellaProposteAltriPage.setPrefSize(1000, 600);*/
                         });
                     }
 

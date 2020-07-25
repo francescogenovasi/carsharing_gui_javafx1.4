@@ -15,7 +15,7 @@ public class ClienteDAO implements IClienteDAO {
 
         //ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM cliente WHERE idcliente =" + id + ";");
         //ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT C.utente_idutente, U.username, U.password, U.email FROM cliente AS C INNER JOIN utente as U  ON U.idutente = C.utente_idutente WHERE C.utente_idutente = "+id+";");
-        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT cliente.utente_idutente, utente.username, utente.password, utente.email FROM cliente INNER JOIN utente ON utente.idutente = cliente.utente_idutente WHERE cliente.utente_idutente = "+id+";");
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT cliente.utente_idutente, utente.username, utente.password, utente.email, cliente.nome, cliente.cognome, cliente.telefono, cliente.citta, cliente.cap, cliente.indirizzo, cliente.eta FROM cliente INNER JOIN utente ON utente.idutente = cliente.utente_idutente WHERE cliente.utente_idutente = "+id+";");
 
         //todo aggiungere gli altri campi
         if(res.size() == 1){
@@ -25,6 +25,15 @@ public class ClienteDAO implements IClienteDAO {
             c.setId(Integer.parseInt(riga[0]));
             c.setUsername(riga[1]);
             c.setEmail(riga[3]);
+            c.setNome(riga[4]);
+            c.setCognome(riga[5]);
+            c.setTelefono(riga[6]);
+            c.setCitta(riga[7]);
+            c.setCap(Integer.parseInt(riga[8]));
+            c.setIndirizzo(riga[9]);
+            c.setEta(Integer.parseInt(riga[10]));
+
+
         }
 
         return c;
