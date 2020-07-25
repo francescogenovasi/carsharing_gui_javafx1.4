@@ -18,8 +18,6 @@ public class AggiuntaMezzoController {
     private boolean aggiuntaMezzo;
 
     @FXML
-    ComboBox<String> numPostiDisp;
-    @FXML
     ComboBox<Modello> modello;
     @FXML
     ComboBox<String> motorizzazione;
@@ -28,7 +26,6 @@ public class AggiuntaMezzoController {
     @FXML
     private Pane rootAggiungiMezzoPane;
 
-    ObservableList<String> posti = FXCollections.observableArrayList(CommonBusiness.getInstance().getPosti100());
     ObservableList<String> motor = FXCollections.observableArrayList(CommonBusiness.getInstance().getMotorizzazione());
     ObservableList<Modello> model = FXCollections.observableArrayList(CommonBusiness.getInstance().getModelli());
 
@@ -37,9 +34,6 @@ public class AggiuntaMezzoController {
     }
 
     public void initialize() {
-        posti.add(VALORE_NULLO);
-        numPostiDisp.setItems(posti);
-        numPostiDisp.getSelectionModel().select(posti.size()-1);
         motor.add(VALORE_NULLO);
         motorizzazione.setItems(motor);
         motorizzazione.getSelectionModel().select(motor.size()-1);
@@ -49,16 +43,16 @@ public class AggiuntaMezzoController {
     }
 
     public void loadMezzo() throws IOException {
-        if (targa.getText().equals("") || modello.getValue().equals(VALORE_NULLO) || numPostiDisp.getValue().equals(VALORE_NULLO) || motorizzazione.getValue().equals(VALORE_NULLO)){
+        if (targa.getText().equals("") || modello.getValue().equals(VALORE_NULLO) || motorizzazione.getValue().equals(VALORE_NULLO)){
             AlertBox.display("Aggiunta Mezzo", "Campi mancanti");
         }else{
 
             if(MezzoBusiness.getInstance().checkTarga(targa.getText())) {
                 Mezzo m = new Mezzo();
                 m.setTarga(targa.getText());
+                m.setPostiDisponibili(modello.getValue().getNumPosti());
                 m.setModello(modello.getValue());
                 m.setMotorizzazione(motorizzazione.getValue());
-                m.setPostiDisponibili(Integer.parseInt(numPostiDisp.getValue()));
 
                 if (MezzoBusiness.getInstance().findIdMezzo(m.getTarga()) == -1) {
                     aggiuntaMezzo = MezzoBusiness.getInstance().salvaAggiuntaMezzo(m);

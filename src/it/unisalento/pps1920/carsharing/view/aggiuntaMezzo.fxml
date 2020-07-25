@@ -12,8 +12,6 @@
         <Text layoutX="364.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AGGIUNGI MEZZO" />
         <TextField fx:id="targa" layoutX="356.0" layoutY="110.0" prefHeight="27.0" prefWidth="107.0" />
         <Text layoutX="277.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Targa:" />
-        <Text layoutX="277.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Posti Disponibili:" />
-        <ComboBox fx:id="numPostiDisp" layoutX="445.0" layoutY="156.0" prefHeight="27.0" prefWidth="74.0" />
         <Text layoutX="277.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modello:" />
         <ComboBox fx:id="modello" layoutX="444.0" layoutY="200.0" prefHeight="27.0" prefWidth="145.0" />
         <ComboBox fx:id="motorizzazione" layoutX="444.0" layoutY="247.0" prefHeight="27.0" prefWidth="145.0" />
