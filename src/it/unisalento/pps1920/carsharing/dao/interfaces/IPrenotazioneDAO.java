@@ -22,4 +22,5 @@ public interface IPrenotazioneDAO  extends IBaseDAO<Prenotazione> {
 
     public int getIdPrenFromIdPropCon(int idProp);
 
+    public int richiestaToPrenotazione(RichiestaCondivisione r) throws IOException;
 }

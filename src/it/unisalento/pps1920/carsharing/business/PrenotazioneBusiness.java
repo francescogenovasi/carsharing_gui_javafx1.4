@@ -6,6 +6,7 @@ import it.unisalento.pps1920.carsharing.model.*;
 import it.unisalento.pps1920.carsharing.util.MailHelper;
 import it.unisalento.pps1920.carsharing.util.PdfHelper;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -80,10 +81,7 @@ public class PrenotazioneBusiness {
         return true;
     }
 
-    public static boolean inviaRichiestaCondivisione(RichiestaCondivisione r, List<Accessorio> a){
-        boolean res = new RichiestaCondivisioneDAO().salvaRichiesta(r, a);
-        return res;
-    }
+
 
 
 }

@@ -72,4 +72,16 @@ public class RichiestaCondivisioneDAO implements IRichiestaCondivisioneDAO {
         }
         return richieste;
     }
+
+    @Override
+    public boolean accettaRichiesta(int idRichiesta){
+        boolean res = DbConnection.getInstance().eseguiAggiornamento("UPDATE richiesta_condivisione SET stato = 'Accettata' WHERE idrichiesta_condivisione = "+ idRichiesta + ";");
+        return res;
+    }
+
+    @Override
+    public boolean rifiutaRichiesta(int idRichiesta){
+        boolean res = DbConnection.getInstance().eseguiAggiornamento("UPDATE richiesta_condivisione SET stato = 'Rifiutata' WHERE idrichiesta_condivisione = "+ idRichiesta + ";");
+        return res;
+    }
 }

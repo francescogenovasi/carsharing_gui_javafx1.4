@@ -194,4 +194,26 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
         }
     }
 
+    @Override
+    public int richiestaToPrenotazione(RichiestaCondivisione r) throws IOException {
+        Prenotazione pren = new Prenotazione();
+        PropostaCondivisione prop = new PropostaCondivisioneDAO().findById(r.getProposta().getId());
+        pren.setData(new Date());
+        pren.setCliente(prop.getCliente());
+        pren.setMezzo(prop.getMezzo());
+        pren.setNumPostiOccupati(r.getNumPostiRichiesti());
+        pren.setPartenza(prop.getPartenza());
+        pren.setArrivo(prop.getArrivo());
+        pren.setLocalita(prop.getLocalita());
+        pren.setDataInizio(prop.getDataInizio());
+        pren.setDataFine(prop.getDataFine());
+        pren.setIdPropostaCondivisione(prop.getId());
+
+        List<Accessorio> acc = new ArrayList<Accessorio>();
+        salvaPrenotazione(pren, acc);
+
+        //System.out.println("iddddddddddddddddddddd: " + pren.getId());
+        return pren.getId();
+    }
+
 }

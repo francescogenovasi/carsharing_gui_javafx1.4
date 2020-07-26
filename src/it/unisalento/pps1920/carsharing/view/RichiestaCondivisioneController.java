@@ -3,6 +3,7 @@ package it.unisalento.pps1920.carsharing.view;
 import it.unisalento.pps1920.carsharing.business.AccessorioBusiness;
 import it.unisalento.pps1920.carsharing.business.CommonBusiness;
 import it.unisalento.pps1920.carsharing.business.PrenotazioneBusiness;
+import it.unisalento.pps1920.carsharing.business.RichiestaBusiness;
 import it.unisalento.pps1920.carsharing.model.*;
 import it.unisalento.pps1920.carsharing.util.Session;
 import javafx.collections.FXCollections;
@@ -142,7 +143,7 @@ public class RichiestaCondivisioneController {
 
             //salvare accessori aggiunti dalla richiesta di condivisione e poi una volta confermata la richiesta aggiungerli alla prenotazione
 
-            boolean inserimentoRichiesta = PrenotazioneBusiness.getInstance().inviaRichiestaCondivisione(r, accessoriAggiunti);
+            boolean inserimentoRichiesta = RichiestaBusiness.getInstance().inviaRichiestaCondivisione(r, accessoriAggiunti);
 
             //todo aggiungere accessori alla prenotazione se confermata
 

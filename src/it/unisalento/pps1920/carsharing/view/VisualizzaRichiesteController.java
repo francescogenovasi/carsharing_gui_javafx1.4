@@ -1,7 +1,10 @@
 package it.unisalento.pps1920.carsharing.view;
 
-import it.unisalento.pps1920.carsharing.model.Cliente;
-import it.unisalento.pps1920.carsharing.model.TabConfermaRichieste;
+import it.unisalento.pps1920.carsharing.business.CommonBusiness;
+import it.unisalento.pps1920.carsharing.business.PrenotazioneBusiness;
+import it.unisalento.pps1920.carsharing.business.RichiestaBusiness;
+import it.unisalento.pps1920.carsharing.model.*;
+import it.unisalento.pps1920.carsharing.util.Session;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -122,9 +125,18 @@ public class VisualizzaRichiesteController {
                             //PropostaCondivisione data = getTableView().getItems().get(getIndex());
                             int data = getTableView().getItems().get(getIndex()).getIdRichiesta();
                             System.out.println("Richiesta selezionata: " + data);
-                            AlertBox.display("prenotazione", "ACCETTA");
-
-
+                            try {
+                                RichiestaBusiness.getInstance().accettaRichiesta(data);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            AlertBox.display("prenotazione", "ACCETTATA");
+                            try {
+                                ObservableList<TabConfermaRichieste> rich = FXCollections.observableArrayList(CommonBusiness.getInstance().getRichiesteInAttesa(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())) ;
+                                setListRichieste(rich);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         });
                     }
 
@@ -161,9 +173,19 @@ public class VisualizzaRichiesteController {
                         btn.setOnAction((ActionEvent event) -> {
                             //PropostaCondivisione data = getTableView().getItems().get(getIndex());
                             int data = getTableView().getItems().get(getIndex()).getIdRichiesta();
-                            System.out.println("proposta selezionata: " + data);
-                            AlertBox.display("prenotazione", "RIFUTA");
-
+                            System.out.println("Richiesta selezionata: " + data);
+                            try {
+                                RichiestaBusiness.getInstance().rifiutaRichiesta(data);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            AlertBox.display("prenotazione", "RIFIUTATA");
+                            try {
+                                ObservableList<TabConfermaRichieste> rich = FXCollections.observableArrayList(CommonBusiness.getInstance().getRichiesteInAttesa(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())) ;
+                                setListRichieste(rich);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         });
                     }
 

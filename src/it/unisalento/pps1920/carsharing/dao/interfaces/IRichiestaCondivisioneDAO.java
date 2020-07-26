@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface IRichiestaCondivisioneDAO  extends IBaseDAO<RichiestaCondivisione> {
     public boolean salvaRichiesta(RichiestaCondivisione r, List<Accessorio> a);
+    public boolean accettaRichiesta(int idRichiesta);
+    public boolean rifiutaRichiesta(int idRichiesta);
 }
