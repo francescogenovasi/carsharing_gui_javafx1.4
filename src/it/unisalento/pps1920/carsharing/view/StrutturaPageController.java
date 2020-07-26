@@ -76,7 +76,6 @@ public class StrutturaPageController{
 
     /* @FXML
     private void loadTabellaPrenotazioniPage() throws IOException {
-        //todo cambiare tabella visualizzata
         FXMLLoader loader = new FXMLLoader(getClass().getResource("tabellaPrenotazioniPage.fxml"));
         Pane pane = (Pane) loader.load();
         TabellaPrenotazioniPageController controller = loader.<TabellaPrenotazioniPageController>getController();
@@ -91,7 +90,6 @@ public class StrutturaPageController{
                 ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(CommonBusiness.getInstance().getPrenotazioniUtente(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId()));
                 controller.setListPrenotazioni(prenotazioni);
             } else {
-                //todo aggiungere se è un addetto o un operatore
             }
         }
 

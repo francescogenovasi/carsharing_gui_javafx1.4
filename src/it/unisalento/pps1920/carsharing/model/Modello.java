@@ -15,7 +15,6 @@ public class Modello {
     public Modello(){
 
     }
-    //todo add foto a modello
     public Modello(int id, String nome, int numPosti, File foto, String tipologia, String dimensione, float tariffaBase) {
         this.id = id;
         this.nome = nome;

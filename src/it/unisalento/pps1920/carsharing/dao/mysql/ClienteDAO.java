@@ -22,7 +22,6 @@ public class ClienteDAO implements IClienteDAO {
         //ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT C.utente_idutente, U.username, U.password, U.email FROM cliente AS C INNER JOIN utente as U  ON U.idutente = C.utente_idutente WHERE C.utente_idutente = "+id+";");
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT cliente.utente_idutente, utente.username, utente.password, utente.email, cliente.nome, cliente.cognome, cliente.telefono, cliente.citta, cliente.cap, cliente.indirizzo, cliente.eta FROM cliente INNER JOIN utente ON utente.idutente = cliente.utente_idutente WHERE cliente.utente_idutente = "+id+";");
 
-        //todo aggiungere gli altri campi
         if(res.size() == 1){
             String riga[] = res.get(0);
             c = new Cliente();
@@ -73,7 +72,7 @@ public class ClienteDAO implements IClienteDAO {
 
     public boolean salvaRegistrazioneCliente(Cliente c){
         //boolean res = DbConnection.getInstance().eseguiAggiornamento("INSERT INTO utente (username, password, email) VALUES ('"+username+"','"+password+"' ,'"+email+"') ;");
-        String sql = "INSERT INTO cliente (utente_idutente, nome, cognome, telefono, citta, cap, indirizzo, eta, foto) VALUES (" + c.getId() +", '" + c.getNome() + "', '" + c.getCognome() + "', '" + c.getTelefono() + "', '" + c.getCitta() + "', '" + c.getCap() + "', '" + c.getIndirizzo() + "', '" + c.getEta() +"', NULL);"; //todo aggiungere foto a cliente
+        String sql = "INSERT INTO cliente (utente_idutente, nome, cognome, telefono, citta, cap, indirizzo, eta, foto) VALUES (" + c.getId() +", '" + c.getNome() + "', '" + c.getCognome() + "', '" + c.getTelefono() + "', '" + c.getCitta() + "', '" + c.getCap() + "', '" + c.getIndirizzo() + "', '" + c.getEta() +"', NULL);";
         System.out.println(sql);
         boolean res = DbConnection.getInstance().eseguiAggiornamento(sql);
         sql="SELECT last_insert_id()";

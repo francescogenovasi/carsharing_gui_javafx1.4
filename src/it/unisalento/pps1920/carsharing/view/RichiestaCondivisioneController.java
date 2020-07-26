@@ -145,8 +145,6 @@ public class RichiestaCondivisioneController {
 
             boolean inserimentoRichiesta = RichiestaBusiness.getInstance().inviaRichiestaCondivisione(r, accessoriAggiunti);
 
-            //todo aggiungere accessori alla prenotazione se confermata abbiamo detto no????????
-
             
 
             if (inserimentoRichiesta){

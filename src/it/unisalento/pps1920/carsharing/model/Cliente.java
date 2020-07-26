@@ -16,7 +16,6 @@ public class Cliente extends Utente{
     public Cliente(){
 
     }
-    //todo add foto a cliente
     public Cliente(int id, String username, String password, String email, String nome, String cognome, String telefono, String citta, int cap, String indirizzo, int eta, File foto) {
         super(id, username, password, email);
         this.nome = nome;
