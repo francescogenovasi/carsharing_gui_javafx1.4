@@ -136,9 +136,9 @@ public class StrutturaPageController{
     public void initialize() {
         if (CommonBusiness.getInstance().checkAmministratore(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
             menuAdmin.setVisible(true);
-            menuAddetto.setVisible(true);
-            menuOperatore.setVisible(true);
-            menuCliente.setVisible(true);
+            //menuAddetto.setVisible(true);
+            //menuOperatore.setVisible(true);
+            //menuCliente.setVisible(true);
         } else {
             if (CommonBusiness.getInstance().checkAddetto(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
                 menuAddetto.setVisible(true);

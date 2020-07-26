@@ -55,9 +55,19 @@ public class AccessorioDAO implements IAccessorioDAO {
         return id;
     }
 
-    public ArrayList<Accessorio> getAccessoriPrenotazione(int idpren){
+    public ArrayList<Accessorio> getAccessoriPrenotazione(int idPren){
         ArrayList<Accessorio> acc = new ArrayList<Accessorio>();
-        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM pren_acc WHERE prenotazione_idprenotazione=" + idpren + ";");
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM pren_acc WHERE prenotazione_idprenotazione=" + idPren + ";");
+        for (String[] riga : res){
+            Accessorio a = findById(Integer.parseInt(riga[1]));
+            acc.add(a);
+        }
+        return acc;
+    }
+
+    public ArrayList<Accessorio> getAccessoriRichiesta(int idRichiesta){
+        ArrayList<Accessorio> acc = new ArrayList<Accessorio>();
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM rich_acc WHERE idrichiesta_condivisione = " + idRichiesta + ";");
         for (String[] riga : res){
             Accessorio a = findById(Integer.parseInt(riga[1]));
             acc.add(a);

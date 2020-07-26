@@ -117,9 +117,9 @@ public class CommonBusiness {
         return aDAO.findAll();
     }
 
-    public ArrayList<Accessorio> getAccessoriPrenotazione(int idpren){
+    public ArrayList<Accessorio> getAccessoriPrenotazione(int idPren){
         IAccessorioDAO aDAO = new AccessorioDAO();
-        return aDAO.getAccessoriPrenotazione(idpren);
+        return aDAO.getAccessoriPrenotazione(idPren);
     }
 
     public int maxPostiPrenotabili(){

@@ -210,6 +210,8 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
         pren.setIdPropostaCondivisione(prop.getId());
 
         List<Accessorio> acc = new ArrayList<Accessorio>();
+        acc = new AccessorioDAO().getAccessoriRichiesta(r.getId());
+
         salvaPrenotazione(pren, acc);
 
         //System.out.println("iddddddddddddddddddddd: " + pren.getId());
