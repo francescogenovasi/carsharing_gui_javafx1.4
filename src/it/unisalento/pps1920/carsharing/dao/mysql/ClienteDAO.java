@@ -5,11 +5,16 @@ import it.unisalento.pps1920.carsharing.dao.interfaces.IClienteDAO;
 import it.unisalento.pps1920.carsharing.model.Cliente;
 import it.unisalento.pps1920.carsharing.model.Utente;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ClienteDAO implements IClienteDAO {
     @Override
-    public Cliente findById(int id) {
+    public Cliente findById(int id) throws IOException {
 
         Cliente c = null;
 
@@ -32,15 +37,20 @@ public class ClienteDAO implements IClienteDAO {
             c.setCap(Integer.parseInt(riga[8]));
             c.setIndirizzo(riga[9]);
             c.setEta(Integer.parseInt(riga[10]));
-
-
+            byte[] foto = DbConnection.getInstance().getFoto("SELECT foto FROM cliente INNER JOIN utente ON utente.idutente = cliente.utente_idutente WHERE cliente.utente_idutente = "+id+";");
+            ByteArrayInputStream bis = new ByteArrayInputStream(foto);
+            BufferedImage bImage = ImageIO.read(bis);
+            ImageIO.write(bImage, "jpg", new File("src/temp.jpg") );
+            File file = new File("src/temp.jpg");
+            c.setFoto(file);
+            file.delete();
         }
 
         return c;
     }
 
     @Override
-    public ArrayList<Cliente> findAll() { //potrebbe non funzionare, potrebbe mancare qualche inner join
+    public ArrayList<Cliente> findAll() throws IOException { //potrebbe non funzionare, potrebbe mancare qualche inner join
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT C.utente_idutente, U.username, U.password, U.email FROM cliente AS C INNER JOIN utente as U  ON U.idutente = C.utente_idutente"); //query SELECT C.utente_idutente, U.username, U.password, U.email FROM cliente AS C INNER JOIN utente as U  ON U.idutente = C.utente_idutente
 
         ArrayList<Cliente> clienti = new ArrayList<Cliente>(); //istanziare model con risultati query

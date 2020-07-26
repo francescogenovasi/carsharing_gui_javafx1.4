@@ -5,6 +5,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -25,13 +27,14 @@ public class AlertBoxProfilo {
         label2.setText(c.getTelefono() + " " +c.getEta());
         Label label3 = new Label();
         label3.setText(c.getCap() + " " +c.getCitta() + " " + c.getIndirizzo());
-        //todo inserire immagine profilo
-        //ImageView image profilo =
+        ImageView imageProfilo = new ImageView();
+        Image image = new Image(c.getFoto().toURI().toString());
+        imageProfilo.setImage(image);
         Button closeButton = new Button("Chiudi");
         closeButton.setOnAction(e -> window.close());
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(label, label2, label3, /*image*/ closeButton);
+        layout.getChildren().addAll(label, label2, label3, imageProfilo, closeButton);
         layout.setAlignment(Pos.CENTER);
 
         //Display window and wait for it to be closed before returning
