@@ -11,8 +11,8 @@
 
 <Pane fx:id="rootPaneConfermaPrenotazione" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="654.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.pps1920.carsharing.view.ConfermaPrenotazioneController">
    <children>
-      <Label layoutX="120.0" layoutY="144.0" text="Mezzo:" />
-      <ComboBox fx:id="mezzo" layoutX="225.0" layoutY="139.0" onAction="#reloadImage" prefWidth="150.0" promptText="mezzo" />
+      <Label layoutX="237.0" layoutY="144.0" text="Mezzo:" />
+      <ComboBox fx:id="mezzo" layoutX="303.0" layoutY="139.0" onAction="#reloadImage" prefWidth="150.0" promptText="mezzo" />
       <Button layoutX="170.0" layoutY="315.0" mnemonicParsing="false" onAction="#conferma" text="Conferma" />
       <Button layoutX="300.0" layoutY="315.0" mnemonicParsing="false" onAction="#returPrenotazioneForm" text="Indietro" />
       <Label layoutX="237.0" layoutY="22.0" text="Riepilogo prenotazione" />
@@ -35,5 +35,7 @@
          </content>
       </ScrollPane>
       <Text layoutX="28.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Accessori:" />
+      <Label layoutX="37.0" layoutY="136.0" text="Costo:" />
+      <Label fx:id="costoLabel" layoutX="88.0" layoutY="136.0" text="costo" />
    </children>
 </Pane>

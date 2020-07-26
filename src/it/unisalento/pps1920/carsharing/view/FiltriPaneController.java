@@ -85,7 +85,7 @@ public class FiltriPaneController{
         //aggiunta elemento nullo
         stazioni.add(new Stazione(0, VALORE_NULLO, 0, 0, null));
         localitas.add(new Localita(0, VALORE_NULLO, 0, 0));
-        modelli.add(new Modello(0, VALORE_NULLO, 0, null, VALORE_NULLO, VALORE_NULLO));
+        modelli.add(new Modello(0, VALORE_NULLO, 0, null, VALORE_NULLO, VALORE_NULLO, 0));
         dimensioni.add(VALORE_NULLO);
         tipo.add(VALORE_NULLO);
         motore.add(VALORE_NULLO);

@@ -29,6 +29,7 @@ public class ModelloDAO implements IModelloDAO {
             m.setNumPosti(Integer.parseInt(riga[2]));
             m.setDimensione(riga[4]);
             m.setTipologia(riga[5]);
+            m.setTariffaBase(Float.parseFloat(riga[6]));
 
             byte[] foto = DbConnection.getInstance().getFoto("SELECT foto FROM modello WHERE idmodello = " + id +";");
             ByteArrayInputStream bis = new ByteArrayInputStream(foto);
@@ -69,7 +70,7 @@ public class ModelloDAO implements IModelloDAO {
     }
 
     public boolean salvaModello(Modello m){
-        String sql = "INSERT INTO modello (nome, num_posti, dimensione, tipologia) VALUES ('" + m.getNome() + "', '" + m.getNumPosti() + "', '" + m.getDimensione() + "' , '" + m.getTipologia() + "');";
+        String sql = "INSERT INTO modello (nome, num_posti, dimensione, tipologia, tariffa_base) VALUES ('" + m.getNome() + "', '" + m.getNumPosti() + "', '" + m.getDimensione() + "' , '" + m.getTipologia() + "', " + m.getTariffaBase() + ");";
         System.out.println(sql);
         boolean res = DbConnection.getInstance().eseguiAggiornamento(sql);
         sql = "SELECT last_insert_id()";

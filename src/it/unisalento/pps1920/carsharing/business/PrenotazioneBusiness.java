@@ -42,7 +42,18 @@ public class PrenotazioneBusiness {
         new PropostaCondivisioneDAO().salvaProposta(prop);
         //System.out.println("bhuuhuhuhuhuhuhuhhuhhuh: " + prop.getId());
         p.setIdPropostaCondivisione(prop.getId());
-        new PrenotazioneDAO().salvaPrenotazione(p, a);
+
+
+        float costo = p.getMezzo().getModello().getTariffaBase();
+        //il costo dello sharing è dato dalla tariffa base sommato al costo di ogni accessorio scelto
+        for (int i=0; i<a.size(); i++){
+            costo = costo + a.get(i).getCosto();
+        }
+
+        //p.setCosto(costo);
+
+
+        new PrenotazioneDAO().salvaPrenotazione(p, a, costo);
         new MezzoDAO().decrementaPosti(p.getMezzo(), p.getNumPostiOccupati());
 
 
@@ -81,7 +92,9 @@ public class PrenotazioneBusiness {
         return true;
     }
 
+    /*public int calcoloCosto(){
 
+    }*/
 
 
 }

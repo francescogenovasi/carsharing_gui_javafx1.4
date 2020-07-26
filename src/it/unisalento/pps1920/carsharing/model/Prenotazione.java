@@ -15,6 +15,7 @@ public class Prenotazione {
     private Date dataInizio;
     private Date dataFine;
     private int idPropostaCondivisione;
+    private float costo;
     private boolean pagamento;
     private boolean pronta;
 
@@ -22,7 +23,7 @@ public class Prenotazione {
 
     }
 
-    public Prenotazione(int id, Date data, Cliente cliente, Mezzo mezzo, int numPostiOccupati, Stazione partenza, Stazione arrivo, Localita localita, int idPropostaCondivisione, boolean pagamento, boolean pronta) {
+    public Prenotazione(int id, Date data, Cliente cliente, Mezzo mezzo, int numPostiOccupati, Stazione partenza, Stazione arrivo, Localita localita, int idPropostaCondivisione, float costo, boolean pagamento, boolean pronta) {
         this.id = id;
         this.data = data;
         this.cliente = cliente;
@@ -32,6 +33,7 @@ public class Prenotazione {
         this.arrivo = arrivo;
         this.localita = localita;
         this.idPropostaCondivisione = idPropostaCondivisione;
+        this.costo = costo;
         this.pagamento = pagamento;
         this.pronta = pronta;
     }
@@ -138,5 +140,13 @@ public class Prenotazione {
 
     public void setIdPropostaCondivisione(int idPropostaCondivisione) {
         this.idPropostaCondivisione = idPropostaCondivisione;
+    }
+
+    public float getCosto() {
+        return costo;
+    }
+
+    public void setCosto(float costo) {
+        this.costo = costo;
     }
 }

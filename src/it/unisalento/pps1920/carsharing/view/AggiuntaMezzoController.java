@@ -37,7 +37,7 @@ public class AggiuntaMezzoController {
         motor.add(VALORE_NULLO);
         motorizzazione.setItems(motor);
         motorizzazione.getSelectionModel().select(motor.size()-1);
-        model.add(new Modello(0,VALORE_NULLO,0,null,VALORE_NULLO,VALORE_NULLO));
+        model.add(new Modello(0,VALORE_NULLO,0,null,VALORE_NULLO,VALORE_NULLO, 0));
         modello.setItems(model);
         modello.getSelectionModel().select(model.size()-1);
     }

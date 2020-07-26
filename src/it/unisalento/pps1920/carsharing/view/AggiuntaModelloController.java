@@ -23,21 +23,27 @@ public class AggiuntaModelloController {
     private static final String VALORE_NULLO = "-";
     private boolean aggiuntaModello;
     @FXML
-    ImageView imageModello = new ImageView();
+    private ImageView imageModello = new ImageView();
     @FXML
-    ComboBox<String> numPosti;
+    private ComboBox<String> numPosti;
     @FXML
-    ComboBox<String> dimensione;
+    private ComboBox<String> dimensione;
     @FXML
-    ComboBox<String> tipologia;
+    private ComboBox<String> tipologia;
     @FXML
-    TextField nome;
+    private TextField nome;
+    @FXML
+    private ComboBox<String> euroCombo;
+    @FXML
+    private ComboBox<String> centesimiCombo;
     @FXML
     private Pane rootAggiungiModelloPane;
 
     ObservableList<String> posti = FXCollections.observableArrayList(CommonBusiness.getInstance().getPosti());
     ObservableList<String> dim = FXCollections.observableArrayList(CommonBusiness.getInstance().getDimensioni());
     ObservableList<String> tipo = FXCollections.observableArrayList(CommonBusiness.getInstance().getTipologia());
+    ObservableList<String> euro = FXCollections.observableArrayList(CommonBusiness.getInstance().getEuro());
+    ObservableList<String> centesimi = FXCollections.observableArrayList(CommonBusiness.getInstance().getCentesimi());
 
 
     public void initialize() {
@@ -50,6 +56,12 @@ public class AggiuntaModelloController {
         tipo.add(VALORE_NULLO);
         tipologia.setItems(tipo);
         tipologia.getSelectionModel().select(tipo.size()-1);
+        euro.add(VALORE_NULLO);
+        euroCombo.setItems(euro);
+        euroCombo.getSelectionModel().select(euro.size()-1);
+        centesimi.add(VALORE_NULLO);
+        centesimiCombo.setItems(centesimi);
+        centesimiCombo.getSelectionModel().select(centesimi.size()-1);
     }
 
 
@@ -65,7 +77,7 @@ public class AggiuntaModelloController {
     }
 
     public void loadModello() throws IOException {
-        if (nome.getText().equals("") || nome.getText().equals(null) || numPosti.getValue().equals(VALORE_NULLO) || dimensione.getValue().equals(VALORE_NULLO) || tipologia.getValue().equals(VALORE_NULLO) || file==null){
+        if (nome.getText().equals("") || nome.getText().equals(null) || numPosti.getValue().equals(VALORE_NULLO) || dimensione.getValue().equals(VALORE_NULLO) || tipologia.getValue().equals(VALORE_NULLO) || file==null || euroCombo.getValue().equals(VALORE_NULLO) || centesimiCombo.getValue().equals(VALORE_NULLO)){
             AlertBox.display("Aggiunta Modello", "Campi mancanti");
         } else {
             Modello m = new Modello();
@@ -74,6 +86,7 @@ public class AggiuntaModelloController {
             m.setNumPosti(Integer.parseInt(numPosti.getValue()));
             m.setTipologia(tipologia.getValue());
             m.setDimensione(dimensione.getValue());
+            m.setTariffaBase(Float.parseFloat(euroCombo.getValue() + "." + centesimiCombo.getValue()));
 
             if (ModelloBusiness.getInstance().findIdModello(m.getNome()) == -1) {
                 aggiuntaModello = ModelloBusiness.getInstance().salvaAggiuntaModello(m);

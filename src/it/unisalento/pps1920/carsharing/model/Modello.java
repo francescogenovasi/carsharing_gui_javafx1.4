@@ -9,19 +9,21 @@ public class Modello {
     private File foto;
     private String tipologia;
     private String dimensione;
+    private float tariffaBase;
 
 
     public Modello(){
 
     }
     //todo add foto a modello
-    public Modello(int id, String nome, int numPosti, File foto, String tipologia, String dimensione) {
+    public Modello(int id, String nome, int numPosti, File foto, String tipologia, String dimensione, float tariffaBase) {
         this.id = id;
         this.nome = nome;
         this.numPosti = numPosti;
-        this.foto=foto;
-        this.dimensione=dimensione;
-        this.tipologia=tipologia;
+        this.foto = foto;
+        this.dimensione = dimensione;
+        this.tipologia = tipologia;
+        this.tariffaBase = tariffaBase;
     }
 
     public int getId() {
@@ -70,6 +72,14 @@ public class Modello {
 
     public void setFoto(File foto) {
         this.foto = foto;
+    }
+
+    public float getTariffaBase() {
+        return tariffaBase;
+    }
+
+    public void setTariffaBase(float tariffaBase) {
+        this.tariffaBase = tariffaBase;
     }
 
     @Override

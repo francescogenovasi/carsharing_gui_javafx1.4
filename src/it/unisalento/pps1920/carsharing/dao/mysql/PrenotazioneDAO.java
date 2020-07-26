@@ -46,6 +46,9 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
             IMezzoDAO mDao = new MezzoDAO();
             Mezzo mezzo = mDao.findById(Integer.parseInt(riga[3]));;
             p.setMezzo(mezzo);
+
+            p.setIdPropostaCondivisione(Integer.parseInt(riga[10]));
+            p.setCosto(Float.parseFloat(riga[11]));
         }
         return p;
     }
@@ -77,16 +80,24 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
     }
 
     @Override
-    public void salvaPrenotazione(Prenotazione p, List<Accessorio> a) {
+    public void salvaPrenotazione(Prenotazione p, List<Accessorio> a, float costo) {
 
         String strDataPrenotazione = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getData()));
         String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataInizio()));
         String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataFine()));
 
 
+        /* float costo = p.getMezzo().getModello().getTariffaBase();
+        //il costo dello sharing è dato dalla tariffa base sommato al costo di ogni accessorio scelto
+        for (int i=0; i<a.size(); i++){
+            costo = costo + a.get(i).getCosto();
+        }*/
+
+        p.setCosto(costo);
+
 
         //String sql = "INSERT INTO prenotazione VALUES (NULL, '"+strDataPrenotazione+"',"+p.getCliente().getId()+","+p.getMezzo().getId()+","+p.getNumPostiOccupati()+","+p.getPartenza().getId()+","+p.getArrivo().getId()+","+p.getLocalita().getId()+",'"+strDataInizio+"','"+strDataFine+"');";
-        String sql = "INSERT INTO prenotazione VALUES (NULL, '"+strDataPrenotazione+"',"+p.getCliente().getId()+","+p.getMezzo().getId()+","+p.getNumPostiOccupati()+","+p.getPartenza().getId()+","+p.getArrivo().getId()+","+p.getLocalita().getId()+",'"+strDataInizio+"','"+strDataFine+ "', " + p.getIdPropostaCondivisione() +", 0, 0, 1);";
+        String sql = "INSERT INTO prenotazione VALUES (NULL, '"+strDataPrenotazione+"',"+p.getCliente().getId()+","+p.getMezzo().getId()+","+p.getNumPostiOccupati()+","+p.getPartenza().getId()+","+p.getArrivo().getId()+","+p.getLocalita().getId()+",'"+strDataInizio+"','"+strDataFine+ "', " + p.getIdPropostaCondivisione() + ", " + p.getCosto() + ", 0, 1);";
 
         System.out.println(sql);
         DbConnection.getInstance().eseguiAggiornamento(sql);
@@ -97,7 +108,6 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
         System.out.println("id prenotazione inserita:" + p.getId());
 
         String sql_acc;
-
         for (int i=0; i<a.size(); i++){
             sql_acc = "INSERT INTO pren_acc VALUES (" + p.getId() + ", " + a.get(i).getId() + ");";
             System.out.println(sql_acc);
@@ -195,27 +205,33 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
     }
 
     @Override
-    public int richiestaToPrenotazione(RichiestaCondivisione r) throws IOException {
-        Prenotazione pren = new Prenotazione();
-        PropostaCondivisione prop = new PropostaCondivisioneDAO().findById(r.getProposta().getId());
-        pren.setData(new Date());
-        pren.setCliente(prop.getCliente());
-        pren.setMezzo(prop.getMezzo());
-        pren.setNumPostiOccupati(r.getNumPostiRichiesti());
-        pren.setPartenza(prop.getPartenza());
-        pren.setArrivo(prop.getArrivo());
-        pren.setLocalita(prop.getLocalita());
-        pren.setDataInizio(prop.getDataInizio());
-        pren.setDataFine(prop.getDataFine());
-        pren.setIdPropostaCondivisione(prop.getId());
+    public int getNumeroClientiSharing(int idProposta){
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT count(*) FROM (SELECT * FROM prenotazione WHERE idproposta_condivisione = " + idProposta + ") AS a;");
+        if (res.size() == 1){
+            String[] riga = res.get(0);
+            return Integer.parseInt(riga[0]);
+        } else {
+            return -1;
+        }
+    }
 
-        List<Accessorio> acc = new ArrayList<Accessorio>();
-        acc = new AccessorioDAO().getAccessoriRichiesta(r.getId());
+    public void correggiCosto(int idProposta) throws IOException { //se aggiungo clienti allo sharing allora il costo diminuisce
+        int clientiPrima = getNumeroClientiSharing(idProposta);
+        int clientiDopo = clientiPrima + 1;
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT idprenotazione, mezzo_idmezzo, costo_tot from prenotazione where idproposta_condivisione = " + idProposta + ";");
+        for (String[] riga : res){
+            int idPren = Integer.parseInt(riga[0]);
+            IMezzoDAO mDAO = new MezzoDAO();
+            Mezzo m = mDAO.findById(Integer.parseInt(riga[1]));
 
-        salvaPrenotazione(pren, acc);
+            float vecchioCosto = m.getModello().getTariffaBase() / clientiPrima ;
+            float nuovoCosto = m.getModello().getTariffaBase() / clientiDopo ;
+            float vecchioTotale = Float.parseFloat(riga[2]);
+            float nuovoTotale = vecchioTotale - vecchioCosto + nuovoCosto;
 
-        //System.out.println("iddddddddddddddddddddd: " + pren.getId());
-        return pren.getId();
+            DbConnection.getInstance().eseguiAggiornamento("UPDATE prenotazione SET costo_tot = " + nuovoTotale + " WHERE idprenotazione = " + idPren + ";");
+
+        }
     }
 
 }

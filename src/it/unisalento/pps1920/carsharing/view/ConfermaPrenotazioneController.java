@@ -35,6 +35,8 @@ public class ConfermaPrenotazioneController {
     @FXML
     private Label posti;
     @FXML
+    private Label costoLabel;
+    @FXML
     private Label dataInizio;
     @FXML
     private Label dataFine;
@@ -50,6 +52,15 @@ public class ConfermaPrenotazioneController {
     @FXML
     private void reloadImage() throws IOException {
         imageAutoRiepilogo.setImage(CommonBusiness.getInstance().getFotoModello(mezzo.getValue().getModello().getId()));
+        //reload anche del costo
+
+        //System.out.println(mezzo.getValue().getModello().getNome() + " aaaaaa " + mezzo.getValue().getModello().getTariffaBase());
+        float costo = mezzo.getValue().getModello().getTariffaBase();
+        //il costo dello sharing è dato dalla tariffa base sommato al costo di ogni accessorio scelto
+        for (int i=0; i<accList.size(); i++){
+            costo = costo + accList.get(i).getCosto();
+        }
+        costoLabel.setText(costo + "€");
     }
 
 
@@ -72,6 +83,15 @@ public class ConfermaPrenotazioneController {
         mezzi = (ObservableList<Mezzo>) FXCollections.observableArrayList(RicercaBusiness.getInstance().mezziPrenotabili(dim, prenotazione.getNumPostiOccupati()));
         mezzo.setItems(mezzi);
         mezzo.getSelectionModel().select(0);
+
+        float costo = mezzo.getValue().getModello().getTariffaBase();
+        //il costo dello sharing è dato dalla tariffa base sommato al costo di ogni accessorio scelto
+        for (int i=0; i<accList.size(); i++){
+            costo = costo + accList.get(i).getCosto();
+        }
+
+        costoLabel.setText(costo + "€");
+
 
         System.out.println("id mezzo selezionato: " + mezzo.getValue().getId() );
         imageAutoRiepilogo.setImage(CommonBusiness.getInstance().getFotoModello(mezzo.getValue().getModello().getId()));

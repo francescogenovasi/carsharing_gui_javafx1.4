@@ -14,7 +14,7 @@ public interface IPrenotazioneDAO  extends IBaseDAO<Prenotazione> {
      */
     public ArrayList<Prenotazione> prenotazioniCliente(int id) throws IOException;
 
-    public void salvaPrenotazione(Prenotazione p, List<Accessorio> a);
+    public void salvaPrenotazione(Prenotazione p, List<Accessorio> a, float costo);
 
     public ArrayList<Prenotazione> ricercaConFiltri (Stazione partenza, Stazione arrivo, Localita localita, int numPosti, Date inizio, Date fine, Modello modello, String dimensione, String motorizzazione, String tipologia) throws IOException;
 
@@ -22,5 +22,7 @@ public interface IPrenotazioneDAO  extends IBaseDAO<Prenotazione> {
 
     public int getIdPrenFromIdPropCon(int idProp);
 
-    public int richiestaToPrenotazione(RichiestaCondivisione r) throws IOException;
+    public int getNumeroClientiSharing(int idProposta);
+
+    public void correggiCosto(int idProposta) throws IOException;
 }
