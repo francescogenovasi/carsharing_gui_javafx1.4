@@ -130,7 +130,9 @@ public class RichiestaCondivisioneController {
         if(postiCombo.getValue().equals(VALORE_NULLO)){
             //errore campi mancanti
             AlertBox.display("Richiesta condivisione", "Selezionare posti richiesti");
-            //errore troppi posti richiesti, non ci sono abbastanza todo calcolo posti non da query ma da algoritmo
+            //errore troppi posti richiesti, non ci sono abbastanza
+            //todo prendere i posti occupati dalla tabella mezzi_da_preparare
+            
         } else {
             RichiestaCondivisione r = new RichiestaCondivisione();
             r.setStato("Attesa");

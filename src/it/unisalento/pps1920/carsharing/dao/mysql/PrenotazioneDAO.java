@@ -80,7 +80,7 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
     }
 
     @Override
-    public void salvaPrenotazione(Prenotazione p, List<Accessorio> a, float costo) {
+    public void salvaPrenotazione(Prenotazione p, List<Accessorio> a, float costo, boolean nuovoInserimento) {
 
         String strDataPrenotazione = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getData()));
         String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataInizio()));
@@ -112,6 +112,19 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
             sql_acc = "INSERT INTO pren_acc VALUES (" + p.getId() + ", " + a.get(i).getId() + ");";
             System.out.println(sql_acc);
             DbConnection.getInstance().eseguiAggiornamento(sql_acc);
+        }
+
+        if (nuovoInserimento){
+            DbConnection.getInstance().eseguiAggiornamento("INSERT INTO mezzi_da_preparare VALUES (NULL, '"+ p.getMezzo().getTarga()+"', '" + strDataInizio + "', '" + strDataFine + "', "+ p.getNumPostiOccupati() + ", 'Non Pronto')");
+        } else {
+            System.out.println("SELECT * FROM mezzi_da_preparare WHERE targa = '" + p.getMezzo().getTarga() + "' AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato = 'Non Pronto' ;");
+            ArrayList<String[]> res1 = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzi_da_preparare WHERE targa = '" + p.getMezzo().getTarga() + "' AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato = 'Non Pronto' ;");
+            if(res1.size() == 1){
+                String[] riga = res1.get(0);
+                int vecchiPostiOccupati = Integer.parseInt(riga[4]);
+                int nuoviPostiOccupati = vecchiPostiOccupati + p.getNumPostiOccupati();
+                DbConnection.getInstance().eseguiAggiornamento("UPDATE mezzi_da_preparare SET posti_occupati = "+ nuoviPostiOccupati +" WHERE idmezzi_da_preparare = " + Integer.parseInt(riga[0]) + ";");
+            }
         }
     }
 

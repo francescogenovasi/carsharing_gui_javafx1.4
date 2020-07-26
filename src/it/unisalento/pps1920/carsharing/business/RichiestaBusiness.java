@@ -64,7 +64,7 @@ public class RichiestaBusiness {
 
         new PrenotazioneDAO().correggiCosto(r.getProposta().getId()); //diminuisce il costo se ci sono piu clienti che fanno lo sharing
 
-        new PrenotazioneDAO().salvaPrenotazione(pren, acc, costo);
+        new PrenotazioneDAO().salvaPrenotazione(pren, acc, costo, false);
 
         //System.out.println("iddddddddddddddddddddd: " + pren.getId());
         return pren.getId();

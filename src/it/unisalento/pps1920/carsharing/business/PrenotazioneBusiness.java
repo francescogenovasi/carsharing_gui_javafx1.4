@@ -53,7 +53,7 @@ public class PrenotazioneBusiness {
         //p.setCosto(costo);
 
 
-        new PrenotazioneDAO().salvaPrenotazione(p, a, costo);
+        new PrenotazioneDAO().salvaPrenotazione(p, a, costo, true);
         new MezzoDAO().decrementaPosti(p.getMezzo(), p.getNumPostiOccupati());
 
 

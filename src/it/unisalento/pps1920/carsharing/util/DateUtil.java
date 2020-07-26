@@ -118,6 +118,31 @@ public class DateUtil {
         System.out.println("Date (London) : " + format.format(londonDateTime));
         return format.format(londonDateTime);
     }
+    public static String fromLondonToRome(String oraDaConvertire){
+        System.out.println("da conv : " + oraDaConvertire);
+        String dateformat = "yyyy-MM-dd HH:mm:ss";
+        LocalDateTime ldt = LocalDateTime.parse(oraDaConvertire, DateTimeFormatter.ofPattern(dateformat));
+
+        ZoneId londonZoneId = ZoneId.of("Europe/London");
+        //System.out.println("TimeZone : " + romeZoneId);
+
+        //LocalDateTime + ZoneId = ZonedDateTime
+        ZonedDateTime londonZonedDateTime = ldt.atZone(londonZoneId);
+        //System.out.println("Date (Rome) : " + romeZonedDateTime);
+
+        ZoneId romeZoneId = ZoneId.of("Europe/Rome");
+        //System.out.println("TimeZone : " + londonZoneId);
+
+        ZonedDateTime romeDateTime = londonZonedDateTime.withZoneSameInstant(romeZoneId);
+        //System.out.println("Date (London) : " + londonDateTime);
+
+        DateTimeFormatter format = DateTimeFormatter.ofPattern(dateformat);
+        //System.out.println("\n---DateTimeFormatter---");
+        //System.out.println("Date (Rome) : " + format.format(romeZonedDateTime));
+        System.out.println("Date (Rome) : " + format.format(romeDateTime));
+        return format.format(romeDateTime);
+    }
+
 
 
 }

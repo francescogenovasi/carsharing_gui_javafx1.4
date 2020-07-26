@@ -55,7 +55,8 @@ public class RichiestaCondivisioneDAO implements IRichiestaCondivisioneDAO {
             IClienteDAO cDao = new ClienteDAO();
             Cliente cliente = cDao.findById(Integer.parseInt(riga[3]));;
             r.setCliente(cliente);
-            r.setStato(riga[4]);
+            r.setStato(riga[5]);
+            r.setNumPostiRichiesti(Integer.parseInt(riga[4]));
         }
         return r;
     }
@@ -83,5 +84,10 @@ public class RichiestaCondivisioneDAO implements IRichiestaCondivisioneDAO {
     public boolean rifiutaRichiesta(int idRichiesta){
         boolean res = DbConnection.getInstance().eseguiAggiornamento("UPDATE richiesta_condivisione SET stato = 'Rifiutata' WHERE idrichiesta_condivisione = "+ idRichiesta + ";");
         return res;
+    }
+
+    public int numeroPostiDisponibili(){
+        //todo se io e tizio facciamo la richiesta e ci accetta poi non abbiamo la disponibilità di posti
+        return 0;
     }
 }
