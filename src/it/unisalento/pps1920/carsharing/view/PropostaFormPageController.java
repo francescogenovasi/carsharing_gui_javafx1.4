@@ -268,7 +268,7 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
 
             dim = dimensioneAuto.getValue();
 
-            ObservableList<Mezzo> mezzi = (ObservableList<Mezzo>) FXCollections.observableArrayList(RicercaBusiness.getInstance().mezziPrenotabili(dim, tipoMezzo, p.getDataInizio(), p.getDataFine())); //todo in lavorazione
+            ObservableList<Mezzo> mezzi = (ObservableList<Mezzo>) FXCollections.observableArrayList(RicercaBusiness.getInstance().mezziPrenotabili(dim, tipoMezzo, p.getDataInizio(), p.getDataFine()));
             if(mezzi.size()==0){
                 AlertBox.display("Nuova proposta", "Nessun mezzo disponibile della tipologia richiesta!");
             } else {

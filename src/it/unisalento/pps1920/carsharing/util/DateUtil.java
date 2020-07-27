@@ -61,26 +61,11 @@ public class DateUtil {
         return dateTimeFromStringSlashDots(onlyDateToString(date) + " " + ora + "." + minuto + ".00");
     }
 
-
-
-
     public static Date onlyDateFromDate(Date date) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date dateWithoutTime = sdf.parse(sdf.format(date));
         return dateWithoutTime;
     }
-
-    /*public static Date setTimeToDate(String time, Date daModificare){
-        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.ITALY);
-        return daModificare;
-    }*/
-
-    /*public static String test123(Date date) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateWithoutTime = sdf.parse(sdf.format(date));
-        return sdf.format(dateWithoutTime);
-    }*/
-
 
     public static String fromRomeToLondon(String oraDaConvertire){
         /*ZoneId italia = ZoneId.of("Europe/Rome");

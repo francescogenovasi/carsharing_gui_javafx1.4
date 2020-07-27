@@ -130,7 +130,7 @@ public class FiltriPaneController{
 
         //ricerca auto con almeno un posto
         //posti.add("1");
-        /*for (int i = 1; i <= CommonBusiness.getInstance().maxPostiPrenotabili(); i++){ //todo in lavorazione
+        /*for (int i = 1; i <= CommonBusiness.getInstance().maxPostiPrenotabili(); i++){
             posti.add("" + i + "");
         }*/
         numPosti.setItems(posti);
@@ -166,7 +166,7 @@ public class FiltriPaneController{
             pos = 1;
         } else {
             pos = Integer.parseInt(numPosti.getValue());
-        }*/ //todo in lavorazione
+        }*/
 
         System.out.println("-------------------");
         System.out.println("Filtri:");

@@ -139,7 +139,7 @@ public class CommonBusiness {
         return aDAO.getAccessoriPrenotazione(idPren);
     }
 
-    /*public int maxPostiPrenotabili(){ //todo in lavorazione
+    /*public int maxPostiPrenotabili(){
         IMezzoDAO mDAO = new MezzoDAO();
         return ((MezzoDAO) mDAO).maxPostiDisponibili();
     }*/

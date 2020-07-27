@@ -75,25 +75,22 @@ public class MezzoDAO implements IMezzoDAO {
             mezzi.add(l);
         }
 
-        //todo in lavorazione vedere tra quelli risultanti quali sono liberi nelle date selezionate
-
-
-
         ArrayList<MezzoDaPreparare> mezziPrenotati = new MezzoDaPreparareDAO().findAll();
         for (int i = 0; i < mezziPrenotati.size(); i++){
             for (int j = 0; j < mezzi.size(); j++){
+                System.out.println(dataInizio.toString() + " aaaaabbbbbbbbbaaaaa " + mezziPrenotati.get(i).getDataInizio());
                 if (mezziPrenotati.get(i).getMezzo().getId() == mezzi.get(j).getId()){
                     if (dataInizio.compareTo(mezziPrenotati.get(i).getDataInizio()) >= 0 && dataInizio.compareTo(mezziPrenotati.get(i).getDataFine()) <= 0){ //se la data di inizio si trova nel range della prenotazione già effettuata allora dai errore
                         //0 ->date uguali; <0 se d minore dell'altra; >0 se l'altra è maggiore di d
-                        System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee data inizio");
+                        //System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee data inizio");
                         mezzi.remove(j);
                     } else {
-                        System.out.println("esattooooooooooooooooooooooooooooo data inizio");
+                        //System.out.println("esattooooooooooooooooooooooooooooo data inizio");
                         if (dataFine.compareTo(mezziPrenotati.get(i).getDataInizio()) >= 0 && dataFine.compareTo(mezziPrenotati.get(i).getDataFine()) <= 0){
-                            System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee data fine");
+                            //System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee data fine");
                             mezzi.remove(j);
                         } else {
-                            System.out.println("esattooooooooooooooooooooooooooooo data fine");
+                            //System.out.println("esattooooooooooooooooooooooooooooo data fine");
 
                             if ((dataInizio.compareTo(mezziPrenotati.get(i).getDataInizio()) <= 0 && dataFine.compareTo(mezziPrenotati.get(i).getDataInizio()) <= 0) || dataInizio.compareTo(mezziPrenotati.get(i).getDataFine()) >= 0 && dataFine.compareTo(mezziPrenotati.get(i).getDataFine()) >= 0){
                                 System.out.println("esattooooooooooooooooooooooooooooo tuttoooooooooooooooooooo");
