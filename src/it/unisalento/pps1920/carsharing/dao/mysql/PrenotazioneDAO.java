@@ -116,10 +116,10 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
         }
 
         if (nuovoInserimento){
-            DbConnection.getInstance().eseguiAggiornamento("INSERT INTO mezzi_da_preparare VALUES (NULL, '"+ p.getMezzo().getId()+"', '" + strDataInizio + "', '" + strDataFine + "', "+ p.getNumPostiOccupati() + ", 'Non Pronto')");
+            DbConnection.getInstance().eseguiAggiornamento("INSERT INTO mezzi_da_preparare VALUES (NULL, '"+ p.getMezzo().getId()+"', '" + strDataInizio + "', '" + strDataFine + "', "+ p.getNumPostiOccupati() + ", 'Non Pronto', 'Non partito')");
         } else {
-            System.out.println("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = '" + p.getMezzo().getId() + "' AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato = 'Non Pronto' ;");
-            ArrayList<String[]> res1 = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = '" + p.getMezzo().getId() + "' AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato = 'Non Pronto' ;");
+            System.out.println("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = '" + p.getMezzo().getId() + "' AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato_addetto = 'Non Pronto' ;");
+            ArrayList<String[]> res1 = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = '" + p.getMezzo().getId() + "' AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato_addetto = 'Non Pronto' ;");
             if(res1.size() == 1){
                 String[] riga = res1.get(0);
                 int vecchiPostiOccupati = Integer.parseInt(riga[4]);

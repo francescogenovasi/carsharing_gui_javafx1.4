@@ -94,7 +94,6 @@ public class PropostaCondivisioneDAO implements IPropostaCondivisioneDAO {
 
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM proposta_condivisione WHERE cliente_idcliente != " + ((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId() + " AND dataInizio >= '" + strDataAttuale + "'AND propostavalida = 1;");
 
-        //todo non devono essere visibili le proposte per cui è già stata fatta una richieste
         ArrayList<RichiestaCondivisione> richiesteEffettuate = CommonBusiness.getInstance().getRichiesteCondivisione(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId());
 
         for (String[] riga : res){
