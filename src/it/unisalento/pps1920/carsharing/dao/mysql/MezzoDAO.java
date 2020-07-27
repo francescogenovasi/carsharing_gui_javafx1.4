@@ -2,16 +2,20 @@ package it.unisalento.pps1920.carsharing.dao.mysql;
 
 import it.unisalento.pps1920.carsharing.DbConnection;
 import it.unisalento.pps1920.carsharing.dao.interfaces.IMezzoDAO;
+import it.unisalento.pps1920.carsharing.dao.interfaces.IMezzoDaPreparareDAO;
 import it.unisalento.pps1920.carsharing.dao.interfaces.IModelloDAO;
 import it.unisalento.pps1920.carsharing.model.Mezzo;
+import it.unisalento.pps1920.carsharing.model.MezzoDaPreparare;
 import it.unisalento.pps1920.carsharing.model.Modello;
+import it.unisalento.pps1920.carsharing.util.DateUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class MezzoDAO implements IMezzoDAO {
-        @Override
+
+    @Override
         public Mezzo findById(int id) throws IOException {
             Mezzo m = null;
             IModelloDAO mDAO = new ModelloDAO();
@@ -72,6 +76,61 @@ public class MezzoDAO implements IMezzoDAO {
         }
 
         //todo in lavorazione vedere tra quelli risultanti quali sono liberi nelle date selezionate
+
+
+
+        ArrayList<MezzoDaPreparare> mezziPrenotati = new MezzoDaPreparareDAO().findAll();
+        for (int i = 0; i < mezziPrenotati.size(); i++){
+            for (int j = 0; j < mezzi.size(); j++){
+                if (mezziPrenotati.get(i).getMezzo().getId() == mezzi.get(j).getId()){
+                    if (dataInizio.compareTo(mezziPrenotati.get(i).getDataInizio()) >= 0 && dataInizio.compareTo(mezziPrenotati.get(i).getDataFine()) <= 0){ //se la data di inizio si trova nel range della prenotazione già effettuata allora dai errore
+                        //0 ->date uguali; <0 se d minore dell'altra; >0 se l'altra è maggiore di d
+                        System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee data inizio");
+                        mezzi.remove(j);
+                    } else {
+                        System.out.println("esattooooooooooooooooooooooooooooo data inizio");
+                        if (dataFine.compareTo(mezziPrenotati.get(i).getDataInizio()) >= 0 && dataFine.compareTo(mezziPrenotati.get(i).getDataFine()) <= 0){
+                            System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee data fine");
+                            mezzi.remove(j);
+                        } else {
+                            System.out.println("esattooooooooooooooooooooooooooooo data fine");
+
+                            if ((dataInizio.compareTo(mezziPrenotati.get(i).getDataInizio()) <= 0 && dataFine.compareTo(mezziPrenotati.get(i).getDataInizio()) <= 0) || dataInizio.compareTo(mezziPrenotati.get(i).getDataFine()) >= 0 && dataFine.compareTo(mezziPrenotati.get(i).getDataFine()) >= 0){
+                                System.out.println("esattooooooooooooooooooooooooooooo tuttoooooooooooooooooooo");
+                            } else {
+                                System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee tuttoooooooooooo");
+                                mezzi.remove(j);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        /*IMezzoDaPreparareDAO mdao = new MezzoDaPreparareDAO();
+        MezzoDaPreparare mdp = mdao.findById(6);
+        Date d = DateUtil.dateTimeFromString("2020-07-29 23:01:00");
+        Date d1 = DateUtil.dateTimeFromString("2020-08-10 05:00:00");
+        if (d.compareTo(mdp.getDataInizio()) >= 0 && d.compareTo(mdp.getDataFine()) <= 0){ //se la data di inizio si trova nel range della prenotazione già effettuata allora dai errore
+            //0 ->date uguali; <0 se d minore dell'altra; >0 se l'altra è maggiore di d
+            System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee data inizio");
+        } else {
+            System.out.println("esattooooooooooooooooooooooooooooo data inizio");
+            if (d1.compareTo(mdp.getDataInizio()) >= 0 && d1.compareTo(mdp.getDataFine()) <= 0){
+                System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee data fine");
+            } else {
+                System.out.println("esattooooooooooooooooooooooooooooo data fine");
+
+                if ((d.compareTo(mdp.getDataInizio()) <= 0 && d1.compareTo(mdp.getDataInizio()) <= 0) || d.compareTo(mdp.getDataFine()) >= 0 && d1.compareTo(mdp.getDataFine()) >= 0){
+                    System.out.println("esattooooooooooooooooooooooooooooo tuttoooooooooooooooooooo");
+                } else {
+                    System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee tuttoooooooooooo");
+                }
+            }
+        }*/
+
 
 
         return mezzi;
