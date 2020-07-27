@@ -192,7 +192,7 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
         error = false;
 
         //numero posti almeno uno per forza quindi valore di default se non modificato
-        /* if (Integer < 1){ //todo in lavorazione se non ci sono veicoli che possono contenere quei posti allora dai errore
+        /* if (Integer < 1){
             //popup impossibile effettuare prenotazioni
             AlertBox.display("Nuova proposta", "nessuna macchina disponibile");
             error = true;

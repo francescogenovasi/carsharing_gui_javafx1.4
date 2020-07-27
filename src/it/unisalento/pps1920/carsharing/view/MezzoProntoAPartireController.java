@@ -2,9 +2,8 @@ package it.unisalento.pps1920.carsharing.view;
 
 import it.unisalento.pps1920.carsharing.business.CommonBusiness;
 import it.unisalento.pps1920.carsharing.business.RicercaBusiness;
-import it.unisalento.pps1920.carsharing.model.Mezzo;
-import it.unisalento.pps1920.carsharing.model.MezzoDaPreparare;
-import it.unisalento.pps1920.carsharing.model.PropostaCondivisione;
+import it.unisalento.pps1920.carsharing.model.*;
+import it.unisalento.pps1920.carsharing.util.Session;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,6 +34,7 @@ public class MezzoProntoAPartireController {
         ObservableList<MezzoDaPreparare> mezzidap = FXCollections.observableArrayList();
 
         public void setListMezziPronti(ObservableList<MezzoDaPreparare> m){
+
             mezzidap=m;
 
             TableColumn<MezzoDaPreparare, String> modello = new TableColumn<>("Modello");
@@ -79,13 +79,12 @@ public class MezzoProntoAPartireController {
                             boolean res=CommonBusiness.getInstance().setPartito(id);
                             if (res){
                                 AlertBox.display("Mezzo Partito", "PARTITO");
-                                ObservableList<MezzoDaPreparare> r = null;
                                 try {
-                                    r = FXCollections.observableArrayList(CommonBusiness.getInstance().getMezziProntiAPartire());
+                                    ObservableList<MezzoDaPreparare> mdp = FXCollections.observableArrayList(CommonBusiness.getInstance().getMezziProntiAPartire()) ;
+                                    setListMezziPronti(mdp);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                                setListMezziPronti(r);
 
                             }
 
