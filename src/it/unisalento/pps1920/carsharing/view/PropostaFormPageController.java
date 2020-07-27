@@ -241,9 +241,10 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
             }
         }
 
-        if (!(dimensioneAuto.getValue().equals(VALORE_NULLO))){
+        /*if (!(dimensioneAuto.getValue().equals(VALORE_NULLO))){
+
             System.out.println("dimensione: " + dimensioneAuto.getValue()); //elemento alla query
-        }
+        }*/
 
 
         if (error == false){
@@ -264,6 +265,8 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
             p.setDataFine(fine);
             p.setPagamento(false);
             p.setPronta(false);
+
+            dim = dimensioneAuto.getValue();
 
             ObservableList<Mezzo> mezzi = (ObservableList<Mezzo>) FXCollections.observableArrayList(RicercaBusiness.getInstance().mezziPrenotabili(dim, tipoMezzo, p.getDataInizio(), p.getDataFine())); //todo in lavorazione
             if(mezzi.size()==0){
