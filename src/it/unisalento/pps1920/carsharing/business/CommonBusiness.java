@@ -117,6 +117,11 @@ public class CommonBusiness {
         return mDAO.getMezziPronti();
     }
 
+    public ArrayList<MezzoDaPreparare> getMezziDaPreparare() throws IOException {
+        IMezzoDaPreparareDAO mDAO = new MezzoDaPreparareDAO();
+        return mDAO.getMezziDaPreparare();
+    }
+
     public boolean setPartito(int id){
         IMezzoDaPreparareDAO mz=new MezzoDaPreparareDAO();
         boolean res=mz.mezzoPartito(id);
@@ -215,4 +220,8 @@ public class CommonBusiness {
         ITabConfermaDAO tDAO = new TabConfermaDAO();
         return tDAO.getElencoInAttesa(idProponente);
     }
+
+    /*public int[] prenotazioniFromDateEIdMezzo(){
+        int[] a =
+    }*/
 }

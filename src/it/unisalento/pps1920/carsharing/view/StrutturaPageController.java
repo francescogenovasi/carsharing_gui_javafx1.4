@@ -106,6 +106,21 @@ public class StrutturaPageController{
         rootPaneStrutturaPage.setPrefSize(1000, 600);
     }
 
+
+
+    @FXML
+    private void loadVisualizzaMezziDaPreparare() throws IOException {
+        //System.out.println("nisnifijfisjisdjijfdsijsdfijfdsijfdijidfsjfjdifjdsijjfijifdsjifjsdij");
+        FXMLLoader lo = new FXMLLoader(getClass().getResource("visualizzaMezziDaPreparare.fxml"));
+        Pane pane = (Pane) lo.load();
+        VisualizzaMezziDaPreparareController controller = lo.<VisualizzaMezziDaPreparareController>getController();
+
+        ObservableList<MezzoDaPreparare> mezzi = FXCollections.observableArrayList(CommonBusiness.getInstance().getMezziDaPreparare()) ;
+        controller.setListMezziDaPreparare(mezzi);
+        rootPaneStrutturaPage.getChildren().setAll(pane);
+        rootPaneStrutturaPage.setPrefSize(1000, 600);
+    }
+
     @FXML
     private void loadVisualizzaMezziPronti() throws IOException {
         FXMLLoader lo = new FXMLLoader(getClass().getResource("mezzoProntoAPartire.fxml"));

@@ -9,4 +9,5 @@ public interface IMezzoDaPreparareDAO extends IBaseDAO<MezzoDaPreparare> {
 
     public ArrayList<MezzoDaPreparare> getMezziPronti() throws IOException;
     public boolean mezzoPartito(int id);
+    public ArrayList<MezzoDaPreparare> getMezziDaPreparare() throws IOException;
 }

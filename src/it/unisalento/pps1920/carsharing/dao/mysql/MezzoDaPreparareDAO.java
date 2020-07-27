@@ -57,6 +57,19 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
         return mezzipronti;
     }
 
+    @Override
+    public ArrayList<MezzoDaPreparare> getMezziDaPreparare() throws IOException {
+        ArrayList<MezzoDaPreparare> mezziDaPreparare = new ArrayList<MezzoDaPreparare>();
+
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzi_da_preparare WHERE `stato_addetto` = 'Non pronto' AND `stato_operatore` = 'Non partito' ;");
+
+        for (String[] riga : res){
+            MezzoDaPreparare m = findById(Integer.parseInt(riga[0]));
+            mezziDaPreparare.add(m);
+        }
+        return mezziDaPreparare;
+    }
+
     public boolean mezzoPartito(int id){
         String sql="UPDATE mezzi_da_preparare SET `stato_operatore` = 'Partito' WHERE idmezzi_da_preparare="+id+";";
         boolean res =DbConnection.getInstance().eseguiAggiornamento(sql);
