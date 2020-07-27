@@ -108,13 +108,19 @@ public class ConfermaPrenotazioneController {
 
 
     public void conferma() throws IOException {
-        if (mezzo.getValue().getTarga().equals(VALORE_NULLO)){
-            AlertBox.display("errore", "modifica campi, nessun mezzo trovato");
+        if (mezzo.getValue().getTarga().equals(VALORE_NULLO) || numPosti.getValue().equals(VALORE_NULLO)){
+            AlertBox.display("errore", "inserire tutti i campi");
         } else {
-            prenotazione.setMezzo(mezzo.getValue());
-            PrenotazioneBusiness.getInstance().inviaPrenotazione(prenotazione, accList);//prende la prenotazione e la passa alla query
-            AlertBox.display("prenotazione", "prenotazione avvenuta con successo");
-            goHome();
+            System.out.println("jijhijjijijijijij " + Integer.parseInt(numPosti.getValue()) + "<=" + mezzo.getValue().getModello().getNumPosti());
+            if(Integer.parseInt(numPosti.getValue()) <= mezzo.getValue().getModello().getNumPosti()){
+                prenotazione.setNumPostiOccupati(Integer.parseInt(numPosti.getValue()));
+                prenotazione.setMezzo(mezzo.getValue());
+                PrenotazioneBusiness.getInstance().inviaPrenotazione(prenotazione, accList);//prende la prenotazione e la passa alla query
+                AlertBox.display("prenotazione", "prenotazione avvenuta con successo");
+                goHome();
+            } else {
+                AlertBox.display("errore", "i posti selezionati non sono disponibili nel veicolo selezionato");
+            }
         }
 
     }

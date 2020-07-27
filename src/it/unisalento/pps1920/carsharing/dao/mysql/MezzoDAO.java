@@ -44,33 +44,6 @@ public class MezzoDAO implements IMezzoDAO {
         return mezzi;
     }
 
-    public int maxPostiDisponibili(){
-        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT MAX(postidisponibili) FROM mezzo;"); //query
-        int maxPosti = 0;
-
-        if(res.size() == 1){
-            String riga[] = res.get(0);
-            maxPosti = Integer.parseInt(riga[0]);
-        }
-        return maxPosti;
-    }
-
-    public int postiDisponibiliMezzo(Mezzo m){
-        int posti = 0;
-        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT postidisponibili FROM mezzo WHERE idmezzo = " + m.getId() + ";");
-        if(res.size() == 1){
-            String f[] = res.get(0);
-            posti = Integer.parseInt(f[0]);
-        }
-        return posti;
-    }
-
-    public void decrementaPosti(Mezzo m, int p){
-        int  pos = postiDisponibiliMezzo(m);
-        pos = pos - p;
-        String sql = "UPDATE mezzo SET postidisponibili='"+ pos + "' WHERE idmezzo='" + m.getId() + "';";
-        DbConnection.getInstance().eseguiAggiornamento(sql);
-    }
 
     public ArrayList<Mezzo> findAllPrenotabili(String dim, String tipologia, Date dataInizio, Date dataFine) throws IOException {//restituisce i modelli che possono essere prenotati
         String q;

@@ -55,7 +55,7 @@ public class PrenotazioneBusiness {
 
         new PrenotazioneDAO().salvaPrenotazione(p, a, costo, true);
 
-        new MezzoDAO().decrementaPosti(p.getMezzo(), p.getNumPostiOccupati());
+        //new MezzoDAO().decrementaPosti(p.getMezzo(), p.getNumPostiOccupati());
 
 
         System.out.println("salvato");
