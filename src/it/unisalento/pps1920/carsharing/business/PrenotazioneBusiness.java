@@ -23,7 +23,7 @@ public class PrenotazioneBusiness {
 
     private PrenotazioneBusiness(){}
 
-    public static boolean inviaPrenotazione(Prenotazione p, List<Accessorio> a){
+    public static boolean inviaPrenotazione(Prenotazione p, List<Accessorio> a) throws IOException {
         //logica di business
 
         //System.out.println("TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT1: " + p.getId()); //id assente
@@ -54,6 +54,7 @@ public class PrenotazioneBusiness {
 
 
         new PrenotazioneDAO().salvaPrenotazione(p, a, costo, true);
+
         new MezzoDAO().decrementaPosti(p.getMezzo(), p.getNumPostiOccupati());
 
 
@@ -90,6 +91,12 @@ public class PrenotazioneBusiness {
     public boolean modificaPrenotazione(Prenotazione p){
         //logica di business
         return true;
+    }
+
+    public void notificaRichiestaRifiutataPerMancanzaPosti(RichiestaCondivisione r){
+        String dest = r.getCliente().getEmail();//addetto della stazione di partenza utente id 1
+        String testo = "Purtroppo la richiesta " + r.getId() + " del " + r.getData() + " non è andata a buon fine. Qualcuno ha prenotato prima e non ci sono abbastanza posti per soddisfare la richiesta.";
+        MailHelper.getInstance().send(dest, "Richiesta rifiutata per posti", testo);
     }
 
     /*public int calcoloCosto(){

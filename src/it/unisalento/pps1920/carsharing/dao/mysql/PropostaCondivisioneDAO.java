@@ -1,6 +1,7 @@
 package it.unisalento.pps1920.carsharing.dao.mysql;
 
 import it.unisalento.pps1920.carsharing.DbConnection;
+import it.unisalento.pps1920.carsharing.business.CommonBusiness;
 import it.unisalento.pps1920.carsharing.dao.interfaces.*;
 import it.unisalento.pps1920.carsharing.model.*;
 import it.unisalento.pps1920.carsharing.util.DateUtil;
@@ -8,6 +9,7 @@ import it.unisalento.pps1920.carsharing.util.Session;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PropostaCondivisioneDAO implements IPropostaCondivisioneDAO {
 
@@ -88,12 +90,30 @@ public class PropostaCondivisioneDAO implements IPropostaCondivisioneDAO {
     public ArrayList<PropostaCondivisione> getProposte() throws IOException {
         ArrayList<PropostaCondivisione> proposte = new ArrayList<PropostaCondivisione>();
 
-        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM proposta_condivisione WHERE cliente_idcliente != " + ((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId() + " AND propostavalida = 1;");
+        String strDataAttuale = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(new Date()));
+
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM proposta_condivisione WHERE cliente_idcliente != " + ((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId() + " AND dataInizio >= '" + strDataAttuale + "'AND propostavalida = 1;");
+
+        //todo non devono essere visibili le proposte per cui è già stata fatta una richieste
+        ArrayList<RichiestaCondivisione> richiesteEffettuate = CommonBusiness.getInstance().getRichiesteCondivisione(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId());
 
         for (String[] riga : res){
             PropostaCondivisione p = findById(Integer.parseInt(riga[0]));
             proposte.add(p);
         }
+
+        for (int i = 0; i < richiesteEffettuate.size(); i++){
+            for (int j = 0; j < proposte.size(); j++){
+                if ( richiesteEffettuate.get(i).getProposta().getId() == proposte.get(j).getId() ){
+                    proposte.remove(j);
+                }
+            }
+        }
+
         return proposte;
+    }
+
+    public boolean setPropostaInvalida(int idProposta){
+        return DbConnection.getInstance().eseguiAggiornamento("UPDATE proposta_condivisione SET propostavalida = 0 WHERE idproposta_condivisione = " + idProposta + ";");
     }
 }

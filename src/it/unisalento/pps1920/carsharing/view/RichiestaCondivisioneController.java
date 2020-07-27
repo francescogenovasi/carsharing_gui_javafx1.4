@@ -130,35 +130,39 @@ public class RichiestaCondivisioneController {
         if(postiCombo.getValue().equals(VALORE_NULLO)){
             //errore campi mancanti
             AlertBox.display("Richiesta condivisione", "Selezionare posti richiesti");
-            //errore troppi posti richiesti, non ci sono abbastanza
-            //todo prendere i posti occupati dalla tabella mezzi_da_preparare
-            
         } else {
-            RichiestaCondivisione r = new RichiestaCondivisione();
-            r.setStato("Attesa");
-
-            System.out.println("id: " + ((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId());
-            r.setCliente(CommonBusiness.getInstance().getCliente(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId()));
-            r.setData(prop.getData());
-            r.setProposta(prop);
-            r.setNumPostiRichiesti(Integer.parseInt(postiCombo.getValue()));
-
-            //salvare accessori aggiunti dalla richiesta di condivisione e poi una volta confermata la richiesta aggiungerli alla prenotazione
-
-            boolean inserimentoRichiesta = RichiestaBusiness.getInstance().inviaRichiestaCondivisione(r, accessoriAggiunti);
-
-            
-
-            if (inserimentoRichiesta){
-                AlertBox.display("Richiesta condivisione", "Richiesta fatta");
+            if (Integer.parseInt(postiCombo.getValue()) > RichiestaBusiness.getInstance().numeroPostiDisponibili(prop.getDataInizio(), prop.getDataFine(), prop.getMezzo().getId())){
+                System.out.println("ghuguhuhhhhuhuh"+Integer.parseInt(postiCombo.getValue()) + ">" + RichiestaBusiness.getInstance().numeroPostiDisponibili(prop.getDataInizio(), prop.getDataFine(), prop.getMezzo().getId()));
+                //errore troppi posti richiesti, non ci sono abbastanza
+                AlertBox.display("Richiesta condivisione", "I posti richiesti non sono disponibili. Selezionare un altra proposta o ridurre il numero di posti richiesti");
             } else {
-                AlertBox.display("Richiesta condivisione", "Errore, riprovare");
+                RichiestaCondivisione r = new RichiestaCondivisione();
+                r.setStato("Attesa");
+
+                System.out.println("id: " + ((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId());
+                r.setCliente(CommonBusiness.getInstance().getCliente(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId()));
+                r.setData(prop.getData());
+                r.setProposta(prop);
+                r.setNumPostiRichiesti(Integer.parseInt(postiCombo.getValue()));
+
+                //salvare accessori aggiunti dalla richiesta di condivisione e poi una volta confermata la richiesta aggiungerli alla prenotazione
+
+                boolean inserimentoRichiesta = RichiestaBusiness.getInstance().inviaRichiestaCondivisione(r, accessoriAggiunti);
+
+
+
+                if (inserimentoRichiesta){
+                    AlertBox.display("Richiesta condivisione", "Richiesta fatta");
+                } else {
+                    AlertBox.display("Richiesta condivisione", "Errore, riprovare");
+                }
+
+                FXMLLoader lo = new FXMLLoader(getClass().getResource("tabsRicercaPage.fxml"));
+                Pane pane = (Pane) lo.load();
+                rootPaneRichiestaCondivisione.getChildren().setAll(pane);
+                rootPaneRichiestaCondivisione.setPrefSize(1000, 600);
             }
 
-            FXMLLoader lo = new FXMLLoader(getClass().getResource("tabsRicercaPage.fxml"));
-            Pane pane = (Pane) lo.load();
-            rootPaneRichiestaCondivisione.getChildren().setAll(pane);
-            rootPaneRichiestaCondivisione.setPrefSize(1000, 600);
         }
     }
     @FXML

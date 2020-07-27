@@ -107,6 +107,11 @@ public class CommonBusiness {
         return pDAO.getProposte();
     }
 
+    public ArrayList<RichiestaCondivisione> getRichiesteCondivisione(int idCliente) throws IOException {
+        IRichiestaCondivisioneDAO rDAO = new RichiestaCondivisioneDAO();
+        return rDAO.getRichiesteCliente(idCliente);
+    }
+
     public ArrayList<MezzoDaPreparare> getMezziProntiAPartire() throws IOException {
         IMezzoDaPreparareDAO mDAO = new MezzoDaPreparareDAO();
         return mDAO.getMezziPronti();

@@ -1,6 +1,7 @@
 package it.unisalento.pps1920.carsharing.business;
 
 import it.unisalento.pps1920.carsharing.dao.interfaces.IPrenotazioneDAO;
+import it.unisalento.pps1920.carsharing.dao.interfaces.IRichiestaCondivisioneDAO;
 import it.unisalento.pps1920.carsharing.dao.mysql.AccessorioDAO;
 import it.unisalento.pps1920.carsharing.dao.mysql.PrenotazioneDAO;
 import it.unisalento.pps1920.carsharing.dao.mysql.PropostaCondivisioneDAO;
@@ -95,16 +96,23 @@ public class RichiestaBusiness {
         return res;
     }
 
-    public static boolean rifiutaRichiesta(int idRichiesta) throws IOException {
+    public static boolean rifiutaRichiesta(int idRichiesta, boolean errorePosti) throws IOException {
         boolean res = new RichiestaCondivisioneDAO().rifiutaRichiesta(idRichiesta); //setta stato da "Attesa" a "Rifiutata"
         RichiestaCondivisione r = new RichiestaCondivisioneDAO().findById(idRichiesta);
 
-        //inviare mail di conferma all'utente
-        String dest = r.getCliente().getEmail(); //cliente utente id 2 gc.pps
-        String testo = "purtroppo la richiesta numero: " + idRichiesta + " del " + r.getData() + "è stata rifiutata";
-        MailHelper.getInstance().send(dest, "CLI Richiesta sharing rifiutata!", testo);
+        if ( !errorePosti ){
+            //inviare mail di conferma all'utente
+            String dest = r.getCliente().getEmail(); //cliente utente id 2 gc.pps
+            String testo = "purtroppo la richiesta numero: " + idRichiesta + " del " + r.getData() + "è stata rifiutata";
+            MailHelper.getInstance().send(dest, "CLI Richiesta sharing rifiutata!", testo);
+        }
 
 
         return res;
+    }
+
+    public int numeroPostiDisponibili(Date dataInizio, Date dataFine, int idMezzo) throws IOException {
+        IRichiestaCondivisioneDAO rDAO = new RichiestaCondivisioneDAO();
+        return rDAO.numeroPostiDisponibili(dataInizio, dataFine, idMezzo);
     }
 }

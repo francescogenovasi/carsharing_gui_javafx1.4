@@ -7,4 +7,5 @@ import java.util.ArrayList;
 
 public interface IMezzoDAO extends IBaseDAO<Mezzo> {
     public ArrayList<Mezzo> findAllPrenotabili(String dim, int pos) throws IOException;
+    public int findMezzoId(String targa);
 }

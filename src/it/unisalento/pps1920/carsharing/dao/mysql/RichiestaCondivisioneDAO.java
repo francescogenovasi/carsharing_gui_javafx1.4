@@ -7,6 +7,7 @@ import it.unisalento.pps1920.carsharing.util.DateUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class RichiestaCondivisioneDAO implements IRichiestaCondivisioneDAO {
@@ -86,8 +87,33 @@ public class RichiestaCondivisioneDAO implements IRichiestaCondivisioneDAO {
         return res;
     }
 
-    public int numeroPostiDisponibili(){
-        //todo se io e tizio facciamo la richiesta e ci accetta poi non abbiamo la disponibilità di posti
+    @Override
+    public int numeroPostiDisponibili(Date dataInizio, Date dataFine, int idMezzo) throws IOException {
+        String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(dataInizio));
+        String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(dataFine));
+
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = " + idMezzo + " AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) + "';");
+        System.out.println("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = " + idMezzo + " AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) + "';");
+        if (res.size()==1){
+            String[] riga = res.get(0);
+            IMezzoDAO mDAO = new MezzoDAO();
+            Mezzo m = mDAO.findById(idMezzo);
+            return (m.getModello().getNumPosti() - Integer.parseInt(riga[4]));
+
+        }
         return 0;
+    }
+
+    @Override
+    public ArrayList<RichiestaCondivisione> getRichiesteCliente(int idCliente) throws IOException {
+        ArrayList<RichiestaCondivisione> richieste = new ArrayList<RichiestaCondivisione>();
+
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM richiesta_condivisione WHERE cliente_idcliente=" + idCliente + ";");
+
+        for (String[] riga : res){
+            RichiestaCondivisione r = findById(Integer.parseInt(riga[0]));
+            richieste.add(r);
+        }
+        return richieste;
     }
 }

@@ -3,6 +3,8 @@ package it.unisalento.pps1920.carsharing.view;
 import it.unisalento.pps1920.carsharing.business.CommonBusiness;
 import it.unisalento.pps1920.carsharing.business.PrenotazioneBusiness;
 import it.unisalento.pps1920.carsharing.business.RichiestaBusiness;
+import it.unisalento.pps1920.carsharing.dao.interfaces.IRichiestaCondivisioneDAO;
+import it.unisalento.pps1920.carsharing.dao.mysql.RichiestaCondivisioneDAO;
 import it.unisalento.pps1920.carsharing.model.*;
 import it.unisalento.pps1920.carsharing.util.Session;
 import javafx.beans.property.SimpleStringProperty;
@@ -129,18 +131,41 @@ public class VisualizzaRichiesteController {
                             //PropostaCondivisione data = getTableView().getItems().get(getIndex());
                             int data = getTableView().getItems().get(getIndex()).getIdRichiesta();
                             System.out.println("Richiesta selezionata: " + data);
+                            //RichiestaBusiness.getInstance().numeroPostiDisponibili(p.getDataInizio(), p.getDataFine(), p.getMezzo().getTarga()) == 0
+                            IRichiestaCondivisioneDAO rDAO = new RichiestaCondivisioneDAO();
+
+                            RichiestaCondivisione richiesta = null;
                             try {
-                                RichiestaBusiness.getInstance().accettaRichiesta(data);
+                                richiesta = rDAO.findById(data);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            AlertBox.display("prenotazione", "ACCETTATA");
+
                             try {
-                                ObservableList<TabConfermaRichieste> rich = FXCollections.observableArrayList(CommonBusiness.getInstance().getRichiesteInAttesa(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())) ;
-                                setListRichieste(rich);
+                                if(RichiestaBusiness.getInstance().numeroPostiDisponibili(richiesta.getProposta().getDataInizio(), richiesta.getProposta().getDataFine(), richiesta.getProposta().getMezzo().getId()) - richiesta.getNumPostiRichiesti() < 0 ){
+                                    AlertBox.display("prenotazione", "Purtroppo non ci sono abbastanza posti anche per questa richiesta");
+                                    PrenotazioneBusiness.getInstance().notificaRichiestaRifiutataPerMancanzaPosti(richiesta);
+                                    RichiestaBusiness.getInstance().rifiutaRichiesta(data, true);
+                                    ObservableList<TabConfermaRichieste> rich = FXCollections.observableArrayList(CommonBusiness.getInstance().getRichiesteInAttesa(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())) ;
+                                    setListRichieste(rich);
+                                } else {
+                                    try {
+                                        RichiestaBusiness.getInstance().accettaRichiesta(data);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    AlertBox.display("prenotazione", "ACCETTATA");
+                                    try {
+                                        ObservableList<TabConfermaRichieste> rich = FXCollections.observableArrayList(CommonBusiness.getInstance().getRichiesteInAttesa(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())) ;
+                                        setListRichieste(rich);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
+
                         });
                     }
 
@@ -179,7 +204,7 @@ public class VisualizzaRichiesteController {
                             int data = getTableView().getItems().get(getIndex()).getIdRichiesta();
                             System.out.println("Richiesta selezionata: " + data);
                             try {
-                                RichiestaBusiness.getInstance().rifiutaRichiesta(data);
+                                RichiestaBusiness.getInstance().rifiutaRichiesta(data, false);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

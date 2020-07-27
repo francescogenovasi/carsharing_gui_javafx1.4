@@ -1,6 +1,7 @@
 package it.unisalento.pps1920.carsharing.dao.mysql;
 
 import it.unisalento.pps1920.carsharing.DbConnection;
+import it.unisalento.pps1920.carsharing.business.RichiestaBusiness;
 import it.unisalento.pps1920.carsharing.dao.interfaces.*;
 import it.unisalento.pps1920.carsharing.model.*;
 import it.unisalento.pps1920.carsharing.util.DateUtil;
@@ -80,7 +81,7 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
     }
 
     @Override
-    public void salvaPrenotazione(Prenotazione p, List<Accessorio> a, float costo, boolean nuovoInserimento) {
+    public void salvaPrenotazione(Prenotazione p, List<Accessorio> a, float costo, boolean nuovoInserimento) throws IOException {
 
         String strDataPrenotazione = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getData()));
         String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataInizio()));
@@ -115,15 +116,21 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
         }
 
         if (nuovoInserimento){
-            DbConnection.getInstance().eseguiAggiornamento("INSERT INTO mezzi_da_preparare VALUES (NULL, '"+ p.getMezzo().getTarga()+"', '" + strDataInizio + "', '" + strDataFine + "', "+ p.getNumPostiOccupati() + ", 'Non Pronto')");
+            DbConnection.getInstance().eseguiAggiornamento("INSERT INTO mezzi_da_preparare VALUES (NULL, '"+ p.getMezzo().getId()+"', '" + strDataInizio + "', '" + strDataFine + "', "+ p.getNumPostiOccupati() + ", 'Non Pronto')");
         } else {
-            System.out.println("SELECT * FROM mezzi_da_preparare WHERE targa = '" + p.getMezzo().getTarga() + "' AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato = 'Non Pronto' ;");
-            ArrayList<String[]> res1 = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzi_da_preparare WHERE targa = '" + p.getMezzo().getTarga() + "' AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato = 'Non Pronto' ;");
+            System.out.println("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = '" + p.getMezzo().getId() + "' AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato = 'Non Pronto' ;");
+            ArrayList<String[]> res1 = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = '" + p.getMezzo().getId() + "' AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato = 'Non Pronto' ;");
             if(res1.size() == 1){
                 String[] riga = res1.get(0);
                 int vecchiPostiOccupati = Integer.parseInt(riga[4]);
                 int nuoviPostiOccupati = vecchiPostiOccupati + p.getNumPostiOccupati();
                 DbConnection.getInstance().eseguiAggiornamento("UPDATE mezzi_da_preparare SET posti_occupati = "+ nuoviPostiOccupati +" WHERE idmezzi_da_preparare = " + Integer.parseInt(riga[0]) + ";");
+                //se con quest'ultima richiesta la macchina è piena allora la proposta non è piu valida e visualizzabile
+                if (RichiestaBusiness.getInstance().numeroPostiDisponibili(p.getDataInizio(), p.getDataFine(), p.getMezzo().getId()) == 0){
+                    IPropostaCondivisioneDAO pDAO = new PropostaCondivisioneDAO();
+                    pDAO.setPropostaInvalida(p.getIdPropostaCondivisione());
+                }
+
             }
         }
     }
