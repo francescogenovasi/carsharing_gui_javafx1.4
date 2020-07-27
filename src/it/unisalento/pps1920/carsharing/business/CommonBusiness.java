@@ -117,6 +117,12 @@ public class CommonBusiness {
         return mDAO.getMezziPronti();
     }
 
+    public boolean setPartito(int id){
+        IMezzoDaPreparareDAO mz=new MezzoDaPreparareDAO();
+        boolean res=mz.mezzoPartito(id);
+        return res;
+    }
+
 
     public ArrayList<Prenotazione> getPrenotazioniUtente(int id) throws IOException {
         IPrenotazioneDAO pDAO = new PrenotazioneDAO();

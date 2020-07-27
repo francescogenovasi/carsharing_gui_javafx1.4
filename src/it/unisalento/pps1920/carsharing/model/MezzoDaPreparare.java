@@ -8,24 +8,34 @@ public class MezzoDaPreparare {
     private Date dataInizio;
     private int postiOccupati;
     private Date dataFine;
-    private String stato;
+    private String statoOperatore;
+    private String statoAddetto;
 
 
-    public MezzoDaPreparare(int id, Mezzo mezzo, Date dataInizio, int postiOccupati, Date dataFine, String stato) {
+    public MezzoDaPreparare(int id, Mezzo mezzo, Date dataInizio, int postiOccupati, Date dataFine, String statoAddetto, String statoOperatore) {
         this.id = id;
         this.mezzo=mezzo;
         this.dataFine = dataFine;
         this.postiOccupati=postiOccupati;
         this.dataInizio=dataInizio;
-        this.stato=stato;
+        this.statoAddetto=statoAddetto;
+        this.statoOperatore=statoOperatore;
     }
 
-    public String getStato() {
-        return stato;
+    public String getStatoOperatore() {
+        return statoOperatore;
     }
 
-    public void setStato(String stato) {
-        this.stato = stato;
+    public void setStatoOperatore(String statoOperatore) {
+        this.statoOperatore = statoOperatore;
+    }
+
+    public String getStatoAddetto() {
+        return statoAddetto;
+    }
+
+    public void setStatoAddetto(String statoAddetto) {
+        this.statoAddetto = statoAddetto;
     }
 
     public int getId() {

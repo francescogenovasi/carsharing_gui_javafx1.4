@@ -1,5 +1,6 @@
 package it.unisalento.pps1920.carsharing.view;
 
+import it.unisalento.pps1920.carsharing.business.CommonBusiness;
 import it.unisalento.pps1920.carsharing.business.RicercaBusiness;
 import it.unisalento.pps1920.carsharing.model.Mezzo;
 import it.unisalento.pps1920.carsharing.model.MezzoDaPreparare;
@@ -70,11 +71,24 @@ public class MezzoProntoAPartireController {
             public TableCell<MezzoDaPreparare, Void> call(final TableColumn<MezzoDaPreparare, Void> param) {
                 final TableCell<MezzoDaPreparare, Void> cell = new TableCell<MezzoDaPreparare, Void>() {
 
-                    private final Button btn = new Button("Mezzo Partito");
+                    private final Button btn = new Button("Partito");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            //todo inserire sript per o rimuovere mezzo o cambiarne stato
+                            int id = getTableView().getItems().get(getIndex()).getId();
+                            boolean res=CommonBusiness.getInstance().setPartito(id);
+                            if (res){
+                                AlertBox.display("Mezzo Partito", "PARTITO");
+                                ObservableList<MezzoDaPreparare> r = null;
+                                try {
+                                    r = FXCollections.observableArrayList(CommonBusiness.getInstance().getMezziProntiAPartire());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                setListMezziPronti(r);
+
+                            }
+
                         });
                     }
 

@@ -8,4 +8,5 @@ import java.util.ArrayList;
 public interface IMezzoDaPreparareDAO extends IBaseDAO<MezzoDaPreparare> {
 
     public ArrayList<MezzoDaPreparare> getMezziPronti() throws IOException;
+    public boolean mezzoPartito(int id);
 }

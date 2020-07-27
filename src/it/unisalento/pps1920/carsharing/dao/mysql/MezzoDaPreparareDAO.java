@@ -2,15 +2,11 @@ package it.unisalento.pps1920.carsharing.dao.mysql;
 
 import it.unisalento.pps1920.carsharing.DbConnection;
 import it.unisalento.pps1920.carsharing.dao.interfaces.IMezzoDaPreparareDAO;
-import it.unisalento.pps1920.carsharing.dao.interfaces.IModelloDAO;
-import it.unisalento.pps1920.carsharing.model.Mezzo;
 import it.unisalento.pps1920.carsharing.model.MezzoDaPreparare;
-import it.unisalento.pps1920.carsharing.model.Modello;
 import it.unisalento.pps1920.carsharing.util.DateUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
     @Override
@@ -22,13 +18,14 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
 
         if(res.size() == 1){
             String riga[] = res.get(0);
-            m = new MezzoDaPreparare(0,null,null,0,null,null);
+            m = new MezzoDaPreparare(0,null,null,0,null,null,null);
             m.setId(Integer.parseInt(riga[0]));
             m.setMezzo(mezz.findById(Integer.parseInt(riga[1])));
             m.setDataInizio(DateUtil.dateTimeFromString(riga[2]));
             m.setDataFine(DateUtil.dateTimeFromString(riga[3]));
             m.setPostiOccupati(Integer.parseInt(riga[4]));
-            m.setStato(riga[5]);
+            m.setStatoAddetto(riga[5]);
+            m.setStatoOperatore(riga[6]);
 
         }
         return m;
@@ -51,13 +48,19 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
     public ArrayList<MezzoDaPreparare> getMezziPronti() throws IOException {
         ArrayList<MezzoDaPreparare> mezzipronti = new ArrayList<MezzoDaPreparare>();
 
-        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzi_da_preparare WHERE `stato` = 'Pronto' ;");
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzi_da_preparare WHERE `stato_addetto` = 'Pronto' AND `stato_operatore` = 'Non partito' ;");
 
         for (String[] riga : res){
             MezzoDaPreparare m = findById(Integer.parseInt(riga[0]));
             mezzipronti.add(m);
         }
         return mezzipronti;
+    }
+
+    public boolean mezzoPartito(int id){
+        String sql="UPDATE mezzi_da_preparare SET `stato_operatore` = 'Partito' WHERE idmezzi_da_preparare="+id+";";
+        boolean res =DbConnection.getInstance().eseguiAggiornamento(sql);
+        return res;
     }
 
 }
