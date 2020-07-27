@@ -7,6 +7,7 @@ import it.unisalento.pps1920.carsharing.dao.mysql.MezzoDAO;
 import it.unisalento.pps1920.carsharing.dao.mysql.PrenotazioneDAO;
 import it.unisalento.pps1920.carsharing.dao.mysql.PropostaCondivisioneDAO;
 import it.unisalento.pps1920.carsharing.model.*;
+import it.unisalento.pps1920.carsharing.util.DateUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,9 +31,9 @@ public class RicercaBusiness {
         return pDAO.ricercaConFiltri(partenza, arrivo, localita, numPosti, inizio, fine, modello, dimensione, motorizzazione, tipologia);
     }
 
-    public ArrayList<Mezzo> mezziPrenotabili(String dim, int pos) throws IOException {
+    public ArrayList<Mezzo> mezziPrenotabili(String dim, String tipologia, Date dataInizio, Date dataFine) throws IOException {
         IMezzoDAO mDAO = new MezzoDAO();
-        return mDAO.findAllPrenotabili(dim, pos);
+        return mDAO.findAllPrenotabili(dim, tipologia, dataInizio, dataFine);
     }
 
     public PropostaCondivisione ricercaProposta(int id) throws IOException {

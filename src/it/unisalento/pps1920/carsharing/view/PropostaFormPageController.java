@@ -2,6 +2,7 @@ package it.unisalento.pps1920.carsharing.view;
 
 import it.unisalento.pps1920.carsharing.business.AccessorioBusiness;
 import it.unisalento.pps1920.carsharing.business.CommonBusiness;
+import it.unisalento.pps1920.carsharing.business.RicercaBusiness;
 import it.unisalento.pps1920.carsharing.dao.interfaces.IMezzoDAO;
 import it.unisalento.pps1920.carsharing.dao.mysql.MezzoDAO;
 import it.unisalento.pps1920.carsharing.model.*;
@@ -16,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 
@@ -42,11 +44,14 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
     private Modello mod = null;
     private String dim = null;
     private boolean error = false;
+    private String tipoMezzo;
 
     List<Accessorio> acc = new ArrayList<Accessorio>(); //lista accessori selezionati da chi prenota
 
     @FXML
     private Pane rootPanePropostaFormPage;
+    @FXML
+    private Label dimensioneAutoLabel;
     @FXML
     private ComboBox<Stazione> partenza;
     @FXML
@@ -58,7 +63,7 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
     @FXML
     private DatePicker dataFine;
     @FXML
-    private ComboBox<String> numPosti;
+    private ComboBox<String> tipologiaCombo;
     @FXML
     private ComboBox<String> dimensioneAuto;
     @FXML
@@ -77,7 +82,7 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
     ObservableList<Stazione> stazioni = (ObservableList<Stazione>) FXCollections.observableArrayList(CommonBusiness.getInstance().getStazioni());
     ObservableList<Cliente> clienti = (ObservableList<Cliente>) FXCollections.observableArrayList(CommonBusiness.getInstance().getClienti());
     ObservableList<Localita> localitas = (ObservableList<Localita>) FXCollections.observableArrayList(CommonBusiness.getInstance().getLocalita());
-    ObservableList<String> posti = FXCollections.observableArrayList();
+    ObservableList<String> tipologia = FXCollections.observableArrayList(CommonBusiness.getInstance().getTipologia());
     ObservableList<String> ora = FXCollections.observableArrayList(CommonBusiness.getInstance().getOre());
     ObservableList<String> minuto = FXCollections.observableArrayList(CommonBusiness.getInstance().getMinuti());
     ObservableList<String> dimensioni = FXCollections.observableArrayList(CommonBusiness.getInstance().getDimensioni());
@@ -94,7 +99,7 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
         stazioni.add(new Stazione(0, VALORE_NULLO, 0, 0, null));
         clienti.add(new Cliente(0, VALORE_NULLO, "", "", "", "", "", "", 0, "", 0, null));
         localitas.add(new Localita(0, VALORE_NULLO, 0, 0));
-        posti.add(VALORE_NULLO);
+        tipologia.add(VALORE_NULLO);
         ora.add(VALORE_NULLO);
         minuto.add(VALORE_NULLO);
         dimensioni.add(VALORE_NULLO);
@@ -148,13 +153,8 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
             cb.setOnAction(ev);
         }
 
-
-
-        for (int i = 1; i <= CommonBusiness.getInstance().maxPostiPrenotabili(); i++){
-            posti.add(""+ i + "");
-        }
-        numPosti.setItems(posti);
-        numPosti.getSelectionModel().select(0);
+        tipologiaCombo.setItems(tipologia);
+        tipologiaCombo.getSelectionModel().select(tipologia.size()-1);
 
         oraInizio.setItems(ora);
         oraInizio.getSelectionModel().select(ora.size()-1);
@@ -175,18 +175,31 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
     }
 
     @FXML
+    public void checkVeicolo(){
+        if (tipologiaCombo.getValue().equals("Auto")){
+            dimensioneAuto.getSelectionModel().select(dimensioni.size()-1);
+            dimensioneAuto.setVisible(true);
+            dimensioneAutoLabel.setVisible(true);
+        } else {
+            dimensioneAuto.getSelectionModel().select(dimensioni.size()-1);
+            dimensioneAuto.setVisible(false);
+            dimensioneAutoLabel.setVisible(false);
+        }
+    }
+
+    @FXML
     public void nextStep() throws ParseException, IOException {
         error = false;
 
         //numero posti almeno uno per forza quindi valore di default se non modificato
-        if (CommonBusiness.getInstance().maxPostiPrenotabili() < 1){
+        /* if (Integer < 1){ //todo in lavorazione se non ci sono veicoli che possono contenere quei posti allora dai errore
             //popup impossibile effettuare prenotazioni
             AlertBox.display("Nuova proposta", "nessuna macchina disponibile");
             error = true;
             pos = 1;
         } else {
             //pos = Integer.parseInt(numPosti.getValue());
-        }
+        }*/
         System.out.println("-------------------");
         System.out.println("Prenotazione:");
 
@@ -194,7 +207,7 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
         if ((partenza.getValue().getNome().equals(VALORE_NULLO)) || (arrivo.getValue().getNome().equals(VALORE_NULLO)) || (cliente.getValue().getUsername().equals(VALORE_NULLO))
                 || (localita.getValue().getCitta().equals(VALORE_NULLO)) || (dataInizio.getValue() == null) || (dataFine.getValue() == null) || (oraInizio.getValue().equals(VALORE_NULLO))
                 || (oraFine.getValue().equals(VALORE_NULLO)) || (minutoInizio.getValue().equals(VALORE_NULLO)) || (minutoFine.getValue().equals(VALORE_NULLO))
-                || (numPosti.getValue().equals(VALORE_NULLO))){
+                || (tipologiaCombo.getValue().equals(VALORE_NULLO))){
             //non tutti i campi sono stati inseriti
             AlertBox.display("Nuova proposta", "campi mancanti");
             error = true;
@@ -222,7 +235,7 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
                 loc = localita.getValue();
                 System.out.println("localita: " + localita.getValue().getCitta()); //elemento alla query
 
-                pos = Integer.parseInt(numPosti.getValue());
+                tipoMezzo = tipologiaCombo.getValue();
 
                 System.out.println("tutto ok");
             }
@@ -243,7 +256,7 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
                 p.setCliente(cli);
             }
 
-            p.setNumPostiOccupati(Integer.parseInt(numPosti.getValue()));
+            //p.setNumPostiOccupati(Integer.parseInt(numPosti.getValue()));
             p.setPartenza(part);
             p.setArrivo(arr);
             p.setLocalita(loc);
@@ -252,13 +265,20 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
             p.setPagamento(false);
             p.setPronta(false);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("confermaPrenotazione.fxml"));
-            Pane pane = (Pane) loader.load();
-            ConfermaPrenotazioneController controller = loader.<ConfermaPrenotazioneController>getController();
-            controller.initialize(p, dimensioneAuto.getValue(), acc);//passa la prenotazione incompleta (manca mezzo)
+            ObservableList<Mezzo> mezzi = (ObservableList<Mezzo>) FXCollections.observableArrayList(RicercaBusiness.getInstance().mezziPrenotabili(dim, tipoMezzo, p.getDataInizio(), p.getDataFine())); //todo in lavorazione
+            if(mezzi.size()==0){
+                AlertBox.display("Nuova proposta", "Nessun mezzo disponibile della tipologia richiesta!");
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("confermaPrenotazione.fxml"));
+                Pane pane = (Pane) loader.load();
+                ConfermaPrenotazioneController controller = loader.<ConfermaPrenotazioneController>getController();
 
-            rootPanePropostaFormPage.getChildren().setAll(pane);
-            rootPanePropostaFormPage.setPrefSize(1000, 600);
+                controller.initialize(p, dimensioneAuto.getValue(), acc, tipoMezzo, mezzi);//passa la prenotazione incompleta (manca mezzo)
+
+                rootPanePropostaFormPage.getChildren().setAll(pane);
+                rootPanePropostaFormPage.setPrefSize(1000, 600);
+            }
+
         }
     }
 

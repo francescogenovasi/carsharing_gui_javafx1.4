@@ -32,8 +32,8 @@ public class ConfermaPrenotazioneController {
     private Label arrivo;
     @FXML
     private Label localita;
-    @FXML
-    private Label posti;
+    /*@FXML
+    private Label posti;*/
     @FXML
     private Label costoLabel;
     @FXML
@@ -44,10 +44,13 @@ public class ConfermaPrenotazioneController {
     private ImageView imageAutoRiepilogo;
     @FXML
     private TilePane tilePaneAccessori;
+    @FXML
+    private ComboBox<String> numPosti;
 
     Prenotazione prenotazione = null;
     List<Accessorio> accList = null;
     ObservableList<Mezzo> mezzi = FXCollections.observableArrayList();
+    ObservableList<String> posti = FXCollections.observableArrayList(CommonBusiness.getInstance().getPosti());
 
     @FXML
     private void reloadImage() throws IOException {
@@ -64,9 +67,10 @@ public class ConfermaPrenotazioneController {
     }
 
 
-    public void initialize(Prenotazione p, String dim, List<Accessorio> a) throws IOException { //riceve la prenotazione incompleta, crea la observable e imposta i mezzi
+    public void initialize(Prenotazione p, String dim, List<Accessorio> a, String tipoMezzo, ObservableList<Mezzo> m) throws IOException { //riceve la prenotazione incompleta, crea la observable e imposta i mezzi
         prenotazione = p;
         accList = a;
+        mezzi = m;
 
         for (int i = 0; i < a.size(); i++) {
             Label ta = new Label(a.get(i).getNome());
@@ -76,11 +80,16 @@ public class ConfermaPrenotazioneController {
         partenza.setText(prenotazione.getPartenza().getNome());
         arrivo.setText(prenotazione.getArrivo().getNome());
         localita.setText(prenotazione.getLocalita().getCitta());
-        posti.setText(Integer.toString(prenotazione.getNumPostiOccupati()));
+        //posti.setText(Integer.toString(prenotazione.getNumPostiOccupati()));
+        posti.add(VALORE_NULLO);
+        numPosti.setItems(posti);
+        numPosti.getSelectionModel().select(posti.size()-1);
+
         dataInizio.setText(prenotazione.getDataInizio().toString());
         dataFine.setText(prenotazione.getDataFine().toString());
 
-        mezzi = (ObservableList<Mezzo>) FXCollections.observableArrayList(RicercaBusiness.getInstance().mezziPrenotabili(dim, prenotazione.getNumPostiOccupati()));
+
+
         mezzo.setItems(mezzi);
         mezzo.getSelectionModel().select(0);
 

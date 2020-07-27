@@ -28,14 +28,16 @@
       <Label layoutX="339.0" layoutY="84.0" text="Posti richiesti" />
       <Label fx:id="localita" layoutX="102.0" layoutY="81.0" text="loc" />
       <Label fx:id="posti" layoutX="430.0" layoutY="84.0" text="posti" />
-      <ImageView fx:id="imageAutoRiepilogo" fitHeight="113.0" fitWidth="162.0" layoutX="460.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true" />
-      <ScrollPane fx:id="scrollAccessori" layoutX="106.0" layoutY="174.0" prefHeight="67.0" prefWidth="324.0">
+      <ImageView fx:id="imageAutoRiepilogo" fitHeight="113.0" fitWidth="162.0" layoutX="460.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true" />
+      <ScrollPane fx:id="scrollAccessori" layoutX="106.0" layoutY="217.0" prefHeight="67.0" prefWidth="324.0">
          <content>
             <TilePane fx:id="tilePaneAccessori" nodeOrientation="LEFT_TO_RIGHT" prefHeight="64.0" prefWidth="276.0" tileAlignment="TOP_LEFT" />
          </content>
       </ScrollPane>
-      <Text layoutX="28.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Accessori:" />
+      <Text layoutX="28.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Accessori:" />
       <Label layoutX="37.0" layoutY="136.0" text="Costo:" />
       <Label fx:id="costoLabel" layoutX="88.0" layoutY="136.0" text="costo" />
+      <ComboBox fx:id="numPosti" layoutX="143.0" layoutY="180.0" prefHeight="25.0" prefWidth="72.0" promptText="0" />
+      <Label layoutX="32.0" layoutY="185.0" text="Posti richiesti:" />
    </children>
 </Pane>

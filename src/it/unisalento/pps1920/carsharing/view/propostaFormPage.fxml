@@ -16,15 +16,15 @@
       <ComboBox fx:id="localita" layoutX="174.0" layoutY="134.0" prefWidth="150.0" promptText="localita" />
       <DatePicker fx:id="dataInizio" editable="false" layoutX="174.0" layoutY="188.0" prefHeight="25.0" prefWidth="150.0" promptText="inizio" showWeekNumbers="true" />
       <DatePicker fx:id="dataFine" editable="false" layoutX="174.0" layoutY="240.0" prefHeight="25.0" prefWidth="150.0" promptText="fine" />
-      <ComboBox fx:id="dimensioneAuto" layoutX="174.0" layoutY="280.0" prefWidth="150.0" promptText="dimensioni" />
-      <ComboBox fx:id="numPosti" layoutX="470.0" layoutY="131.0" prefHeight="25.0" prefWidth="72.0" promptText="0" />
+      <ComboBox fx:id="dimensioneAuto" layoutX="175.0" layoutY="334.0" prefWidth="150.0" promptText="dimensioni" visible="false" />
+      <ComboBox fx:id="tipologiaCombo" layoutX="175.0" layoutY="293.0" onAction="#checkVeicolo" prefHeight="27.0" prefWidth="150.0" promptText="0" />
       <Label layoutX="22.0" layoutY="75.0" text="Stazione Partenza:" />
       <Label layoutX="358.0" layoutY="75.0" text="Stazione Arrivo:" />
       <Label layoutX="22.0" layoutY="136.0" text="Località da visitare:" />
-      <Label layoutX="359.0" layoutY="136.0" text="Posti richiesti:" />
+      <Label layoutX="24.0" layoutY="298.0" text="Tipologia mezzo: " />
       <Label layoutX="22.0" layoutY="191.0" text="Data inizio:" />
       <Label layoutX="22.0" layoutY="243.0" text="Data fine:" />
-      <Label layoutX="22.0" layoutY="282.0" text="Dimensione richiesta:" />
+      <Label fx:id="dimensioneAutoLabel" layoutX="23.0" layoutY="336.0" text="Dimensione richiesta:" visible="false" />
       <Button layoutX="248.0" layoutY="388.0" mnemonicParsing="false" onAction="#nextStep" text="Avanti" />
       <Button layoutX="387.0" layoutY="388.0" mnemonicParsing="false" onAction="#goHome" text="Indietro" />
       <ComboBox fx:id="oraInizio" layoutX="446.0" layoutY="188.0" prefHeight="25.0" prefWidth="72.0" />

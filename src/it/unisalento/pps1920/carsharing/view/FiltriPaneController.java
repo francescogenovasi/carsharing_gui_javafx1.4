@@ -130,9 +130,9 @@ public class FiltriPaneController{
 
         //ricerca auto con almeno un posto
         //posti.add("1");
-        for (int i = 1; i <= CommonBusiness.getInstance().maxPostiPrenotabili(); i++){
+        /*for (int i = 1; i <= CommonBusiness.getInstance().maxPostiPrenotabili(); i++){ //todo in lavorazione
             posti.add("" + i + "");
-        }
+        }*/
         numPosti.setItems(posti);
         numPosti.getSelectionModel().select(0);
         /*if (CommonBusiness.getInstance().maxPostiPrenotabili() < 1){
@@ -160,13 +160,13 @@ public class FiltriPaneController{
 
     public void risultatiFiltri() throws ParseException, IOException {
         //numero posti almeno uno per forza quindi valore di default se non modificato
-        if (CommonBusiness.getInstance().maxPostiPrenotabili() < 1){
+        /* if (CommonBusiness.getInstance().maxPostiPrenotabili() < 1){
             //popup impossibile effettuare prenotazioni
             AlertBox.display("title", "nessuma macchina disponibile");
             pos = 1;
         } else {
             pos = Integer.parseInt(numPosti.getValue());
-        }
+        }*/ //todo in lavorazione
 
         System.out.println("-------------------");
         System.out.println("Filtri:");

@@ -8,6 +8,7 @@ import it.unisalento.pps1920.carsharing.model.Modello;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MezzoDAO implements IMezzoDAO {
         @Override
@@ -24,8 +25,7 @@ public class MezzoDAO implements IMezzoDAO {
                 m.setTarga(riga[1]);
                 Modello modello= mDAO.findById(Integer.parseInt(riga[2]));
                 m.setModello(modello);
-                m.setPostiDisponibili(Integer.parseInt(riga[3]));
-                m.setMotorizzazione(riga[4]);
+                m.setMotorizzazione(riga[3]);
 
             }
             return m;
@@ -72,27 +72,33 @@ public class MezzoDAO implements IMezzoDAO {
         DbConnection.getInstance().eseguiAggiornamento(sql);
     }
 
-    public ArrayList<Mezzo> findAllPrenotabili(String dim, int pos) throws IOException {//restituisce i modelli che possono essere prenotati
+    public ArrayList<Mezzo> findAllPrenotabili(String dim, String tipologia, Date dataInizio, Date dataFine) throws IOException {//restituisce i modelli che possono essere prenotati
         String q;
 
-        if (dim.equals("-")){
+        //vedere tutti i mezzi che hanno dimensione e tipologia richiesti
+
+        if (dim.equals(null) || dim.equals("-")){
+            q = "SELECT * FROM mezzo INNER JOIN modello ON mezzo.modello_idmodello = modello.idmodello WHERE modello.tipologia = '"+ tipologia +"';";
+        } else {
+            q = "SELECT * FROM mezzo INNER JOIN modello ON mezzo.modello_idmodello = modello.idmodello WHERE modello.tipologia = '"+ tipologia + "' AND modello.dimensione = '" + dim +"';";
+        }
+
+        /*if (dim.equals("-")){
             q = "SELECT * FROM mezzo WHERE postidisponibili >= " + pos + ";";
         } else {
             q = "SELECT * FROM mezzo INNER JOIN modello ON mezzo.modello_idmodello = modello.idmodello WHERE modello.dimensione = '" + dim + "' AND mezzo.postidisponibili >= " + pos + ";";
 
-        }
+        }*/
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery(q); //query
 
         ArrayList<Mezzo> mezzi = new ArrayList<Mezzo>();//istanziare model con risultati query
 
-        //if(res.size() == 1){
-            for(String[] riga : res) {
-                Mezzo l = findById(Integer.parseInt(riga[0]));
-                mezzi.add(l);
-            }
-        //} else {
-          //  mezzi.add(new Mezzo(0, "-", null));
-        //}
+        for(String[] riga : res) {
+            Mezzo l = findById(Integer.parseInt(riga[0]));
+            mezzi.add(l);
+        }
+
+        //todo in lavorazione vedere tra quelli risultanti quali sono liberi nelle date selezionate
 
         return mezzi;
     }
