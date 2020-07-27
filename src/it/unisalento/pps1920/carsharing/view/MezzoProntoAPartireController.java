@@ -36,27 +36,69 @@ public class MezzoProntoAPartireController {
         public void setListMezziPronti(ObservableList<MezzoDaPreparare> m){
             mezzidap=m;
 
+            TableColumn<MezzoDaPreparare, String> modello = new TableColumn<>("Modello");
+            modello.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMezzo().getModello().getNome()));
             TableColumn<MezzoDaPreparare, String> targa = new TableColumn<>("Targa");
-            targa.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTarga()));
+            targa.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMezzo().getTarga()));
+            TableColumn<MezzoDaPreparare, String> tipologia = new TableColumn<>("Tipologia");
+            tipologia.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMezzo().getModello().getTipologia()));
 
             TableColumn<MezzoDaPreparare, String> datapr = new TableColumn<>("Data prelievo mezzo");
             datapr.setCellValueFactory(new PropertyValueFactory<>("dataInizio"));
             TableColumn<MezzoDaPreparare, String> dataco = new TableColumn<>("Data consegna mezzo");
             dataco.setCellValueFactory(new PropertyValueFactory<>("dataFine"));
-
-
             TableColumn<MezzoDaPreparare, Integer> postiOccupati = new TableColumn<>("Posti Occupati");
             postiOccupati.setCellValueFactory(new PropertyValueFactory<>("postiOccupati"));
 
 
-            tabellaMezzi.getColumns().addAll(targa, datapr, dataco, postiOccupati);
+            tabellaMezzi.getColumns().addAll(modello,targa,tipologia, datapr, dataco, postiOccupati);
 
+            addButtonToTable();
 
 
             tabellaMezzi.setItems(mezzidap);
         }
 
 
+
+
+    private void addButtonToTable() {
+        TableColumn<MezzoDaPreparare, Void> colBtn = new TableColumn("Mezzo Partito?");
+
+        Callback<TableColumn<MezzoDaPreparare, Void>, TableCell<MezzoDaPreparare, Void>> cellFactory = new Callback<TableColumn<MezzoDaPreparare, Void>, TableCell<MezzoDaPreparare, Void>>() {
+            @Override
+            public TableCell<MezzoDaPreparare, Void> call(final TableColumn<MezzoDaPreparare, Void> param) {
+                final TableCell<MezzoDaPreparare, Void> cell = new TableCell<MezzoDaPreparare, Void>() {
+
+                    private final Button btn = new Button("Mezzo Partito");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            //todo inserire sript per o rimuovere mezzo o cambiarne stato
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+
+        tabellaMezzi.getColumns().add(colBtn);
+
     }
+
+
+}
 
 

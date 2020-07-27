@@ -16,6 +16,7 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
     @Override
     public MezzoDaPreparare findById(int id) throws IOException {
         MezzoDaPreparare m = null;
+        MezzoDAO mezz=new MezzoDAO();
 
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzi_da_preparare WHERE idmezzi_da_preparare = " + id + ";");
 
@@ -23,7 +24,7 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
             String riga[] = res.get(0);
             m = new MezzoDaPreparare(0,null,null,0,null,null);
             m.setId(Integer.parseInt(riga[0]));
-            m.setTarga(riga[1]);
+            m.setMezzo(mezz.findById(Integer.parseInt(riga[1])));
             m.setDataInizio(DateUtil.dateTimeFromString(riga[2]));
             m.setDataFine(DateUtil.dateTimeFromString(riga[3]));
             m.setPostiOccupati(Integer.parseInt(riga[4]));

@@ -117,6 +117,7 @@ public class CommonBusiness {
         return mDAO.getMezziPronti();
     }
 
+
     public ArrayList<Prenotazione> getPrenotazioniUtente(int id) throws IOException {
         IPrenotazioneDAO pDAO = new PrenotazioneDAO();
         return pDAO.ricercaPerCliente(id);
