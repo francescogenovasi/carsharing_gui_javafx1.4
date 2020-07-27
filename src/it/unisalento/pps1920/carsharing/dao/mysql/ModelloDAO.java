@@ -30,14 +30,6 @@ public class ModelloDAO implements IModelloDAO {
             m.setDimensione(riga[4]);
             m.setTipologia(riga[5]);
             m.setTariffaBase(Float.parseFloat(riga[6]));
-
-            byte[] foto = DbConnection.getInstance().getFoto("SELECT foto FROM modello WHERE idmodello = " + id +";");
-            ByteArrayInputStream bis = new ByteArrayInputStream(foto);
-            BufferedImage bImage = ImageIO.read(bis);
-            ImageIO.write(bImage, "jpg", new File("src/temp.jpg") );
-            File file = new File("src/temp.jpg");
-            m.setFoto(file);
-            file.delete();
         }
         return m;
     }

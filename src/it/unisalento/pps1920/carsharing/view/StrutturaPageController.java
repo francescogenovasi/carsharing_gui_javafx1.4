@@ -1,10 +1,7 @@
 package it.unisalento.pps1920.carsharing.view;
 
 import it.unisalento.pps1920.carsharing.business.CommonBusiness;
-import it.unisalento.pps1920.carsharing.model.Prenotazione;
-import it.unisalento.pps1920.carsharing.model.PropostaCondivisione;
-import it.unisalento.pps1920.carsharing.model.TabConfermaRichieste;
-import it.unisalento.pps1920.carsharing.model.Utente;
+import it.unisalento.pps1920.carsharing.model.*;
 import it.unisalento.pps1920.carsharing.util.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -110,6 +107,18 @@ public class StrutturaPageController{
     }
 
     @FXML
+    private void loadVisualizzaMezziPronti() throws IOException {
+        FXMLLoader lo = new FXMLLoader(getClass().getResource("mezzoProntoAPartire.fxml"));
+        Pane pane = (Pane) lo.load();
+        MezzoProntoAPartireController controller = lo.<MezzoProntoAPartireController>getController();
+
+        ObservableList<MezzoDaPreparare> mezzoDaPreparare = FXCollections.observableArrayList(CommonBusiness.getInstance().getMezziProntiAPartire()) ;
+        controller.setListMezziPronti(mezzoDaPreparare);
+        rootPaneStrutturaPage.getChildren().setAll(pane);
+        rootPaneStrutturaPage.setPrefSize(1000, 600);
+    }
+
+    @FXML
     private void loadVisualizzaRichieste() throws IOException {
         FXMLLoader lo = new FXMLLoader(getClass().getResource("visualizzaRichieste.fxml"));
         Pane pane = (Pane) lo.load();
@@ -145,7 +154,7 @@ public class StrutturaPageController{
                     menuCliente.setVisible(true);
                 } else {
                     if (CommonBusiness.getInstance().checkOperatore(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
-                        menuAddetto.setVisible(true);
+                        menuOperatore.setVisible(true);
                     }
                 }
             }

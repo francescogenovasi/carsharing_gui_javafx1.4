@@ -1,5 +1,6 @@
 package it.unisalento.pps1920.carsharing.view;
 
+import it.unisalento.pps1920.carsharing.business.CommonBusiness;
 import it.unisalento.pps1920.carsharing.model.Cliente;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,10 +12,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class AlertBoxProfilo {
 
-    public static void display(String title, Cliente c) {
+    public static void display(String title, Cliente c) throws IOException {
         Stage window = new Stage();
+        ImageView imageProfilo = new ImageView();
 
         //Block events to other windows
         window.initModality(Modality.APPLICATION_MODAL);
@@ -27,13 +31,12 @@ public class AlertBoxProfilo {
         label2.setText(c.getTelefono() + " " +c.getEta());
         Label label3 = new Label();
         label3.setText(c.getCap() + " " +c.getCitta() + " " + c.getIndirizzo());
-        ImageView imageProfilo = new ImageView();
-        Image image = new Image(c.getFoto().toURI().toString());
+        Image image=CommonBusiness.getInstance().getFotoCliente(c.getId());
         imageProfilo.setImage(image);
         Button closeButton = new Button("Chiudi");
         closeButton.setOnAction(e -> window.close());
 
-        VBox layout = new VBox(10);
+        VBox layout = new VBox(40);
         layout.getChildren().addAll(label, label2, label3, imageProfilo, closeButton);
         layout.setAlignment(Pos.CENTER);
 

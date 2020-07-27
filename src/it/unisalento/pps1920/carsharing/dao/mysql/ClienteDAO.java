@@ -4,6 +4,7 @@ import it.unisalento.pps1920.carsharing.DbConnection;
 import it.unisalento.pps1920.carsharing.dao.interfaces.IClienteDAO;
 import it.unisalento.pps1920.carsharing.model.Cliente;
 import it.unisalento.pps1920.carsharing.model.Utente;
+import javafx.scene.image.Image;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -36,13 +37,6 @@ public class ClienteDAO implements IClienteDAO {
             c.setCap(Integer.parseInt(riga[8]));
             c.setIndirizzo(riga[9]);
             c.setEta(Integer.parseInt(riga[10]));
-            byte[] foto = DbConnection.getInstance().getFoto("SELECT foto FROM cliente INNER JOIN utente ON utente.idutente = cliente.utente_idutente WHERE cliente.utente_idutente = "+id+";");
-            ByteArrayInputStream bis = new ByteArrayInputStream(foto);
-            BufferedImage bImage = ImageIO.read(bis);
-            ImageIO.write(bImage, "jpg", new File("src/temp.jpg") );
-            File file = new File("src/temp.jpg");
-            c.setFoto(file);
-            file.delete();
         }
 
         return c;
@@ -82,5 +76,17 @@ public class ClienteDAO implements IClienteDAO {
         DbConnection.getInstance().addFoto(c.getFoto(),sql);
         System.out.println("id cliente inserito:" + c.getId());
         return res;
+    }
+
+    public Image getFoto(int id) throws IOException {
+        String query = "SELECT foto FROM cliente INNER JOIN utente ON utente.idutente = cliente.utente_idutente WHERE cliente.utente_idutente = "+id+";";
+        byte[] prova = DbConnection.getInstance().getFoto(query);
+        ByteArrayInputStream bis = new ByteArrayInputStream(prova);
+        BufferedImage bImage2 = ImageIO.read(bis);
+        ImageIO.write(bImage2, "jpg", new File("src/temp.jpg") );
+        File file = new File("src/temp.jpg");
+        Image image = new Image(file.toURI().toString());
+        file.delete();
+        return image;
     }
 }

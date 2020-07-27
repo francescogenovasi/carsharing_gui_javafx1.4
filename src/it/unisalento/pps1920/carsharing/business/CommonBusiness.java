@@ -107,6 +107,11 @@ public class CommonBusiness {
         return pDAO.getProposte();
     }
 
+    public ArrayList<MezzoDaPreparare> getMezziProntiAPartire() throws IOException {
+        IMezzoDaPreparareDAO mDAO = new MezzoDaPreparareDAO();
+        return mDAO.getMezziPronti();
+    }
+
     public ArrayList<Prenotazione> getPrenotazioniUtente(int id) throws IOException {
         IPrenotazioneDAO pDAO = new PrenotazioneDAO();
         return pDAO.ricercaPerCliente(id);
@@ -182,6 +187,11 @@ public class CommonBusiness {
     public javafx.scene.image.Image getFotoModello(int id) throws IOException {
         IModelloDAO mDAO = new ModelloDAO();
         return mDAO.getFoto(id);
+    }
+
+    public javafx.scene.image.Image getFotoCliente(int id) throws IOException {
+        IClienteDAO cDAO = new ClienteDAO();
+        return cDAO.getFoto(id);
     }
 
     public int getIdPrenFromIdPropCon(int idProp){

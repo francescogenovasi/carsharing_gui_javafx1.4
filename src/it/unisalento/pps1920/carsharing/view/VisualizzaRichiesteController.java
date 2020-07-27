@@ -87,7 +87,11 @@ public class VisualizzaRichiesteController {
                             System.out.println("Richiesta selezionata: " + data);
                             //int idRich = getTableView().getItems().get(getIndex()).getRichiedente().getId();
                             Cliente c = getTableView().getItems().get(getIndex()).getRichiedente();
-                            AlertBoxProfilo.display("prenotazione", c);
+                            try {
+                                AlertBoxProfilo.display("prenotazione", c);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         });
                     }
 

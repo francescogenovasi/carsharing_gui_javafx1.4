@@ -92,10 +92,8 @@ public class ConfermaPrenotazioneController {
 
         costoLabel.setText(costo + "€");
 
-
         System.out.println("id mezzo selezionato: " + mezzo.getValue().getId() );
         imageAutoRiepilogo.setImage(CommonBusiness.getInstance().getFotoModello(mezzo.getValue().getModello().getId()));
-
         
     }
 
