@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.text.Text?>
+
+<Pane fx:id="rootPaneModificaPrenotazione" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.pps1920.carsharing.view.ModificaPrenotazioneController">
+   <children>
+      <ComboBox fx:id="arrivo" layoutX="482.0" layoutY="73.0" prefWidth="150.0" promptText="arrivo" />
+      <ComboBox fx:id="partenza" layoutX="174.0" layoutY="73.0" prefWidth="150.0" promptText="partenza" />
+      <ComboBox fx:id="localita" layoutX="174.0" layoutY="134.0" prefWidth="150.0" promptText="localita" />
+      <DatePicker fx:id="dataInizio" editable="false" layoutX="170.0" layoutY="235.0" prefHeight="25.0" prefWidth="150.0" promptText="inizio" showWeekNumbers="true" />
+      <DatePicker fx:id="dataFine" editable="false" layoutX="174.0" layoutY="287.0" prefHeight="25.0" prefWidth="150.0" promptText="fine" />
+      <ComboBox fx:id="dimensioneAuto" layoutX="175.0" layoutY="334.0" prefWidth="150.0" promptText="dimensioni" visible="false" />
+      <Label layoutX="22.0" layoutY="75.0" text="Stazione Partenza:" />
+      <Label layoutX="358.0" layoutY="75.0" text="Stazione Arrivo:" />
+      <Label layoutX="22.0" layoutY="136.0" text="Località da visitare:" />
+      <Label layoutX="18.0" layoutY="238.0" text="Data inizio:" />
+      <Label layoutX="18.0" layoutY="290.0" text="Data fine:" />
+      <Label fx:id="dimensioneAutoLabel" layoutX="23.0" layoutY="336.0" text="Dimensione richiesta:" visible="false" />
+      <Button layoutX="248.0" layoutY="388.0" mnemonicParsing="false" onAction="#check" text="Avanti" />
+      <Button layoutX="387.0" layoutY="388.0" mnemonicParsing="false" text="Indietro" />
+      <ComboBox fx:id="oraInizio" layoutX="442.0" layoutY="235.0" prefHeight="25.0" prefWidth="72.0" />
+      <ComboBox fx:id="minutoFine" layoutX="559.0" layoutY="287.0" prefHeight="25.0" prefWidth="72.0" />
+      <ComboBox fx:id="oraFine" layoutX="442.0" layoutY="287.0" prefHeight="25.0" prefWidth="72.0" />
+      <ComboBox fx:id="minutoInizio" layoutX="559.0" layoutY="235.0" prefHeight="25.0" prefWidth="72.0" />
+      <Label layoutX="502.0" layoutY="190.0" text=":" />
+      <Label layoutX="503.0" layoutY="242.0" text=":" />
+      <Label layoutX="363.0" layoutY="237.0" text="Ora inizio:" />
+      <Label layoutX="363.0" layoutY="289.0" text="Ora fine:" />
+      <ScrollPane fx:id="scrollAccessori" layoutX="445.0" layoutY="280.0" prefHeight="67.0" prefWidth="324.0" visible="false">
+         <content>
+            <TilePane fx:id="tilePaneAccessori" nodeOrientation="LEFT_TO_RIGHT" prefHeight="64.0" prefWidth="276.0" tileAlignment="TOP_LEFT" />
+         </content>
+      </ScrollPane>
+      <Label fx:id="accessoriLabel" layoutX="367.0" layoutY="304.0" text="Accessori:" visible="false" />
+      <ComboBox fx:id="numPosti" layoutX="472.0" layoutY="134.0" prefHeight="25.0" prefWidth="72.0" promptText="0" />
+      <Label layoutX="361.0" layoutY="139.0" text="Posti richiesti:" />
+      <Text layoutX="61.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modificare se si intende modificare uno dei campi, se si lascia - non saranno apportate modifiche" wrappingWidth="665.95556640625" />
+      <Text layoutX="55.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data inizio e data fine saranno cambiate se complete e se il mezzo è disponibile in quell'arco di tempo" />
+   </children>
+</Pane>

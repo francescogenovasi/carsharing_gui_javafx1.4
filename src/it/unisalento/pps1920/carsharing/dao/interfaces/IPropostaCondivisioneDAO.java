@@ -15,5 +15,6 @@ public interface IPropostaCondivisioneDAO extends IBaseDAO<PropostaCondivisione>
     public boolean setPropostaInvalida(int idProposta);
     public ArrayList<PropostaCondivisione> ricercaConFiltri (Stazione partenza, Stazione arrivo, Localita localita, int numPosti, Date inizio, Date fine, Modello modello, String dimensione, String motorizzazione, String tipologia) throws IOException;
     public boolean updatePostiProposta(int idProposta, int posti);
+    public boolean propostaUgualeCliente(int idProposta, int idCliente);
 
 }

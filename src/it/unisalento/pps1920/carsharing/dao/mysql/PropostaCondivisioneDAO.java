@@ -195,4 +195,14 @@ public class PropostaCondivisioneDAO implements IPropostaCondivisioneDAO {
         int nuoviPostiOccupati = vecchiPosti + posti;
         return DbConnection.getInstance().eseguiAggiornamento("UPDATE proposta_condivisione SET num_posti_occupati = "+nuoviPostiOccupati+" WHERE idproposta_condivisione = " + idProposta + ";");
     }
+
+    @Override
+    public boolean propostaUgualeCliente(int idProposta, int idCliente){
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM proposta_condivisione WHERE idproposta_condivisione = "+idProposta+" AND cliente_idcliente = "+idCliente+";");
+        if (res.size()==1){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -150,10 +150,10 @@ public class CommonBusiness {
         return aDAO.getAccessoriPrenotazione(idPren);
     }
 
-    /*public int maxPostiPrenotabili(){
-        IMezzoDAO mDAO = new MezzoDAO();
-        return ((MezzoDAO) mDAO).maxPostiDisponibili();
-    }*/
+    public boolean propostaUgualeCliente(int idProposta, int idCliente){
+        IPropostaCondivisioneDAO pDAO = new PropostaCondivisioneDAO();
+        return pDAO.propostaUgualeCliente(idProposta, idCliente);
+    }
 
     public boolean checkCliente(int id){ //verifica se l'utente con l'id passato è un cliente o no
         IClienteDAO cDAO = new ClienteDAO();

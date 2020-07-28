@@ -2,6 +2,7 @@ package it.unisalento.pps1920.carsharing.view;
 
 import it.unisalento.pps1920.carsharing.business.CommonBusiness;
 import it.unisalento.pps1920.carsharing.business.PrenotazioneBusiness;
+import it.unisalento.pps1920.carsharing.dao.interfaces.IPrenotazioneDAO;
 import it.unisalento.pps1920.carsharing.dao.mysql.PrenotazioneDAO;
 import it.unisalento.pps1920.carsharing.model.MezzoDaPreparare;
 import it.unisalento.pps1920.carsharing.model.Prenotazione;
@@ -13,12 +14,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
 import java.io.IOException;
@@ -27,6 +30,9 @@ public class TabellaPrenotazioniPageController{
 
     @FXML
     private TableView<Prenotazione> tabellaPrenotazioni;
+    @FXML
+    private Pane rootPaneTabellaPrenotazioniPage;
+
 
 
     //ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(new PrenotazioneDAO().findAll()); //FXCollections.observableArrayList();
@@ -164,6 +170,28 @@ public class TabellaPrenotazioniPageController{
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             System.out.println("modificare: " + getTableView().getItems().get(getIndex()).getId());
+                            if (CommonBusiness.getInstance().propostaUgualeCliente(getTableView().getItems().get(getIndex()).getIdPropostaCondivisione(), ((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
+                                //modificabile
+                                AlertBox.display("Prenotazioni", "Lo hai proposto tu");
+                                IPrenotazioneDAO pDAO = new PrenotazioneDAO();
+                                try {
+                                    Prenotazione p = pDAO.findById(getTableView().getItems().get(getIndex()).getId());
+
+                                    FXMLLoader lo = new FXMLLoader(getClass().getResource("modificaPrenotazione.fxml"));
+                                    Pane pane = (Pane) lo.load();
+                                    ModificaPrenotazioneController controller = lo.<ModificaPrenotazioneController>getController();
+
+                                    controller.setPrenotazione(p);
+                                    rootPaneTabellaPrenotazioniPage.getChildren().setAll(pane);
+                                    rootPaneTabellaPrenotazioniPage.setPrefSize(1000, 600);
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                            } else {
+                                AlertBox.display("Prenotazioni", "Non puoi modificare questo sharing, non lo hai proposto tu");
+                            }
                         });
                     }
 
