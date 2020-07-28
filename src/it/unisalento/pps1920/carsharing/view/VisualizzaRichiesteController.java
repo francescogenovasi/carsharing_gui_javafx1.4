@@ -6,6 +6,7 @@ import it.unisalento.pps1920.carsharing.business.RichiestaBusiness;
 import it.unisalento.pps1920.carsharing.dao.interfaces.IRichiestaCondivisioneDAO;
 import it.unisalento.pps1920.carsharing.dao.mysql.RichiestaCondivisioneDAO;
 import it.unisalento.pps1920.carsharing.model.*;
+import it.unisalento.pps1920.carsharing.util.DateUtil;
 import it.unisalento.pps1920.carsharing.util.Session;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -45,10 +46,11 @@ public class VisualizzaRichiesteController {
         rich.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRichiedente().getUsername()));
 
         TableColumn<TabConfermaRichieste, String> dataInizio = new TableColumn<>("inizio");
-        dataInizio.setCellValueFactory(new PropertyValueFactory<>("dataInizio"));
+        dataInizio.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(cellData.getValue().getDataInizio()))));
 
         TableColumn<TabConfermaRichieste, String> dataFine = new TableColumn<>("fine");
-        dataFine.setCellValueFactory(new PropertyValueFactory<>("dataFine"));
+        dataFine.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(cellData.getValue().getDataFine()))));
+
 
         TableColumn<TabConfermaRichieste, String> partenza = new TableColumn<>("partenza");
         partenza.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPartenza().getNome()));

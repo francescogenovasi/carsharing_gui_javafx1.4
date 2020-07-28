@@ -72,6 +72,8 @@ public class RichiestaBusiness {
 
         new PrenotazioneDAO().salvaPrenotazione(pren, acc, costo, false);
 
+        new PropostaCondivisioneDAO().updatePostiProposta(prop.getId(), pren.getNumPostiOccupati());
+
         //System.out.println("iddddddddddddddddddddd: " + pren.getId());
         return pren.getId();
     }

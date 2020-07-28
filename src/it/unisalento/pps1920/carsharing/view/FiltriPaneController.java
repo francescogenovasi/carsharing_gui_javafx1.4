@@ -2,10 +2,8 @@ package it.unisalento.pps1920.carsharing.view;
 
 import it.unisalento.pps1920.carsharing.business.CommonBusiness;
 import it.unisalento.pps1920.carsharing.business.RicercaBusiness;
-import it.unisalento.pps1920.carsharing.model.Localita;
-import it.unisalento.pps1920.carsharing.model.Modello;
-import it.unisalento.pps1920.carsharing.model.Prenotazione;
-import it.unisalento.pps1920.carsharing.model.Stazione;
+import it.unisalento.pps1920.carsharing.dao.mysql.PropostaCondivisioneDAO;
+import it.unisalento.pps1920.carsharing.model.*;
 import it.unisalento.pps1920.carsharing.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -238,13 +236,15 @@ public class FiltriPaneController{
             System.out.println("motorizzazione: " + motorizzazione.getValue());
         }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("tabellaPrenotazioniPage.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("visualizzaProposte.fxml"));
         Pane pane = (Pane) loader.load();
         //todo controllare dato che non si deve aprire questa finestra
         //TabellaPrenotazioniPageController controller = loader.<TabellaPrenotazioniPageController>getController();
         //ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(RicercaBusiness.getInstance().cercaConFiltri(part, arr, loc, pos, inizio, fine, mod, dim, mot, tip));
         //controller.setListPrenotazioni(prenotazioni);
-
+        VisualizzaProposteController controller = loader.<VisualizzaProposteController>getController();
+        ObservableList<PropostaCondivisione> proposte = (ObservableList<PropostaCondivisione>) FXCollections.observableArrayList(RicercaBusiness.getInstance().cercaConFiltri(part, arr, loc, pos, inizio, fine, mod, dim, mot, tip));
+        controller.setListProposte(proposte, false);
 
         rootPaneFiltriPane.getChildren().setAll(pane);
         rootPaneFiltriPane.setPrefSize(1000, 600);

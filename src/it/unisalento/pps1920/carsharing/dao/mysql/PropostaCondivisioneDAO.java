@@ -6,6 +6,7 @@ import it.unisalento.pps1920.carsharing.dao.interfaces.*;
 import it.unisalento.pps1920.carsharing.model.*;
 import it.unisalento.pps1920.carsharing.util.DateUtil;
 import it.unisalento.pps1920.carsharing.util.Session;
+import it.unisalento.pps1920.carsharing.view.AlertBox;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -114,5 +115,78 @@ public class PropostaCondivisioneDAO implements IPropostaCondivisioneDAO {
 
     public boolean setPropostaInvalida(int idProposta){
         return DbConnection.getInstance().eseguiAggiornamento("UPDATE proposta_condivisione SET propostavalida = 0 WHERE idproposta_condivisione = " + idProposta + ";");
+    }
+
+    @Override
+    public ArrayList<PropostaCondivisione> ricercaConFiltri(Stazione partenza, Stazione arrivo, Localita localita, int numPosti, Date inizio, Date fine, Modello modello, String dimensione, String motorizzazione, String tipologia) throws IOException {
+        ArrayList<PropostaCondivisione> proposte = new ArrayList<PropostaCondivisione>();
+
+        //SELECT * FROM prenotazione inner join mezzo on prenotazione.mezzo_idmezzo = mezzo.idmezzo where mezzo.postidisponibili<6;
+        String query = "SELECT * FROM (proposta_condivisione INNER JOIN mezzo ON proposta_condivisione.mezzo_idmezzo = mezzo.idmezzo) INNER JOIN modello ON mezzo.modello_idmodello = modello.idmodello WHERE propostavalida=1";
+
+        if ((partenza != (null))){
+            query = query + " AND idstazione_partenza = " + partenza.getId();
+        }
+        if ((arrivo != (null))){
+            query = query + " AND idstazione_arrivo = " + arrivo.getId();
+        }
+        if ((localita != (null))){
+            query = query + " AND localita_idlocalita = " + localita.getId();
+        }
+
+        if ((inizio != (null))){//inizio.toString()
+            query = query + " AND dataInizio >= STR_TO_DATE('" + DateUtil.fromRomeToLondon(DateUtil.stringFromDate(inizio)) + "', '%Y-%m-%d %H:%i:%s')";
+            //System.out.println(DateUtil.stringFromDate(inizio));
+            inizio = DateUtil.modificaOrarioData(inizio, "23", "59");
+            //System.out.println(DateUtil.stringFromDate(inizio));
+            query = query + " AND dataInizio <= STR_TO_DATE('" + DateUtil.fromRomeToLondon(DateUtil.stringFromDate(inizio)) + "', '%Y-%m-%d %H:%i:%s')";
+        } else {
+            Date d = new Date();
+            query = query + " AND dataInizio >= STR_TO_DATE('" + DateUtil.fromRomeToLondon(DateUtil.stringFromDate(d)) + "', '%Y-%m-%d %H:%i:%s')";
+        }
+        if ((fine != (null))){
+            query = query + " AND dataFine = '" + DateUtil.dateTimeFromString(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(fine))).toString() + "'";
+        }
+
+        if ((modello != (null))){
+            query = query + " AND mezzo.modello_idmodello = " + modello.getId();
+        }
+        if ((dimensione != (null))){
+            query = query + " AND modello.dimensione = '" + dimensione + "'";
+        }
+        if ((motorizzazione != (null))){
+            query = query + " AND mezzo.motorizzazione = '" + motorizzazione + "'";
+        }
+        if ((tipologia != (null))){
+            query = query + " AND modello.tipologia = '" + tipologia + "'";
+        }
+        //query = query + " AND prenotazionevalida = 1;";
+
+        System.out.println(query);
+
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery(query);
+        //ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM prenotazione");
+
+
+        if (res.size() > 0){//
+            for (String[] riga : res){
+                PropostaCondivisione p = findById(Integer.parseInt(riga[0]));
+                proposte.add(p);
+            }
+        } else {
+            AlertBox.display("Errore ricerca", "nessun elemento corrisponde ai criteri di ricerca");
+        }
+
+
+        return proposte;
+    }
+
+    @Override
+    public boolean updatePostiProposta(int idProposta, int posti) {
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT num_posti_occupati FROM proposta_condivisione WHERE idproposta_condivisione = "+idProposta+";");
+        String[] riga = res.get(0);
+        int vecchiPosti = Integer.parseInt(riga[0]);
+        int nuoviPostiOccupati = vecchiPosti + posti;
+        return DbConnection.getInstance().eseguiAggiornamento("UPDATE proposta_condivisione SET num_posti_occupati = "+nuoviPostiOccupati+" WHERE idproposta_condivisione = " + idProposta + ";");
     }
 }

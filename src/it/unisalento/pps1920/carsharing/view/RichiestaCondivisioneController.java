@@ -171,7 +171,7 @@ public class RichiestaCondivisioneController {
         Pane pane = (Pane) lo.load();
         VisualizzaProposteController controller = lo.<VisualizzaProposteController>getController();
         ObservableList<PropostaCondivisione> prop = FXCollections.observableArrayList(CommonBusiness.getInstance().getProposteCondivisione()) ;
-        controller.setListProposte(prop);
+        controller.setListProposte(prop, true);
         rootPaneRichiestaCondivisione.getChildren().setAll(pane);
         rootPaneRichiestaCondivisione.setPrefSize(1000, 600);
     }

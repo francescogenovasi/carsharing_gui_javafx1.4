@@ -26,8 +26,9 @@ public class RicercaBusiness {
 
     private RicercaBusiness(){}
 
-    public ArrayList<Prenotazione> cercaConFiltri(Stazione partenza, Stazione arrivo, Localita localita, int numPosti, Date inizio, Date fine, Modello modello, String dimensione, String motorizzazione, String tipologia) throws IOException {
-        IPrenotazioneDAO pDAO = new PrenotazioneDAO();
+    //todo in lavorazione
+    public ArrayList<PropostaCondivisione> cercaConFiltri(Stazione partenza, Stazione arrivo, Localita localita, int numPosti, Date inizio, Date fine, Modello modello, String dimensione, String motorizzazione, String tipologia) throws IOException {
+        IPropostaCondivisioneDAO pDAO = new PropostaCondivisioneDAO();
         return pDAO.ricercaConFiltri(partenza, arrivo, localita, numPosti, inizio, fine, modello, dimensione, motorizzazione, tipologia);
     }
 

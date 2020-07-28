@@ -3,6 +3,7 @@ package it.unisalento.pps1920.carsharing.view;
 import it.unisalento.pps1920.carsharing.business.CommonBusiness;
 import it.unisalento.pps1920.carsharing.business.RicercaBusiness;
 import it.unisalento.pps1920.carsharing.model.PropostaCondivisione;
+import it.unisalento.pps1920.carsharing.util.DateUtil;
 import it.unisalento.pps1920.carsharing.util.Session;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -52,10 +53,12 @@ public class VisualizzaProposteController {
          localita.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLocalita().getCitta()));
 
          TableColumn<PropostaCondivisione, String> dataInizio = new TableColumn<>("inizio");
-         dataInizio.setCellValueFactory(new PropertyValueFactory<>("dataInizio"));
+         dataInizio.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(cellData.getValue().getDataInizio()))));
+         //dataInizio.setCellValueFactory(new PropertyValueFactory<>("dataInizio"));
 
          TableColumn<PropostaCondivisione, String> dataFine = new TableColumn<>("fine");
-         dataFine.setCellValueFactory(new PropertyValueFactory<>("dataFine"));
+         dataFine.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(cellData.getValue().getDataFine()))));
+         //dataFine.setCellValueFactory(new PropertyValueFactory<>("dataFine"));
 
          tabellaProposteAltri.getColumns().addAll(id, cli, mezzo, postiOccupati, partenza, arrivo, localita, dataInizio, dataFine);
 
