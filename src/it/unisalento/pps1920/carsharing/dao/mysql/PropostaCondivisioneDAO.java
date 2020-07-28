@@ -177,6 +177,12 @@ public class PropostaCondivisioneDAO implements IPropostaCondivisioneDAO {
             AlertBox.display("Errore ricerca", "nessun elemento corrisponde ai criteri di ricerca");
         }
 
+        for (int i = 0; i < proposte.size(); i++){
+            System.out.println("mod :" + proposte.get(i).getMezzo().getModello().getNumPosti() + " posti occupati: " + proposte.get(i).getNumPostiOccupati() + " posti richiesti: " + numPosti);
+            if (( proposte.get(i).getMezzo().getModello().getNumPosti() - proposte.get(i).getNumPostiOccupati() ) < numPosti || ( proposte.get(i).getMezzo().getModello().getNumPosti() - proposte.get(i).getNumPostiOccupati() ) == 0){
+                proposte.remove(i);
+            }
+        }
 
         return proposte;
     }

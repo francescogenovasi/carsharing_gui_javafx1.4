@@ -73,7 +73,7 @@ public class FiltriPaneController{
     ObservableList<Stazione> stazioni = (ObservableList<Stazione>) FXCollections.observableArrayList(CommonBusiness.getInstance().getStazioni());
     ObservableList<Localita> localitas = (ObservableList<Localita>) FXCollections.observableArrayList(CommonBusiness.getInstance().getLocalita());
     ObservableList<Modello> modelli = FXCollections.observableArrayList(CommonBusiness.getInstance().getModelli());
-    ObservableList<String> posti = FXCollections.observableArrayList();
+    ObservableList<String> posti = FXCollections.observableArrayList(CommonBusiness.getInstance().getPosti());
     ObservableList<String> dimensioni = FXCollections.observableArrayList(CommonBusiness.getInstance().getDimensioni()); //enum nel db
     ObservableList<String> tipo = FXCollections.observableArrayList(CommonBusiness.getInstance().getTipologia()); //enum nel db
     ObservableList<String> motore = FXCollections.observableArrayList(CommonBusiness.getInstance().getMotorizzazione()); //enum nel db
@@ -174,13 +174,14 @@ public class FiltriPaneController{
 
     public void risultatiFiltri() throws ParseException, IOException {
         //numero posti almeno uno per forza quindi valore di default se non modificato
-        /* if (CommonBusiness.getInstance().maxPostiPrenotabili() < 1){
+        /*if (CommonBusiness.getInstance().maxPostiPrenotabili() < 1){
             //popup impossibile effettuare prenotazioni
-            AlertBox.display("title", "nessuma macchina disponibile");
+            AlertBox.display("title", "nessuna macchina disponibile");
             pos = 1;
         } else {
             pos = Integer.parseInt(numPosti.getValue());
         }*/
+        pos = Integer.parseInt(numPosti.getValue());
 
         System.out.println("-------------------");
         System.out.println("Filtri:");
