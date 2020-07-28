@@ -9,11 +9,12 @@ import it.unisalento.pps1920.carsharing.view.AlertBox;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PrenotazioneDAO implements IPrenotazioneDAO {
+public class PrenotazioneDAO implements IPrenotazioneDAO{
 
     @Override
     public Prenotazione findById(int id) throws IOException {
@@ -278,9 +279,16 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
         return DbConnection.getInstance().eseguiAggiornamento("UPDATE prenotazione SET prenotazionevalida=0 WHERE idprenotazione = "+ idPrenotazione+";");
     }
 
-    public ArrayList<Prenotazione> getPrenotazioniPerOperatore(Operatore op) throws IOException {
+
+
+    public ArrayList<Prenotazione> getPrenotazioniPerOperatore(Utente u) throws IOException {
         ArrayList<Prenotazione> pren = new ArrayList<Prenotazione>();
-        String sql="SELECT * FROM prenotazione WHERE idstazione_partenza ="+op.getIdstazione()+";";
+        IOperatoreDAO opDAO = new OperatoreDAO();
+        Operatore op = opDAO.findById(u.getId());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        String finaledata= formatter.format(date);
+        String sql="SELECT * FROM prenotazione WHERE idstazione_partenza ="+op.getIdstazione()+" AND dataInizio>'"+finaledata+"';";
 
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery(sql);
 

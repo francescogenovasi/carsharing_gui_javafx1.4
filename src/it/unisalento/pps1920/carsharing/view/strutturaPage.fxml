@@ -37,7 +37,7 @@
             </Menu>
             <Menu fx:id="menuOperatore" mnemonicParsing="false" text="Menu Operatore" visible="false">
               <items>
-                <MenuItem mnemonicParsing="false" text="Visualizza pren stazione NO" />
+                <MenuItem mnemonicParsing="false" text="Visualizza pren stazione" onAction="#loadTabellaOperatore" />
                   <MenuItem mnemonicParsing="false" onAction="#loadVisualizzaMezziPronti" text="Visualizza mezzi pronti" />
                   <MenuItem mnemonicParsing="false" onAction="#loadNuovoMessaggio" text="Scrivi Messaggio" />
                   <MenuItem mnemonicParsing="false" onAction="#loadTabMessaggi" text="Messaggi Ricevuti" />

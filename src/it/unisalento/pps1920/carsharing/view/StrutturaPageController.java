@@ -2,6 +2,7 @@ package it.unisalento.pps1920.carsharing.view;
 
 import it.unisalento.pps1920.carsharing.business.CommonBusiness;
 import it.unisalento.pps1920.carsharing.business.MessaggiBusiness;
+import it.unisalento.pps1920.carsharing.business.PrenotazioneBusiness;
 import it.unisalento.pps1920.carsharing.model.*;
 import it.unisalento.pps1920.carsharing.util.Session;
 import javafx.collections.FXCollections;
@@ -119,7 +120,6 @@ public class StrutturaPageController{
         FXMLLoader lo = new FXMLLoader(getClass().getResource("visualizzaMezziDaPreparare.fxml"));
         Pane pane = (Pane) lo.load();
         VisualizzaMezziDaPreparareController controller = lo.<VisualizzaMezziDaPreparareController>getController();
-
         ObservableList<MezzoDaPreparare> mezzi = FXCollections.observableArrayList(CommonBusiness.getInstance().getMezziDaPreparare()) ;
         controller.setListMezziDaPreparare(mezzi);
         rootPaneStrutturaPage.getChildren().setAll(pane);
@@ -131,9 +131,21 @@ public class StrutturaPageController{
         FXMLLoader lo = new FXMLLoader(getClass().getResource("messaggiRicevuti.fxml"));
         Pane pane = (Pane) lo.load();
         MessaggiRicevutiController controller = lo.<MessaggiRicevutiController>getController();
-
         ObservableList<Messaggio> mess = FXCollections.observableArrayList(MessaggiBusiness.getInstance().getMessaggiDaLeggere(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)))) ;
         controller.setListMessaggi(mess);
+        rootPaneStrutturaPage.getChildren().setAll(pane);
+        rootPaneStrutturaPage.setPrefSize(1000, 600);
+    }
+
+
+
+    @FXML
+    private void loadTabellaOperatore() throws IOException {
+        FXMLLoader lo = new FXMLLoader(getClass().getResource("visualizzaPrenOperatore.fxml"));
+        Pane pane = (Pane) lo.load();
+        VisualizzaPrenOperatoreController controllerr = lo.<VisualizzaPrenOperatoreController>getController();
+        ObservableList<Prenotazione> pren = FXCollections.observableArrayList(PrenotazioneBusiness.getInstance().getStazioniOperatore(((Utente)Session.getInstance().ottieni(Session.UTENTE_LOGGATO)))) ;
+        controllerr.setListPrenOp(pren);
         rootPaneStrutturaPage.getChildren().setAll(pane);
         rootPaneStrutturaPage.setPrefSize(1000, 600);
     }

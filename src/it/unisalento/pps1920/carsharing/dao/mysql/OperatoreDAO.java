@@ -22,14 +22,16 @@ public class OperatoreDAO implements IOperatoreDAO {
     public Operatore findById(int id) {
         Operatore o = null;
 
-        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT O.utente_idutente, U.username, U.password, U.email FROM operatore AS A INNER JOIN utente as U  ON U.idutente = O.utente_idutente WHERE O.utente_idutente = "+id+";");
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT O.utente_idutente, U.username, U.password, U.email, O.stazione_idstazione FROM operatore AS O INNER JOIN utente as U  ON U.idutente = O.utente_idutente WHERE O.utente_idutente = "+id+";");
 
         if(res.size()==1) {
             String[] riga = res.get(0);
             o = new Operatore();
             o.setId(Integer.parseInt(riga[0]));
+            o.setPassword(riga[2]);
             o.setUsername(riga[1]);
             o.setEmail(riga[3]);
+            o.setIdstazione(Integer.parseInt(riga[4]));
         }
         return o;
     }

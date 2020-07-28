@@ -1,13 +1,9 @@
 package it.unisalento.pps1920.carsharing.view;
 
 import it.unisalento.pps1920.carsharing.business.CommonBusiness;
-import it.unisalento.pps1920.carsharing.business.PrenotazioneBusiness;
-import it.unisalento.pps1920.carsharing.business.RichiestaBusiness;
-import it.unisalento.pps1920.carsharing.dao.interfaces.IRichiestaCondivisioneDAO;
-import it.unisalento.pps1920.carsharing.dao.mysql.RichiestaCondivisioneDAO;
+
 import it.unisalento.pps1920.carsharing.model.*;
 import it.unisalento.pps1920.carsharing.util.DateUtil;
-import it.unisalento.pps1920.carsharing.util.Session;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,9 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
 import javafx.util.Callback;
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
