@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -55,6 +56,8 @@ public class FiltriPaneController{
     private ComboBox<String> numPosti;
     @FXML
     private ComboBox<String> dimensioneAuto;
+    @FXML
+    private Label dimensioneAutoLabel;
     @FXML
     private ComboBox<String> tipologia;
     @FXML
@@ -158,6 +161,19 @@ public class FiltriPaneController{
         dataFine.setPromptText("Fine");
     }
 
+    @FXML
+    public void checkVeicolo(){
+        if (tipologia.getValue().equals("Auto")){
+            dimensioneAuto.getSelectionModel().select(dimensioni.size()-1);
+            dimensioneAuto.setVisible(true);
+            dimensioneAutoLabel.setVisible(true);
+        } else {
+            dimensioneAuto.getSelectionModel().select(dimensioni.size()-1);
+            dimensioneAuto.setVisible(false);
+            dimensioneAutoLabel.setVisible(false);
+        }
+    }
+
     public void risultatiFiltri() throws ParseException, IOException {
         //numero posti almeno uno per forza quindi valore di default se non modificato
         /* if (CommonBusiness.getInstance().maxPostiPrenotabili() < 1){
@@ -225,10 +241,10 @@ public class FiltriPaneController{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("tabellaPrenotazioniPage.fxml"));
         Pane pane = (Pane) loader.load();
         //todo controllare dato che non si deve aprire questa finestra
-        TabellaPrenotazioniPageController controller = loader.<TabellaPrenotazioniPageController>getController();
+        //TabellaPrenotazioniPageController controller = loader.<TabellaPrenotazioniPageController>getController();
+        //ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(RicercaBusiness.getInstance().cercaConFiltri(part, arr, loc, pos, inizio, fine, mod, dim, mot, tip));
+        //controller.setListPrenotazioni(prenotazioni);
 
-        ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(RicercaBusiness.getInstance().cercaConFiltri(part, arr, loc, pos, inizio, fine, mod, dim, mot, tip));
-        controller.setListPrenotazioni(prenotazioni);
 
         rootPaneFiltriPane.getChildren().setAll(pane);
         rootPaneFiltriPane.setPrefSize(1000, 600);

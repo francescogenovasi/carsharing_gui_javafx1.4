@@ -101,7 +101,7 @@ public class StrutturaPageController{
         VisualizzaProposteController controller = lo.<VisualizzaProposteController>getController();
 
         ObservableList<PropostaCondivisione> prop = FXCollections.observableArrayList(CommonBusiness.getInstance().getProposteCondivisione()) ;
-        controller.setListProposte(prop);
+        controller.setListProposte(prop, true);
         rootPaneStrutturaPage.getChildren().setAll(pane);
         rootPaneStrutturaPage.setPrefSize(1000, 600);
     }

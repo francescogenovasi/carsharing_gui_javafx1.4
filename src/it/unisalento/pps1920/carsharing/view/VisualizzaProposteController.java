@@ -27,7 +27,7 @@ public class VisualizzaProposteController {
 
     ObservableList<PropostaCondivisione> proposte = FXCollections.observableArrayList();
 
-     public void setListProposte(ObservableList<PropostaCondivisione> p){
+     public void setListProposte(ObservableList<PropostaCondivisione> p, boolean richiedi){
          proposte = p;
 
          TableColumn<PropostaCondivisione, Integer> id = new TableColumn<>("ID Proposta");
@@ -59,7 +59,9 @@ public class VisualizzaProposteController {
 
          tabellaProposteAltri.getColumns().addAll(id, cli, mezzo, postiOccupati, partenza, arrivo, localita, dataInizio, dataFine);
 
-         addButtonToTable();
+         if(richiedi){
+             addButtonToTable();
+         }
 
          tabellaProposteAltri.setItems(proposte);
      }
