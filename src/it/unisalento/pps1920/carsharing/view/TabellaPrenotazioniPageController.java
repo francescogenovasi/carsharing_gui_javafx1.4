@@ -178,7 +178,7 @@ public class TabellaPrenotazioniPageController{
                             System.out.println("modificare: " + getTableView().getItems().get(getIndex()).getId());
                             if (CommonBusiness.getInstance().propostaUgualeCliente(getTableView().getItems().get(getIndex()).getIdPropostaCondivisione(), ((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
                                 //modificabile
-                                AlertBox.display("Prenotazioni", "Lo hai proposto tu");
+                                //AlertBox.display("Prenotazioni", "Lo hai proposto tu");
                                 IPrenotazioneDAO pDAO = new PrenotazioneDAO();
                                 try {
                                     Prenotazione p = pDAO.findById(getTableView().getItems().get(getIndex()).getId());
