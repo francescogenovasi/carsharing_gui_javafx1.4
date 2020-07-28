@@ -14,10 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 
@@ -52,6 +49,10 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
     private Pane rootPanePropostaFormPage;
     @FXML
     private Label dimensioneAutoLabel;
+    @FXML
+    private Label accessoriLabel;
+    @FXML
+    private ScrollPane scrollAccessori;
     @FXML
     private ComboBox<Stazione> partenza;
     @FXML
@@ -180,10 +181,47 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
             dimensioneAuto.getSelectionModel().select(dimensioni.size()-1);
             dimensioneAuto.setVisible(true);
             dimensioneAutoLabel.setVisible(true);
+            scrollAccessori.setVisible(true);
+            accessoriLabel.setVisible(true);
+
+            acc = new ArrayList<Accessorio>();
+            tilePaneAccessori.getChildren().clear();
+            for (int i = 0; i < accessori.size(); i++) {
+                CheckBox cb = new CheckBox(accessori.get(i).getNome());
+                tilePaneAccessori.getChildren().add(cb);
+                EventHandler<ActionEvent> ev = new EventHandler<ActionEvent>() {
+                    public void handle(ActionEvent e)
+                    {
+                        if (cb.isSelected()){
+                            //System.out.println(cb.getText() + " selezionato con id " + AccessorioBusiness.getInstance().findIdAccessorio(cb.getText()));
+                            Accessorio acc_selected = null;
+                            try {
+                                acc_selected = CommonBusiness.getInstance().getAccessorio(AccessorioBusiness.getInstance().findIdAccessorio(cb.getText()));
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                            acc.add(acc_selected);
+                        } else {
+                            //System.out.println(cb.getText() + " deselezionato con id " + AccessorioBusiness.getInstance().findIdAccessorio(cb.getText()));
+                            for (int i=0; i<acc.size(); i++){
+                                if (acc.get(i).getId() == AccessorioBusiness.getInstance().findIdAccessorio(cb.getText())){
+                                    acc.remove(i);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                };
+                cb.setOnAction(ev);
+            }
+
         } else {
+            acc = new ArrayList<Accessorio>();
             dimensioneAuto.getSelectionModel().select(dimensioni.size()-1);
             dimensioneAuto.setVisible(false);
             dimensioneAutoLabel.setVisible(false);
+            scrollAccessori.setVisible(false);
+            accessoriLabel.setVisible(false);
         }
     }
 

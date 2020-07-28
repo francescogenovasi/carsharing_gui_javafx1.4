@@ -37,11 +37,11 @@
       <Label layoutX="367.0" layoutY="242.0" text="Ora fine:" />
       <Label layoutX="23.0" layoutY="42.0" text="Id Cliente:" />
       <ComboBox fx:id="cliente" layoutX="99.0" layoutY="37.0" prefHeight="27.0" prefWidth="177.0" />
-      <ScrollPane fx:id="scrollAccessori" layoutX="445.0" layoutY="280.0" prefHeight="67.0" prefWidth="324.0">
+      <ScrollPane fx:id="scrollAccessori" layoutX="445.0" layoutY="280.0" prefHeight="67.0" prefWidth="324.0" visible="false">
          <content>
             <TilePane fx:id="tilePaneAccessori" nodeOrientation="LEFT_TO_RIGHT" prefHeight="64.0" prefWidth="276.0" tileAlignment="TOP_LEFT" />
          </content>
       </ScrollPane>
-      <Text layoutX="367.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Accessori:" />
+      <Label fx:id="accessoriLabel" layoutX="367.0" layoutY="304.0" text="Accessori:" visible="false" />
    </children>
 </Pane>

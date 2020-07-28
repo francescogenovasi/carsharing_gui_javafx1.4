@@ -25,9 +25,7 @@
       <Label fx:id="dataInizio" layoutX="113.0" layoutY="107.0" text="iniz" />
       <Label fx:id="dataFine" layoutX="407.0" layoutY="107.0" text="fin" />
       <Label layoutX="37.0" layoutY="81.0" text="Localita:" />
-      <Label layoutX="339.0" layoutY="84.0" text="Posti richiesti" />
       <Label fx:id="localita" layoutX="102.0" layoutY="81.0" text="loc" />
-      <Label fx:id="posti" layoutX="430.0" layoutY="84.0" text="posti" />
       <ImageView fx:id="imageAutoRiepilogo" fitHeight="113.0" fitWidth="162.0" layoutX="460.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true" />
       <ScrollPane fx:id="scrollAccessori" layoutX="106.0" layoutY="217.0" prefHeight="67.0" prefWidth="324.0">
          <content>

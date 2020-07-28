@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
@@ -51,6 +52,10 @@ public class RichiestaCondivisioneController {
     private TilePane tilePaneAccessoriAgg;
     @FXML
     private Label mezzo;
+    @FXML
+    private ScrollPane scrollAccessori1;
+    @FXML
+    private Label accessoriLabel1;
 
     ObservableList<String> posti = FXCollections.observableArrayList(CommonBusiness.getInstance().getPosti());
     ObservableList<Accessorio> acc = FXCollections.observableArrayList();
@@ -73,6 +78,12 @@ public class RichiestaCondivisioneController {
         dataInizio.setText(p.getDataInizio().toString());
         dataFine.setText(p.getDataFine().toString());
         imageAutoRiepilogo.setImage(CommonBusiness.getInstance().getFotoModello(p.getMezzo().getModello().getId()));
+
+        if (p.getMezzo().getModello().getTipologia().equals("Auto")){
+            System.out.println();
+            scrollAccessori1.setVisible(true);
+            accessoriLabel1.setVisible(true);
+        }
 
         //accessori già presenti
         for (int i = 0; i < acc.size(); i++) {

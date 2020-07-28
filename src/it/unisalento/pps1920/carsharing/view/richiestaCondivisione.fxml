@@ -35,11 +35,11 @@
       <Label fx:id="mezzo" layoutX="96.0" layoutY="135.0" text="mezzo" />
       <Label layoutX="340.0" layoutY="135.0" text="Numero posti richiesti" />
       <ComboBox fx:id="postiCombo" layoutX="489.0" layoutY="130.0" prefWidth="150.0" />
-      <ScrollPane fx:id="scrollAccessori1" layoutX="327.0" layoutY="254.0" prefHeight="67.0" prefWidth="324.0">
+      <ScrollPane fx:id="scrollAccessori1" layoutX="327.0" layoutY="254.0" prefHeight="67.0" prefWidth="324.0" visible="false">
          <content>
             <TilePane fx:id="tilePaneAccessoriAgg" nodeOrientation="LEFT_TO_RIGHT" prefHeight="64.0" prefWidth="276.0" tileAlignment="TOP_LEFT" />
          </content>
       </ScrollPane>
-      <Text layoutX="200.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aggiungi accessori:" />
+      <Label fx:id="accessoriLabel1" layoutX="200.0" layoutY="283.0" text="Aggiungi accessori:" visible="false" />
     </children>
 </Pane>
