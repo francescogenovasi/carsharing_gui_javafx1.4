@@ -71,7 +71,8 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
     public ArrayList<Prenotazione> prenotazioniCliente(int id) throws IOException {
         ArrayList<Prenotazione> prenotazioni = new ArrayList<Prenotazione>();
 
-        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM prenotazione WHERE cliente_idcliente=" + id + ";");
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM prenotazione WHERE cliente_idcliente=" + id + " AND dataInizio >= '"+DateUtil.fromRomeToLondon(DateUtil.stringFromDate(new Date()))+"';");
+
 
         for (String[] riga : res){
             Prenotazione p = findById(Integer.parseInt(riga[0]));
@@ -204,7 +205,8 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
     public ArrayList<Prenotazione> ricercaPerCliente(int id) throws IOException {
         ArrayList<Prenotazione> prenotazioni = new ArrayList<Prenotazione>();
 
-        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM prenotazione WHERE cliente_idcliente=" + id + ";");
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM prenotazione WHERE cliente_idcliente=" + id + " AND dataInizio >= '"+DateUtil.fromRomeToLondon(DateUtil.stringFromDate(new Date()))+"'AND prenotazionevalida=1;");
+        System.out.println("SELECT * FROM prenotazione WHERE cliente_idcliente=" + id + " AND dataInizio >= ' "+DateUtil.fromRomeToLondon(DateUtil.stringFromDate(new Date()))+" ' AND prenotazionevalida=1;");
 
         for (String[] riga : res){
             Prenotazione p = findById(Integer.parseInt(riga[0]));

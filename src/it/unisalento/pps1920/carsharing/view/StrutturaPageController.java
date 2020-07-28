@@ -77,7 +77,7 @@ public class StrutturaPageController{
         rootPaneStrutturaPage.getChildren().setAll(pane);
     }
 
-    /* @FXML
+    @FXML
     private void loadTabellaPrenotazioniPage() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("tabellaPrenotazioniPage.fxml"));
         Pane pane = (Pane) loader.load();
@@ -98,7 +98,7 @@ public class StrutturaPageController{
 
         rootPaneStrutturaPage.getChildren().setAll(pane);
         rootPaneStrutturaPage.setPrefSize(1000, 600);
-    }*/
+    }
 
     @FXML
     private void loadVisualizzaProposte() throws IOException {

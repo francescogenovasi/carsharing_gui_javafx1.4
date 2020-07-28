@@ -22,8 +22,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#loadPrenotazioniFormPage" text="Nuova Proposta" />
                         <MenuItem mnemonicParsing="false" onAction="#loadVisualizzaProposte" text="Visualizza proposte di sharing" />
                         <MenuItem mnemonicParsing="false" onAction="#loadVisualizzaRichieste" text="ConfermaSharing" />
-                        <MenuItem mnemonicParsing="false" text="Visualizza pren confermate NO" />
-                        <MenuItem mnemonicParsing="false" text="Modifica/cancella pren confermate NO" />
+                        <MenuItem mnemonicParsing="false" onAction="#loadTabellaPrenotazioniPage" text="Visualizza e modifica pren confermate" />
                     </items>
                 </Menu>
             <Menu fx:id="menuAddetto" mnemonicParsing="false" text="Menu Addetto" visible="false">
