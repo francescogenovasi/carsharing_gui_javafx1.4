@@ -55,6 +55,7 @@ public class MezzoProntoAPartireController {
             tabellaMezzi.getColumns().addAll(modello,targa,tipologia, datapr, dataco, postiOccupati);
 
             addButtonToTable();
+            addButtonPagato();
 
 
             tabellaMezzi.setItems(mezzidap);
@@ -64,21 +65,84 @@ public class MezzoProntoAPartireController {
 
 
     private void addButtonToTable() {
-        TableColumn<MezzoDaPreparare, Void> colBtn = new TableColumn("Mezzo Partito?");
+            TableColumn<MezzoDaPreparare, Void> colBtn = new TableColumn("Mezzo Partito?");
+
+            Callback<TableColumn<MezzoDaPreparare, Void>, TableCell<MezzoDaPreparare, Void>> cellFactory = new Callback<TableColumn<MezzoDaPreparare, Void>, TableCell<MezzoDaPreparare, Void>>() {
+                @Override
+                public TableCell<MezzoDaPreparare, Void> call(final TableColumn<MezzoDaPreparare, Void> param) {
+                    final TableCell<MezzoDaPreparare, Void> cell = new TableCell<MezzoDaPreparare, Void>() {
+
+                        private final Button btn = new Button("Partito");
+
+                        {
+                            btn.setOnAction((ActionEvent event) -> {
+                                boolean res= false;
+                                try {
+                                    res = CommonBusiness.getInstance().setPartito(getTableView().getItems().get(getIndex()));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                if (res){
+                                    AlertBox.display("Mezzo Partito", "PARTITO");
+                                    try {
+                                        ObservableList<MezzoDaPreparare> mdp = FXCollections.observableArrayList(CommonBusiness.getInstance().getMezziProntiAPartire()) ;
+                                        setListMezziPronti(mdp);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }else{
+                                    AlertBox.display("Mezzo Partito", "Errore! Accertarsi che il mezzo sia stato pagato!");
+                                }
+
+                            });
+                        }
+
+                        @Override
+                        public void updateItem(Void item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (empty) {
+                                setGraphic(null);
+                            } else {
+                                setGraphic(btn);
+                            }
+                        }
+                    };
+                    return cell;
+                }
+            };
+
+
+
+
+
+        colBtn.setCellFactory(cellFactory);
+
+        tabellaMezzi.getColumns().add(colBtn);
+
+    }
+
+    private void addButtonPagato() {
+        TableColumn<MezzoDaPreparare, Void> colBtnn = new TableColumn("Pagamento Avvenuto?");
 
         Callback<TableColumn<MezzoDaPreparare, Void>, TableCell<MezzoDaPreparare, Void>> cellFactory = new Callback<TableColumn<MezzoDaPreparare, Void>, TableCell<MezzoDaPreparare, Void>>() {
             @Override
             public TableCell<MezzoDaPreparare, Void> call(final TableColumn<MezzoDaPreparare, Void> param) {
                 final TableCell<MezzoDaPreparare, Void> cell = new TableCell<MezzoDaPreparare, Void>() {
 
-                    private final Button btn = new Button("Partito");
+                    private final Button btn = new Button("Pagato");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             int id = getTableView().getItems().get(getIndex()).getId();
-                            boolean res=CommonBusiness.getInstance().setPartito(id);
+                            boolean res= false;
+                            try {
+                                res = CommonBusiness.getInstance().setPagato(getTableView().getItems().get(getIndex()));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             if (res){
-                                AlertBox.display("Mezzo Partito", "PARTITO");
+                                AlertBox.display("Mezzo Pagato", "PAGATO");
                                 try {
                                     ObservableList<MezzoDaPreparare> mdp = FXCollections.observableArrayList(CommonBusiness.getInstance().getMezziProntiAPartire()) ;
                                     setListMezziPronti(mdp);
@@ -105,9 +169,9 @@ public class MezzoProntoAPartireController {
             }
         };
 
-        colBtn.setCellFactory(cellFactory);
+        colBtnn.setCellFactory(cellFactory);
 
-        tabellaMezzi.getColumns().add(colBtn);
+        tabellaMezzi.getColumns().add(colBtnn);
 
     }
 

@@ -4,6 +4,7 @@ import it.unisalento.pps1920.carsharing.DbConnection;
 import it.unisalento.pps1920.carsharing.dao.interfaces.*;
 import it.unisalento.pps1920.carsharing.dao.mysql.*;
 import it.unisalento.pps1920.carsharing.model.*;
+import it.unisalento.pps1920.carsharing.util.DateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -122,11 +123,20 @@ public class CommonBusiness {
         return mDAO.getMezziDaPreparare();
     }
 
-    public boolean setPartito(int id){
-        IMezzoDaPreparareDAO mz=new MezzoDaPreparareDAO();
-        boolean res=mz.mezzoPartito(id);
+    public boolean setPartito(MezzoDaPreparare m) throws IOException {
+        IMezzoDaPreparareDAO mDAO=new MezzoDaPreparareDAO();
+        int a[]=mDAO.prenotazioniFromDateEIdMezzo2(m.getMezzo().getId(), DateUtil.stringFromDate(m.getDataInizio()), DateUtil.stringFromDate(m.getDataFine()));
+        boolean res=mDAO.mezzoPartito(a,m.getId());
         return res;
     }
+
+    public boolean setPagato(MezzoDaPreparare m) throws IOException {
+        IMezzoDaPreparareDAO mDAO = new MezzoDaPreparareDAO();
+        int a[]=mDAO.prenotazioniFromDateEIdMezzo2(m.getMezzo().getId(), DateUtil.stringFromDate(m.getDataInizio()), DateUtil.stringFromDate(m.getDataFine()));
+        boolean res = mDAO.setPagato(a);
+        return res;
+    }
+
 
     public boolean setPronto(int id){
         IMezzoDaPreparareDAO mz=new MezzoDaPreparareDAO();

@@ -2,10 +2,8 @@ package it.unisalento.pps1920.carsharing.dao.mysql;
 
 import it.unisalento.pps1920.carsharing.DbConnection;
 import it.unisalento.pps1920.carsharing.dao.interfaces.IMezzoDaPreparareDAO;
-import it.unisalento.pps1920.carsharing.model.Localita;
-import it.unisalento.pps1920.carsharing.model.MezzoDaPreparare;
-import it.unisalento.pps1920.carsharing.model.Prenotazione;
-import it.unisalento.pps1920.carsharing.model.Stazione;
+import it.unisalento.pps1920.carsharing.dao.interfaces.IPrenotazioneDAO;
+import it.unisalento.pps1920.carsharing.model.*;
 import it.unisalento.pps1920.carsharing.util.DateUtil;
 
 import java.io.IOException;
@@ -74,10 +72,26 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
         return mezziDaPreparare;
     }
 
-    public boolean mezzoPartito(int id){
-        String sql="UPDATE mezzi_da_preparare SET `stato_operatore` = 'Partito' WHERE idmezzi_da_preparare="+id+";";
-        boolean res =DbConnection.getInstance().eseguiAggiornamento(sql);
-        return res;
+    public boolean mezzoPartito(int a[], int id){
+        int pagato=1;
+        ArrayList<String[]> res = new ArrayList<String[]>();
+        for (int i=0; i<a.length ; i++){
+            String sql="SELECT pagamento_ok FROM prenotazione WHERE (`idprenotazione` = '"+a[i]+"');";
+            res = DbConnection.getInstance().eseguiQuery(sql);
+            String[] riga = res.get(0);
+            if (Integer.parseInt(riga[0])==0){
+                pagato=0;
+                break;
+            }
+        }
+
+        if(pagato==1) {
+            String sql = "UPDATE mezzi_da_preparare SET `stato_operatore` = 'Partito' WHERE idmezzi_da_preparare=" + id + ";";
+            boolean ret = DbConnection.getInstance().eseguiAggiornamento(sql);
+            return ret;
+        }else{
+            return false;
+        }
     }
 
     public boolean mezzoPronto(int id){
@@ -153,5 +167,32 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
         }
         return true;
     }
+
+    public boolean setPagato (int[] a) throws IOException {  //Contiene le cose per trovare una prenotazione
+        Prenotazione p=new Prenotazione();
+        boolean ress = false;
+        for (int i=0; i<a.length ; i++){
+            String sql="UPDATE prenotazione SET `pagamento_ok` = '1' WHERE (`idprenotazione` = '"+a[i]+"');";
+            ress = DbConnection.getInstance().eseguiAggiornamento(sql);
+        }
+
+        return ress;
+    }
+
+
+    public int[] prenotazioniFromDateEIdMezzo2(int idMezzo, String dataInizio, String dataFine){
+        dataFine=DateUtil.fromRomeToLondon(dataFine);
+        dataInizio=DateUtil.fromRomeToLondon(dataInizio);
+        dataFine=DateUtil.fromRomeToLondon(dataFine);
+        dataInizio=DateUtil.fromRomeToLondon(dataInizio);
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT idprenotazione FROM carsharing.prenotazione where mezzo_idmezzo=" + idMezzo + " and dataInizio='"+dataInizio+"' and dataFine='"+dataFine+"';");
+        int[] a = new int[res.size()];
+        for (int i = 0; i < res.size(); i++){
+            String[] riga = res.get(i);
+            a[i] = Integer.parseInt(riga[0]);
+        }
+        return a;
+    }
+
 
 }
