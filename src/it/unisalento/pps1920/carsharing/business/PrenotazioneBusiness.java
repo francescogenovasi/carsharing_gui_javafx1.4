@@ -146,6 +146,13 @@ public class PrenotazioneBusiness {
         MailHelper.getInstance().send(dest, "Richiesta rifiutata per posti", testo);
     }
 
+    public ArrayList<Prenotazione> getStazioniOperatore(Operatore op) throws IOException {
+        ArrayList<Prenotazione> pren =new ArrayList<Prenotazione>();
+        IPrenotazioneDAO pDAO = new PrenotazioneDAO();
+        pren=pDAO.getPrenotazioniPerOperatore(op);
+        return pren;
+    }
+
 
 
 }

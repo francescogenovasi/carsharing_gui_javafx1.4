@@ -29,4 +29,6 @@ public interface IPrenotazioneDAO  extends IBaseDAO<Prenotazione> {
     public int[] prenotazioniFromDateEIdMezzo(int idMezzo, String dataInizio, String dataFine);
 
     public boolean setPrenotazioneInvalida(int idPrenotazione);
+
+    public ArrayList<Prenotazione> getPrenotazioniPerOperatore(Operatore op) throws IOException;
 }
