@@ -1,12 +1,14 @@
 package it.unisalento.pps1920.carsharing.dao.mysql;
 
 import it.unisalento.pps1920.carsharing.DbConnection;
+import it.unisalento.pps1920.carsharing.dao.interfaces.IMessaggioDAO;
 import it.unisalento.pps1920.carsharing.model.Cliente;
 import it.unisalento.pps1920.carsharing.model.Messaggio;
+import it.unisalento.pps1920.carsharing.model.Utente;
 
 import java.util.ArrayList;
 
-public class MessaggioDAO {
+public class MessaggioDAO implements IMessaggioDAO {
 
     public Messaggio findById(int id){
         Messaggio m = null;
@@ -37,5 +39,11 @@ public class MessaggioDAO {
         }
 
         return mess;
+    }
+
+    public boolean ScriviMessaggio(Messaggio m){
+        String sql="INSERT INTO messaggi (testo, stato, mittente, destinatario) VALUES ('"+m.getTesto()+"', '"+m.getStato()+"','"+m.getMittente().getId()+"', '"+m.getDestinatario().getId()+"');";
+        boolean res=DbConnection.getInstance().eseguiAggiornamento(sql);
+        return res;
     }
 }
