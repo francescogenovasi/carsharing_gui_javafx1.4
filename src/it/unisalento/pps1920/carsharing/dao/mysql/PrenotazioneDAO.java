@@ -292,5 +292,59 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
         return pren;
     }
 
+    @Override
+    public boolean modificaPrenotazione(Date inizio, Date fine, int posti, Stazione arrivo, Stazione partenza, Localita localita, Prenotazione oldPren){
+        String query = "UPDATE prenotazione SET ";
+        boolean preceduto = false;
+        if (inizio != null){
+            if (preceduto){
+                query = query + ", ";
+            }
+            String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(inizio));
+            query = query + " dataInizio = '"+strDataInizio+"'";
+            preceduto = true;
+
+        }
+        if (fine != null){
+            if (preceduto){
+                query = query + ", ";
+            }
+            String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(fine));
+            query = query + " dataInizio = '"+strDataFine+"' ";
+            preceduto = true;
+        }
+        if (posti != oldPren.getNumPostiOccupati()){
+            if (preceduto){
+                query = query + ", ";
+            }
+            query = query + "num_posti_occupati = "+posti+" ";
+            preceduto = true;
+        }
+        if (localita != null){
+            if (preceduto){
+                query = query + ", ";
+            }
+            query = query + "localita_idlocalita= "+localita.getId()+" ";
+            preceduto = true;
+        }
+        if (partenza != null){
+            if (preceduto){
+                query = query + ", ";
+            }
+            query = query + "idstazione_partenza= "+partenza.getId()+" ";
+            preceduto = true;
+        }
+        if (localita != null){
+            if (preceduto){
+                query = query + ", ";
+            }
+            query = query + "idstazione_arrivo= "+arrivo.getId()+" ";
+            preceduto = true;
+        }
+        query = query + " WHERE idprenotazione = " + oldPren.getId() +";";
+        System.out.println(query);
+        return true;
+    }
+
 
 }

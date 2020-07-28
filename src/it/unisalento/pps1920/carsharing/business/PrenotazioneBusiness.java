@@ -90,14 +90,22 @@ public class PrenotazioneBusiness {
         return true;
     }
 
-    public boolean modificaPrenotazione(Prenotazione p){
-        //logica di business
-        return true;
+    public boolean modificaPrenotazione(Date inizio, Date fine, int posti, Stazione arrivo, Stazione partenza, Localita localita, Prenotazione oldPren) throws IOException {
+        IPrenotazioneDAO pDAO = new PrenotazioneDAO();
+        IPropostaCondivisioneDAO propDAO = new PropostaCondivisioneDAO();
+        PropostaCondivisione prop = propDAO.findById(oldPren.getIdPropostaCondivisione());
+        //int postiDisponibili =  - prop.getNumPostiOccupati();
+        //controllo posti disponibili
+        System.out.println(oldPren.getMezzo().getModello().getNumPosti() +"-("+ prop.getNumPostiOccupati() +"-"+ oldPren.getNumPostiOccupati() +")-"+ posti +">=" +oldPren.getMezzo().getModello().getNumPosti());
+        if (oldPren.getMezzo().getModello().getNumPosti() - (prop.getNumPostiOccupati() - oldPren.getNumPostiOccupati()) - posti >= oldPren.getMezzo().getModello().getNumPosti() ){ //numpostimezzo-numpostioccupati-numpostioccupatidallaprenotazione+numpostinuovapren deve essere minore del numero di posti disponibili in macchina
+            return false;
+        } else {
+            return pDAO.modificaPrenotazione(inizio, fine, posti, arrivo, partenza, localita, oldPren);
+        }
     }
 
     public boolean eliminaPrenotazione(Prenotazione p) throws IOException {
         //settare prenotazionevalida=0 nella tabella delle prenotazioni
-        // todo in lavorazione
         // correzione sul costo richiestabusiness 62
 
         IPrenotazioneDAO pDAO = new PrenotazioneDAO();
