@@ -101,6 +101,7 @@ public class PrenotazioneBusiness {
         } else {
             if (pDAO.modificaPrenotazione(inizio, fine, posti, arrivo, partenza, localita, oldPren)){
                 new MezzoDaPreparareDAO().modificaTabella(inizio, fine, posti, arrivo, partenza, localita, oldPren);
+                new PropostaCondivisioneDAO().modificaTabella(inizio, fine, posti, arrivo, partenza, localita, oldPren);
                 return true;
             } else {
                 return false;

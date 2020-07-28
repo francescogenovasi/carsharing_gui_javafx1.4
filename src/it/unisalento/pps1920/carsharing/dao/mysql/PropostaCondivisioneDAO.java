@@ -205,4 +205,32 @@ public class PropostaCondivisioneDAO implements IPropostaCondivisioneDAO {
             return false;
         }
     }
+
+    public boolean modificaTabella(Date inizio, Date fine, int posti, Stazione arrivo, Stazione partenza, Localita localita, Prenotazione oldPren) throws IOException {
+        PropostaCondivisione prop = findById(oldPren.getIdPropostaCondivisione());
+
+        if(posti != oldPren.getNumPostiOccupati()){
+            int numPostiAggiornati = prop.getNumPostiOccupati()-oldPren.getNumPostiOccupati()+posti;
+            DbConnection.getInstance().eseguiAggiornamento("UPDATE proposta_condivisione SET num_posti_occupati="+numPostiAggiornati+" WHERE idproposta_condivisione="+prop.getId()+";");
+        }
+        if (inizio != null){
+            String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(inizio));
+            DbConnection.getInstance().eseguiAggiornamento("UPDATE proposta_condivisione SET dataInizio='"+strDataInizio+"' WHERE idproposta_condivisione="+prop.getId()+";");
+        }
+        if (fine != null){
+            String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(fine));
+            DbConnection.getInstance().eseguiAggiornamento("UPDATE proposta_condivisione SET dataInizio='"+strDataFine+"' WHERE idproposta_condivisione="+prop.getId()+";");
+        }
+        if (arrivo != null){
+            DbConnection.getInstance().eseguiAggiornamento("UPDATE proposta_condivisione SET idstazione_arrivo="+arrivo.getId()+" WHERE idproposta_condivisione="+prop.getId()+";");
+        }
+        if (partenza != null){
+            DbConnection.getInstance().eseguiAggiornamento("UPDATE proposta_condivisione SET idstazione_partenza="+partenza.getId()+" WHERE idproposta_condivisione="+prop.getId()+";");
+        }
+        if (localita != null){
+            DbConnection.getInstance().eseguiAggiornamento("UPDATE proposta_condivisione SET localita_localita="+localita.getId()+" WHERE idproposta_condivisione="+prop.getId()+";");
+        }
+
+        return true;
+    }
 }
