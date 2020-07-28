@@ -4,6 +4,8 @@ import it.unisalento.pps1920.carsharing.business.CommonBusiness;
 import it.unisalento.pps1920.carsharing.business.MessaggiBusiness;
 import it.unisalento.pps1920.carsharing.business.PrenotazioneBusiness;
 import it.unisalento.pps1920.carsharing.model.*;
+import it.unisalento.pps1920.carsharing.util.DateUtil;
+import it.unisalento.pps1920.carsharing.util.PdfHelper;
 import it.unisalento.pps1920.carsharing.util.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +16,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class StrutturaPageController{
     @FXML
@@ -114,6 +117,16 @@ public class StrutturaPageController{
 
         rootPaneStrutturaPage.getChildren().setAll(pane);
         rootPaneStrutturaPage.setPrefSize(1000, 600);
+    }
+
+    @FXML
+    private void pdfTuttePrenotazioni() throws IOException {
+        ArrayList<Prenotazione> pren = PrenotazioneBusiness.getInstance().getPrenotazioniPerAdmin();
+        ArrayList<String> testo = new ArrayList<String>();
+        for (int i = 0; i < pren.size(); i++){
+            testo.add("ID: " + pren.get(i).getId() + " dal " + DateUtil.stringFromDate(pren.get(i).getDataInizio()) + " al " + DateUtil.stringFromDate(pren.get(i).getDataInizio()) + " di " + pren.get(i).getCliente().getUsername() + ". Pagamento: " + pren.get(i).getPagamento());
+        }
+        //PdfHelper.getInstance().creaPdfAdmin(testo); //todo pdf commentato per non cambiare sempre path
     }
 
     @FXML

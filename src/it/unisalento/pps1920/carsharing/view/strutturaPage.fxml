@@ -50,6 +50,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#loadNuovoMessaggio" text="Scrivi Messaggio" />
                         <MenuItem mnemonicParsing="false" onAction="#loadTabMessaggi" text="Messaggi Ricevuti" />
                         <MenuItem mnemonicParsing="false" onAction="#loadTuttePrenotazioni" text="Tutte le prenotazioni" />
+                        <MenuItem mnemonicParsing="false" onAction="#pdfTuttePrenotazioni" text="Crea PDF di tutte le prenotazioni" />
                     </items>
                 </Menu>
             </menus>

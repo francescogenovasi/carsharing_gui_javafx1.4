@@ -81,9 +81,16 @@ public class PrenotazioneBusiness {
 
         //4. generare pdf per l'utente
         ArrayList<String> testo = new ArrayList<String>();
-        testo.add("Codice prenotazione: "+p.getId());
-        testo.add("Il giorno...");
+        testo.add("Codice prenotazione: "+ p.getId());
+        testo.add("Prenotazione effettuata il: "+DateUtil.stringFromDate(p.getData()));
+        testo.add("Inizio : "+DateUtil.stringFromDate(p.getDataInizio()));
+        testo.add("Fine : "+DateUtil.stringFromDate(p.getDataFine()));
+        testo.add("Da : "+p.getPartenza().getNome());
+        testo.add("A : "+p.getArrivo().getNome());
+        testo.add("Numero posti prenotati : "+p.getNumPostiOccupati());
+        testo.add("Con : "+p.getMezzo().getModello().getNome() + " targato: " + p.getMezzo().getTarga());
         testo.add("Stampa questo file e presentati in stazione");
+        testo.add("A presto :) ");
         //PdfHelper.getInstance().creaPdf(testo, p.getId()); //todo pdf commentato per non cambiare sempre path
         System.out.println("pdf ok");
 
