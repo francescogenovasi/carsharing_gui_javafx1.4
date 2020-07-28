@@ -239,7 +239,6 @@ public class FiltriPaneController{
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("visualizzaProposte.fxml"));
         Pane pane = (Pane) loader.load();
-        //todo controllare dato che non si deve aprire questa finestra
         //TabellaPrenotazioniPageController controller = loader.<TabellaPrenotazioniPageController>getController();
         //ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(RicercaBusiness.getInstance().cercaConFiltri(part, arr, loc, pos, inizio, fine, mod, dim, mot, tip));
         //controller.setListPrenotazioni(prenotazioni);

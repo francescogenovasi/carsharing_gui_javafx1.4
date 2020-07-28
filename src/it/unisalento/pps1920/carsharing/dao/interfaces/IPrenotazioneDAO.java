@@ -16,7 +16,6 @@ public interface IPrenotazioneDAO  extends IBaseDAO<Prenotazione> {
 
     public void salvaPrenotazione(Prenotazione p, List<Accessorio> a, float costo, boolean nuovoInserimento) throws IOException;
 
-    //todo in lavorazione
     //public ArrayList<Prenotazione> ricercaConFiltri (Stazione partenza, Stazione arrivo, Localita localita, int numPosti, Date inizio, Date fine, Modello modello, String dimensione, String motorizzazione, String tipologia) throws IOException;
 
     public ArrayList<Prenotazione> ricercaPerCliente(int id) throws IOException;
