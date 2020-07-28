@@ -142,6 +142,7 @@ public class PrenotazioneBusiness {
             //elimina il record della tabella  mezzi_da_preparare e setta proposta invalida
             IMezzoDaPreparareDAO mDAO = new MezzoDaPreparareDAO();
             mDAO.eliminaRecord(p);
+            new PropostaCondivisioneDAO().setPropostaInvalida(p.getIdPropostaCondivisione());
         }
         boolean res1 = pDAO.setPrenotazioneInvalida(p.getId());
 
