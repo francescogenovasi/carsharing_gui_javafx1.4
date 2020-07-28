@@ -3,6 +3,7 @@ package it.unisalento.pps1920.carsharing.view;
 import it.unisalento.pps1920.carsharing.business.MessaggiBusiness;
 import it.unisalento.pps1920.carsharing.model.Messaggio;
 import it.unisalento.pps1920.carsharing.model.Utente;
+import it.unisalento.pps1920.carsharing.util.DateUtil;
 import it.unisalento.pps1920.carsharing.util.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,8 +14,14 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
+import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class ScriviMessaggioController {
 
@@ -45,10 +52,16 @@ public class ScriviMessaggioController {
             if (destinatario.getValue().getId()==((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId()){
                 AlertBox.display("Nuovo Messaggio", "Attenzione, ti stai auto-mandando un messaggio");
             }
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = new Date();
+            String finaledata= formatter.format(date);
             m.setTesto(testoField.getText());
             m.setMittente(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)));
             m.setDestinatario(destinatario.getValue());
             m.setStato("Non letto");
+            m.setDatainvio(finaledata);
+
             boolean re = MessaggiBusiness.getInstance().scriviMessaggio(m);
             if (re) {
                 AlertBox.display("Nuovo Messaggio", "Messaggio Inviato Correttamente");
@@ -63,5 +76,7 @@ public class ScriviMessaggioController {
         Pane pane = FXMLLoader.load(getClass().getResource("tabsRicercaPage.fxml"));
         rootScriviMessaggioPane.getChildren().setAll(pane);
     }
+
+
 
 }

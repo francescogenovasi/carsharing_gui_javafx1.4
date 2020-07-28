@@ -59,5 +59,18 @@ public class MessaggiBusiness {
         return res;
     }
 
+    public ArrayList<Messaggio> getMessaggiDaLeggere (Utente destinatario){
+        ArrayList<Messaggio> ricevuti = new ArrayList<Messaggio>();
+        IMessaggioDAO meDAO = new MessaggioDAO();
+        ricevuti=meDAO.getMessaggiDaLeggere(destinatario);
+        return ricevuti;
+    }
+
+    public boolean setLetto(Messaggio m){
+        boolean res;
+        IMessaggioDAO meDAO = new MessaggioDAO();
+        res=meDAO.setLetto(m);
+        return res;
+    }
 
 }

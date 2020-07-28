@@ -1,20 +1,32 @@
 package it.unisalento.pps1920.carsharing.model;
 
+import java.util.Date;
+
 public class Messaggio {
     private int idmessaggi;
     private String testo;
     private Utente mittente;
     private Utente destinatario;
     private String stato;
+    private String datainvio;
 
     public Messaggio(){}
 
-    public Messaggio(int idmessaggi, String testo, Utente mittente, Utente destinatario, String stato){
+    public Messaggio(int idmessaggi, String testo, Utente mittente, Utente destinatario, String stato, String datainvio){
         this.idmessaggi=idmessaggi;
         this.testo=testo;
         this.destinatario=destinatario;
         this.mittente=mittente;
         this.stato=stato;
+        this.datainvio=datainvio;
+    }
+
+    public String getDatainvio() {
+        return datainvio;
+    }
+
+    public void setDatainvio(String datainvio) {
+        this.datainvio = datainvio;
     }
 
     public int getIdmessaggi() {

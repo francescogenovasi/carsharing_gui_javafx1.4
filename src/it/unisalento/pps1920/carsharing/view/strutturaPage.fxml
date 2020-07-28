@@ -32,6 +32,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#loadAggiungiMezzo" text="Aggiungi Mezzo" />
                   <MenuItem mnemonicParsing="false" onAction="#loadAggiungiModello" text="Aggiungi Modello" />
                   <MenuItem mnemonicParsing="false" onAction="#loadNuovoMessaggio" text="Scrivi Messaggio" />
+                  <MenuItem mnemonicParsing="false" onAction="#loadTabMessaggi" text="Messaggi Ricevuti" />
               </items>
             </Menu>
             <Menu fx:id="menuOperatore" mnemonicParsing="false" text="Menu Operatore" visible="false">
@@ -39,6 +40,7 @@
                 <MenuItem mnemonicParsing="false" text="Visualizza pren stazione NO" />
                   <MenuItem mnemonicParsing="false" onAction="#loadVisualizzaMezziPronti" text="Visualizza mezzi pronti" />
                   <MenuItem mnemonicParsing="false" onAction="#loadNuovoMessaggio" text="Scrivi Messaggio" />
+                  <MenuItem mnemonicParsing="false" onAction="#loadTabMessaggi" text="Messaggi Ricevuti" />
               </items>
             </Menu>
                 <Menu fx:id="menuAdmin" mnemonicParsing="false" text="Menu Admin" visible="false">
@@ -46,6 +48,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#loadRegistrazioneAddetto" text="Inserisci Addetto" />
                         <MenuItem mnemonicParsing="false" onAction="#loadRegistrazioneOperatore" text="Inserisci Operatore" />
                         <MenuItem mnemonicParsing="false" onAction="#loadNuovoMessaggio" text="Scrivi Messaggio" />
+                        <MenuItem mnemonicParsing="false" onAction="#loadTabMessaggi" text="Messaggi Ricevuti" />
                     </items>
                 </Menu>
             </menus>
