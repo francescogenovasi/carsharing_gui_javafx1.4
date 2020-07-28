@@ -42,6 +42,12 @@ public class StrutturaPageController{
     }
 
     @FXML
+    private void loadNuovoMessaggio() throws IOException {
+        Pane pane = FXMLLoader.load(getClass().getResource("scriviMessaggio.fxml"));
+        rootPaneStrutturaPage.getChildren().setAll(pane);
+    }
+
+    @FXML
     private void loadAggiungiMezzo() throws IOException {
         Pane pane = FXMLLoader.load(getClass().getResource("aggiuntaMezzo.fxml"));
         rootPaneStrutturaPage.getChildren().setAll(pane);

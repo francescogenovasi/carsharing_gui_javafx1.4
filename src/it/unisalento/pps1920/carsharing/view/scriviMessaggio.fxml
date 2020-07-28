@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.text.Text?>
+<Pane fx:id="rootScriviMessaggioPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450" prefWidth="900" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.pps1920.carsharing.view.ScriviMessaggioController">
+    <children>
+
+        <Text layoutX="364.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCRIVI NUOVO MESSAGGIO" />
+        <Label layoutX="52.0" layoutY="110.0" text="Destinatario" />
+        <Label layoutX="52.0" layoutY="150.0" text="Testo del Messaggio" />
+        <TextArea fx:id="testoField" layoutX="180.0" layoutY="150.0" promptText="Testo Messaggio" />
+        <ComboBox fx:id="destinatario" layoutX="180.0" layoutY="110.0" prefWidth="150.0" />
+        <Button id="buttonHome" fx:id="buttonHome" layoutX="528.0" layoutY="377.0" mnemonicParsing="false" onAction="#goHome" prefHeight="25.0" prefWidth="131.0" text="Back Home" />
+        <Button id="buttonInvia" fx:id="buttonInvia" layoutX="178.0" layoutY="377.0" mnemonicParsing="false" onAction="#loadInviaMessaggio" prefHeight="25.0" prefWidth="131.0"  text="Invia Messaggio" />
+
+    </children>
+</Pane>
+

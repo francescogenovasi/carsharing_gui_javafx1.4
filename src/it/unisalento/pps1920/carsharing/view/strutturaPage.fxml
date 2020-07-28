@@ -32,18 +32,21 @@
                   <MenuItem mnemonicParsing="false" onAction="#loadAggiungiAccessorio" text="Aggiungi Accessorio" />
                   <MenuItem mnemonicParsing="false" onAction="#loadAggiungiMezzo" text="Aggiungi Mezzo" />
                   <MenuItem mnemonicParsing="false" onAction="#loadAggiungiModello" text="Aggiungi Modello" />
+                  <MenuItem mnemonicParsing="false" onAction="#loadNuovoMessaggio" text="Scrivi Messaggio" />
               </items>
             </Menu>
             <Menu fx:id="menuOperatore" mnemonicParsing="false" text="Menu Operatore" visible="false">
               <items>
                 <MenuItem mnemonicParsing="false" text="Visualizza pren stazione NO" />
                   <MenuItem mnemonicParsing="false" onAction="#loadVisualizzaMezziPronti" text="Visualizza mezzi pronti" />
+                  <MenuItem mnemonicParsing="false" onAction="#loadNuovoMessaggio" text="Scrivi Messaggio" />
               </items>
             </Menu>
                 <Menu fx:id="menuAdmin" mnemonicParsing="false" text="Menu Admin" visible="false">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#loadRegistrazioneAddetto" text="Inserisci Addetto" />
                         <MenuItem mnemonicParsing="false" onAction="#loadRegistrazioneOperatore" text="Inserisci Operatore" />
+                        <MenuItem mnemonicParsing="false" onAction="#loadNuovoMessaggio" text="Scrivi Messaggio" />
                     </items>
                 </Menu>
             </menus>

@@ -4,6 +4,7 @@ import it.unisalento.pps1920.carsharing.DbConnection;
 import it.unisalento.pps1920.carsharing.dao.interfaces.IOperatoreDAO;
 import it.unisalento.pps1920.carsharing.model.Addetto;
 import it.unisalento.pps1920.carsharing.model.Operatore;
+import it.unisalento.pps1920.carsharing.model.Utente;
 
 import java.util.ArrayList;
 
@@ -55,4 +56,36 @@ public class OperatoreDAO implements IOperatoreDAO {
         System.out.println("id operatore inserito:" + o.getId());
         return res;
     }
+
+
+    public Utente findIdOperatore(int id) {
+        Utente u = null;
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT O.utente_idutente, U.username, U.password, U.email FROM operatore AS O INNER JOIN utente as U  ON U.idutente = O.utente_idutente WHERE O.utente_idutente = "+id+";");
+        if(res.size() == 1){
+            String riga[] = res.get(0);
+            u = new Utente();
+            u.setId(Integer.parseInt(riga[0]));
+            u.setUsername(riga[1]);
+            u.setPassword(riga[2]);
+            u.setEmail(riga[3]);
+        }
+
+        return u;
+    }
+
+    public ArrayList<Utente> findAllFormaUtente() {
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT O.utente_idutente, U.username, U.password, U.email FROM operatore AS O INNER JOIN utente as U  ON U.idutente = O.utente_idutente ;");
+
+        ArrayList<Utente> ut = new ArrayList<Utente>(); //istanziare model con risultati query
+
+        for(String[] riga : res) {
+            Utente u = findIdOperatore(Integer.parseInt(riga[0]));
+            ut.add(u);
+        }
+
+        return ut;
+    }
+
+
+
 }
