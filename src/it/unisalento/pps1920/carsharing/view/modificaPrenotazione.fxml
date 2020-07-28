@@ -23,8 +23,8 @@
       <Label layoutX="18.0" layoutY="238.0" text="Data inizio:" />
       <Label layoutX="18.0" layoutY="290.0" text="Data fine:" />
       <Label fx:id="dimensioneAutoLabel" layoutX="23.0" layoutY="336.0" text="Dimensione richiesta:" visible="false" />
-      <Button layoutX="248.0" layoutY="388.0" mnemonicParsing="false" onAction="#check" text="Avanti" />
-      <Button layoutX="387.0" layoutY="388.0" mnemonicParsing="false" text="Indietro" />
+      <Button layoutX="248.0" layoutY="388.0" mnemonicParsing="false" onAction="#modifica" text="Avanti" />
+      <Button layoutX="387.0" layoutY="388.0" mnemonicParsing="false" onAction="#indietro" text="Indietro" />
       <ComboBox fx:id="oraInizio" layoutX="442.0" layoutY="235.0" prefHeight="25.0" prefWidth="72.0" />
       <ComboBox fx:id="minutoFine" layoutX="559.0" layoutY="287.0" prefHeight="25.0" prefWidth="72.0" />
       <ComboBox fx:id="oraFine" layoutX="442.0" layoutY="287.0" prefHeight="25.0" prefWidth="72.0" />

@@ -6,6 +6,7 @@ import it.unisalento.pps1920.carsharing.dao.interfaces.IPrenotazioneDAO;
 import it.unisalento.pps1920.carsharing.dao.mysql.PrenotazioneDAO;
 import it.unisalento.pps1920.carsharing.model.MezzoDaPreparare;
 import it.unisalento.pps1920.carsharing.model.Prenotazione;
+import it.unisalento.pps1920.carsharing.model.TabConfermaRichieste;
 import it.unisalento.pps1920.carsharing.model.Utente;
 import it.unisalento.pps1920.carsharing.util.DateUtil;
 import it.unisalento.pps1920.carsharing.util.Session;
@@ -50,8 +51,8 @@ public class TabellaPrenotazioniPageController{
         TableColumn<Prenotazione, String> idStazPart = new TableColumn<Prenotazione, String>("Stazione Partenza");
         TableColumn<Prenotazione, String> idStazArr = new TableColumn<Prenotazione, String>("Stazione Arrivo");
         TableColumn<Prenotazione, String> idLocalita = new TableColumn<Prenotazione, String>("Localita");
-        TableColumn dataInizio = new TableColumn("Data Inizio");
-        TableColumn dataFine = new TableColumn("Data Fine");
+        //TableColumn dataInizio = new TableColumn("Data Inizio");
+        //TableColumn dataFine = new TableColumn("Data Fine");
 
         float idPrenotazioneWidth = 50;
         float dataPrenotazioneWidth = 200;
@@ -72,14 +73,19 @@ public class TabellaPrenotazioniPageController{
         idStazPart.setPrefWidth(idStazPartWidth);
         idStazArr.setPrefWidth(idStazArrWidth);
         idLocalita.setPrefWidth(idLocalitaWidth);
-        dataInizio.setPrefWidth(dataInizioWidth);
-        dataFine.setPrefWidth(dataFineWidth);
+        //dataInizio.setPrefWidth(dataInizioWidth);
+        //dataFine.setPrefWidth(dataFineWidth);
 
 //idPrenotazioneWidth + dataPrenotazioneWidth + idClienteWidth + idMezzoWidth + numPostiOccWidth + idStazPartWidth + idStazArrWidth + idLocalitaWidth + dataInizioWidth + dataFineWidth
         float prefWidth = 900;
         float prefHeight = 400;
 
         tabellaPrenotazioni.setPrefSize(prefWidth, prefHeight);
+
+        TableColumn<Prenotazione, String> dataInizio = new TableColumn<>("inizio");
+        dataInizio.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(cellData.getValue().getDataInizio()))));
+        TableColumn<Prenotazione, String> dataFine = new TableColumn<>("fine");
+        dataFine.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(cellData.getValue().getDataFine()))));
 
         tabellaPrenotazioni.getColumns().addAll(idPrenotazione, dataPrenotazione, idCliente, idMezzo, numPostiOcc, idStazPart, idStazArr, idLocalita, dataInizio, dataFine);
 
@@ -92,8 +98,8 @@ public class TabellaPrenotazioniPageController{
         idStazPart.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPartenza().getNome()));
         idStazArr.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getArrivo().getNome()));
         idLocalita.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLocalita().getCitta()));
-        dataInizio.setCellValueFactory(new PropertyValueFactory<Prenotazione,String>("dataInizio"));
-        dataFine.setCellValueFactory(new PropertyValueFactory<Prenotazione,String>("dataFine"));
+        //dataInizio.setCellValueFactory(new PropertyValueFactory<Prenotazione,String>("dataInizio"));
+        //dataFine.setCellValueFactory(new PropertyValueFactory<Prenotazione,String>("dataFine"));
 
 
         addButtonElimina();

@@ -130,7 +130,7 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
                 numPostiAggiornati = Integer.parseInt(riga[0])-oldPren.getNumPostiOccupati()+posti;
             }
             System.out.println("UPDATE mezzi_da_preparare SET posti_occupati="+numPostiAggiornati+" WHERE mezzo_idmezzo="+oldPren.getMezzo().getId()+" AND dataInizio='"+DateUtil.fromRomeToLondon(strDataInizioVecchia)+"' AND dataFine ='"+DateUtil.fromRomeToLondon(strDataFineVecchia)+"';");
-            DbConnection.getInstance().eseguiAggiornamento("UPDATE mezzi_da_preparare SET posti_occupati="+numPostiAggiornati+" WHERE mezzo_idmezzo="+oldPren.getMezzo().getModello()+" AND dataInizio='"+DateUtil.fromRomeToLondon(strDataInizioVecchia)+"' AND dataFine ='"+DateUtil.fromRomeToLondon(strDataFineVecchia)+"';");
+            DbConnection.getInstance().eseguiAggiornamento("UPDATE mezzi_da_preparare SET posti_occupati="+numPostiAggiornati+" WHERE mezzo_idmezzo="+oldPren.getMezzo().getId()+" AND dataInizio='"+DateUtil.fromRomeToLondon(strDataInizioVecchia)+"' AND dataFine ='"+DateUtil.fromRomeToLondon(strDataFineVecchia)+"';");
         }
         if (inizio != null && fine==null){
             String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(inizio));

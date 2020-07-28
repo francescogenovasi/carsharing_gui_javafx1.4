@@ -338,12 +338,74 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
             if (preceduto){
                 query = query + ", ";
             }
-            query = query + "idstazione_arrivo= "+arrivo.getId()+" ";
+            query = query + "idstazione_arrivo= "+localita.getId()+" ";
             preceduto = true;
         }
         query = query + " WHERE idprenotazione = " + oldPren.getId() +";";
         System.out.println(query);
         return DbConnection.getInstance().eseguiAggiornamento(query);
+    }
+
+    @Override
+    public int[] prenotazioniFromIdProposta(int idProposta){
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT idprenotazione FROM prenotazione where idproposta_condivisione="+idProposta+" and prenotazionevalida=1;");
+        int[] a = new int[res.size()];
+        for (int i = 0; i < res.size(); i++){
+            String[] riga = res.get(i);
+            a[i] = Integer.parseInt(riga[0]);
+        }
+        return a;
+    }
+
+    @Override
+    public boolean modificaAltrePrenotazioni(Date inizio, Date fine, int posti, Stazione arrivo, Stazione partenza, Localita localita, Prenotazione oldPren){
+        int[] a = prenotazioniFromIdProposta(oldPren.getIdPropostaCondivisione());
+        for (int i = 0; i < a.length; i++){
+            String query = "UPDATE prenotazione SET ";
+            boolean preceduto = false;
+            if (inizio != null){
+                if (preceduto){
+                    query = query + ", ";
+                }
+                String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(inizio));
+                query = query + " dataInizio = '"+strDataInizio+"'";
+                preceduto = true;
+
+            }
+            if (fine != null){
+                if (preceduto){
+                    query = query + ", ";
+                }
+                String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(fine));
+                query = query + " dataInizio = '"+strDataFine+"' ";
+                preceduto = true;
+            }
+            if (localita != null){
+                if (preceduto){
+                    query = query + ", ";
+                }
+                query = query + "localita_idlocalita= "+localita.getId()+" ";
+                preceduto = true;
+            }
+            if (partenza != null){
+                if (preceduto){
+                    query = query + ", ";
+                }
+                query = query + "idstazione_partenza= "+partenza.getId()+" ";
+                preceduto = true;
+            }
+            if (localita != null){
+                if (preceduto){
+                    query = query + ", ";
+                }
+                query = query + "idstazione_arrivo= "+arrivo.getId()+" ";
+                preceduto = true;
+            }
+            query = query + " WHERE idprenotazione = " + a[i] +";";
+            System.out.println(query);
+            DbConnection.getInstance().eseguiAggiornamento(query);
+        }
+        return true;
     }
 
 

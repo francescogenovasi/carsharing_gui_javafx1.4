@@ -228,7 +228,7 @@ public class PropostaCondivisioneDAO implements IPropostaCondivisioneDAO {
             DbConnection.getInstance().eseguiAggiornamento("UPDATE proposta_condivisione SET idstazione_partenza="+partenza.getId()+" WHERE idproposta_condivisione="+prop.getId()+";");
         }
         if (localita != null){
-            DbConnection.getInstance().eseguiAggiornamento("UPDATE proposta_condivisione SET localita_localita="+localita.getId()+" WHERE idproposta_condivisione="+prop.getId()+";");
+            DbConnection.getInstance().eseguiAggiornamento("UPDATE proposta_condivisione SET localita_idlocalita="+localita.getId()+" WHERE idproposta_condivisione="+prop.getId()+";");
         }
 
         return true;

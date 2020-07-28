@@ -231,4 +231,6 @@ public class CommonBusiness {
         IPrenotazioneDAO pDAO = new PrenotazioneDAO();
         return pDAO.prenotazioniFromDateEIdMezzo(idMezzo, dataInizio, dataFine);
     }
+
+
 }
