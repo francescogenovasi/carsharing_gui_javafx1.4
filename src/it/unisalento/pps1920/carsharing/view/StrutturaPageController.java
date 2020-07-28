@@ -112,8 +112,6 @@ public class StrutturaPageController{
         rootPaneStrutturaPage.setPrefSize(1000, 600);
     }
 
-
-
     @FXML
     private void loadVisualizzaMezziDaPreparare() throws IOException {
         //System.out.println("nisnifijfisjisdjijfdsijsdfijfdsijfdijidfsjfjdifjdsijjfijifdsjifjsdij");
