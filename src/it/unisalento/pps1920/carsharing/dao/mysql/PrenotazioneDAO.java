@@ -229,7 +229,8 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
 
     @Override
     public int getNumeroClientiSharing(int idProposta){
-        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT count(*) FROM (SELECT * FROM prenotazione WHERE idproposta_condivisione = " + idProposta + ") AS a;");
+        System.out.println("SELECT count(*) FROM (SELECT * FROM prenotazione WHERE idproposta_condivisione = " + idProposta + " AND prenotazionevalida=1) AS a;");
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT count(*) FROM (SELECT * FROM prenotazione WHERE idproposta_condivisione = " + idProposta + " AND prenotazionevalida=1) AS a;");
         if (res.size() == 1){
             String[] riga = res.get(0);
             return Integer.parseInt(riga[0]);
@@ -238,9 +239,14 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
         }
     }
 
-    public void correggiCosto(int idProposta) throws IOException { //se aggiungo clienti allo sharing allora il costo diminuisce
+    public void correggiCosto(int idProposta, boolean aggiunta) throws IOException { //se aggiungo/eliminano clienti allo sharing allora il costo varia
         int clientiPrima = getNumeroClientiSharing(idProposta);
-        int clientiDopo = clientiPrima + 1;
+        int clientiDopo;
+        if (aggiunta){
+            clientiDopo = clientiPrima + 1;
+        } else {
+            clientiDopo = clientiPrima - 1;
+        }
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT idprenotazione, mezzo_idmezzo, costo_tot from prenotazione where idproposta_condivisione = " + idProposta + ";");
         for (String[] riga : res){
             int idPren = Integer.parseInt(riga[0]);
@@ -265,6 +271,11 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
             a[i] = Integer.parseInt(riga[0]);
         }
         return a;
+    }
+
+    @Override
+    public boolean setPrenotazioneInvalida(int idPrenotazione){
+        return DbConnection.getInstance().eseguiAggiornamento("UPDATE prenotazione SET prenotazionevalida=0 WHERE idprenotazione = "+ idPrenotazione+";");
     }
 
 }

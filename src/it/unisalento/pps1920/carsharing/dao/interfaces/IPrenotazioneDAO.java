@@ -24,7 +24,9 @@ public interface IPrenotazioneDAO  extends IBaseDAO<Prenotazione> {
 
     public int getNumeroClientiSharing(int idProposta);
 
-    public void correggiCosto(int idProposta) throws IOException;
+    public void correggiCosto(int idProposta, boolean aggiunta) throws IOException;
 
     public int[] prenotazioniFromDateEIdMezzo(int idMezzo, String dataInizio, String dataFine);
+
+    public boolean setPrenotazioneInvalida(int idPrenotazione);
 }

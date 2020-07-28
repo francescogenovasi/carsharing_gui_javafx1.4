@@ -3,6 +3,7 @@ package it.unisalento.pps1920.carsharing.dao.mysql;
 import it.unisalento.pps1920.carsharing.DbConnection;
 import it.unisalento.pps1920.carsharing.dao.interfaces.IMezzoDaPreparareDAO;
 import it.unisalento.pps1920.carsharing.model.MezzoDaPreparare;
+import it.unisalento.pps1920.carsharing.model.Prenotazione;
 import it.unisalento.pps1920.carsharing.util.DateUtil;
 
 import java.io.IOException;
@@ -80,6 +81,37 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
         String sql="UPDATE mezzi_da_preparare SET `stato_addetto` = 'Pronto' WHERE idmezzi_da_preparare="+id+";";
         boolean res =DbConnection.getInstance().eseguiAggiornamento(sql);
         return res;
+    }
+
+    @Override
+    public boolean updateNumeroPosti(Prenotazione p){
+        //decrementa il numero di posti dalla tabella mezzi_da_preparare
+        String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataInizio()));
+        String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataFine()));
+        System.out.println("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = " + p.getMezzo().getId() + " AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato_addetto = 'Non Pronto' ;");
+        ArrayList<String[]> res2 = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = " + p.getMezzo().getId() + " AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato_addetto = 'Non Pronto' ;");
+        if(res2.size() == 1){
+            String[] riga = res2.get(0);
+            int vecchiPostiOccupati = Integer.parseInt(riga[4]);
+            int nuoviPostiOccupati = vecchiPostiOccupati - p.getNumPostiOccupati();
+            DbConnection.getInstance().eseguiAggiornamento("UPDATE mezzi_da_preparare SET posti_occupati = "+ nuoviPostiOccupati +" WHERE idmezzi_da_preparare = " + Integer.parseInt(riga[0]) + ";");
+
+        }
+        return true;
+    }
+
+    @Override
+    public boolean eliminaRecord(Prenotazione p){
+        String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataInizio()));
+        String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataFine()));
+        System.out.println("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = " + p.getMezzo().getId() + " AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato_addetto = 'Non Pronto' ;");
+        ArrayList<String[]> res2 = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = " + p.getMezzo().getId() + " AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato_addetto = 'Non Pronto' ;");
+        if(res2.size() == 1){
+            String[] riga = res2.get(0);
+            DbConnection.getInstance().eseguiAggiornamento("DELETE FROM mezzi_da_preparare WHERE idmezzi_da_preparare = " + Integer.parseInt(riga[0]) + ";");
+
+        }
+        return true;
     }
 
 }

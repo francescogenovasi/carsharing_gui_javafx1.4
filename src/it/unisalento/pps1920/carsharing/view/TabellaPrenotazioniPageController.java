@@ -1,15 +1,27 @@
 package it.unisalento.pps1920.carsharing.view;
 
+import it.unisalento.pps1920.carsharing.business.CommonBusiness;
+import it.unisalento.pps1920.carsharing.business.PrenotazioneBusiness;
+import it.unisalento.pps1920.carsharing.dao.mysql.PrenotazioneDAO;
+import it.unisalento.pps1920.carsharing.model.MezzoDaPreparare;
 import it.unisalento.pps1920.carsharing.model.Prenotazione;
+import it.unisalento.pps1920.carsharing.model.Utente;
 import it.unisalento.pps1920.carsharing.util.DateUtil;
+import it.unisalento.pps1920.carsharing.util.Session;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.util.Callback;
+
+import java.io.IOException;
 
 public class TabellaPrenotazioniPageController{
 
@@ -78,6 +90,11 @@ public class TabellaPrenotazioniPageController{
         dataFine.setCellValueFactory(new PropertyValueFactory<Prenotazione,String>("dataFine"));
 
 
+        addButtonElimina();
+
+        addButtonModifica();
+
+
 
         tabellaPrenotazioni.setItems(prenotazioni);
     }
@@ -86,4 +103,88 @@ public class TabellaPrenotazioniPageController{
     public void initialize() {
 
     }
+
+    private void addButtonElimina() {
+        TableColumn<Prenotazione, Void> colBtn = new TableColumn("");
+
+        Callback<TableColumn<Prenotazione, Void>, TableCell<Prenotazione, Void>> cellFactory = new Callback<TableColumn<Prenotazione, Void>, TableCell<Prenotazione, Void>>() {
+            @Override
+            public TableCell<Prenotazione, Void> call(final TableColumn<Prenotazione, Void> param) {
+                final TableCell<Prenotazione, Void> cell = new TableCell<Prenotazione, Void>() {
+
+                    private final Button btn = new Button("Elimina");
+                    //private final TilePane tp = new TilePane();
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            System.out.println("cancellare: " + getTableView().getItems().get(getIndex()).getId());
+                            try {
+                                Prenotazione p = new PrenotazioneDAO().findById(getTableView().getItems().get(getIndex()).getId());
+                                PrenotazioneBusiness.getInstance().eliminaPrenotazione(p);
+                                AlertBox.display("Prenotazioni", "Prenotazione eliminata");
+                                ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(CommonBusiness.getInstance().getPrenotazioniUtente(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId()));
+                                setListPrenotazioni(prenotazioni);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+
+        tabellaPrenotazioni.getColumns().add(colBtn);
+    }
+
+    private void addButtonModifica() {
+        TableColumn<Prenotazione, Void> colBtn = new TableColumn("");
+
+        Callback<TableColumn<Prenotazione, Void>, TableCell<Prenotazione, Void>> cellFactory = new Callback<TableColumn<Prenotazione, Void>, TableCell<Prenotazione, Void>>() {
+            @Override
+            public TableCell<Prenotazione, Void> call(final TableColumn<Prenotazione, Void> param) {
+                final TableCell<Prenotazione, Void> cell = new TableCell<Prenotazione, Void>() {
+
+                    private final Button btn = new Button("Modifica");
+                    //private final TilePane tp = new TilePane();
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            System.out.println("modificare: " + getTableView().getItems().get(getIndex()).getId());
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        colBtn.setCellFactory(cellFactory);
+
+        tabellaPrenotazioni.getColumns().add(colBtn);
+    }
+
+
 }

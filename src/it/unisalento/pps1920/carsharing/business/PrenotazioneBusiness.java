@@ -1,8 +1,10 @@
 package it.unisalento.pps1920.carsharing.business;
 
+import it.unisalento.pps1920.carsharing.DbConnection;
 import it.unisalento.pps1920.carsharing.dao.interfaces.*;
 import it.unisalento.pps1920.carsharing.dao.mysql.*;
 import it.unisalento.pps1920.carsharing.model.*;
+import it.unisalento.pps1920.carsharing.util.DateUtil;
 import it.unisalento.pps1920.carsharing.util.MailHelper;
 import it.unisalento.pps1920.carsharing.util.PdfHelper;
 
@@ -93,15 +95,57 @@ public class PrenotazioneBusiness {
         return true;
     }
 
+    public boolean eliminaPrenotazione(Prenotazione p) throws IOException {
+        //settare prenotazionevalida=0 nella tabella delle prenotazioni
+        // todo in lavorazione
+        // correzione sul costo richiestabusiness 62
+
+        IPrenotazioneDAO pDAO = new PrenotazioneDAO();
+        /*decrementare il numero di posti della proposta.
+        se è l'unico allora eliminare il mezzo da mezzi_da_preparare ed eliminare la proposta
+        */
+        System.out.println("numero clienti sharing: " + pDAO.getNumeroClientiSharing(p.getIdPropostaCondivisione()));
+        if (pDAO.getNumeroClientiSharing(p.getIdPropostaCondivisione()) > 1 ){
+
+            /*float costo;
+            int numClientiSharing = pDAO.getNumeroClientiSharing(p.getIdPropostaCondivisione()) - 1; //clienti che stanno facendo lo sharing - quello che è sta eliminando
+
+            float costoBaseModello = p.getMezzo().getModello().getTariffaBase() / numClientiSharing; //costo della macchina diviso numero clienti che fannno lo sharing
+
+            costo = costoBaseModello;*/
+
+            new PrenotazioneDAO().correggiCosto(p.getIdPropostaCondivisione(), false); //diminuisce il costo se ci sono piu clienti che fanno lo sharing
+
+            //decrementa solo il numero di posti dalla proposta
+            IPropostaCondivisioneDAO propDAO = new PropostaCondivisioneDAO();
+            propDAO.updatePostiProposta(p.getIdPropostaCondivisione(), (-p.getNumPostiOccupati()));
+
+            //decrementa il numero di posti dalla tabella mezzi_da_preparare
+            IMezzoDaPreparareDAO mDAO = new MezzoDaPreparareDAO();
+            mDAO.updateNumeroPosti(p);
+
+
+        } else {
+            //elimina il record della tabella  mezzi_da_preparare e setta proposta invalida
+            IMezzoDaPreparareDAO mDAO = new MezzoDaPreparareDAO();
+            mDAO.eliminaRecord(p);
+        }
+        boolean res1 = pDAO.setPrenotazioneInvalida(p.getId());
+
+        // inviare mail di conferma all'utente
+        String dest = p.getCliente().getEmail(); //cliente utente id 2 gc.pps
+        String testo = "pren id " + p.getId() + " del " + p.getData() + " eliminata.";
+        MailHelper.getInstance().send(dest, "CLI Prenotazione eliminata!", testo);
+
+        return true;
+    }
+
     public void notificaRichiestaRifiutataPerMancanzaPosti(RichiestaCondivisione r){
         String dest = r.getCliente().getEmail();//addetto della stazione di partenza utente id 1
         String testo = "Purtroppo la richiesta " + r.getId() + " del " + r.getData() + " non è andata a buon fine. Qualcuno ha prenotato prima e non ci sono abbastanza posti per soddisfare la richiesta.";
         MailHelper.getInstance().send(dest, "Richiesta rifiutata per posti", testo);
     }
 
-    /*public int calcoloCosto(){
-
-    }*/
 
 
 }

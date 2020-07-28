@@ -68,7 +68,7 @@ public class RichiestaBusiness {
             costo = costo + acc.get(i).getCosto(); //aggiunta prezzo accessori
         }
 
-        new PrenotazioneDAO().correggiCosto(r.getProposta().getId()); //diminuisce il costo se ci sono piu clienti che fanno lo sharing
+        new PrenotazioneDAO().correggiCosto(r.getProposta().getId(), true); //diminuisce il costo se ci sono piu clienti che fanno lo sharing
 
         new PrenotazioneDAO().salvaPrenotazione(pren, acc, costo, false);
 
