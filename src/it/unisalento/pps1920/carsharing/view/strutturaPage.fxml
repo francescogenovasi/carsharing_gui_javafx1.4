@@ -49,6 +49,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#loadRegistrazioneOperatore" text="Inserisci Operatore" />
                         <MenuItem mnemonicParsing="false" onAction="#loadNuovoMessaggio" text="Scrivi Messaggio" />
                         <MenuItem mnemonicParsing="false" onAction="#loadTabMessaggi" text="Messaggi Ricevuti" />
+                        <MenuItem mnemonicParsing="false" onAction="#loadTuttePrenotazioni" text="Tutte le prenotazioni" />
                     </items>
                 </Menu>
             </menus>

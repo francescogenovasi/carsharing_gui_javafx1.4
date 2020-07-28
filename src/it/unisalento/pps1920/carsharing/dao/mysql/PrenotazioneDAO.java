@@ -51,6 +51,10 @@ public class PrenotazioneDAO implements IPrenotazioneDAO{
 
             p.setIdPropostaCondivisione(Integer.parseInt(riga[10]));
             p.setCosto(Float.parseFloat(riga[11]));
+
+            if (Integer.parseInt(riga[12]) == 0){
+                p.setPagamento(false);
+            }
         }
         return p;
     }
@@ -414,6 +418,22 @@ public class PrenotazioneDAO implements IPrenotazioneDAO{
             DbConnection.getInstance().eseguiAggiornamento(query);
         }
         return true;
+    }
+
+
+    @Override
+    public ArrayList<Prenotazione> findAllPrenotazioniPerAdmin() throws IOException {
+        ArrayList<Prenotazione> prenotazioni = new ArrayList<Prenotazione>();
+
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM prenotazione WHERE prenotazionevalida=1;");
+        System.out.println("SELECT * FROM prenotazione WHERE prenotazionevalida=1;");
+
+        for (String[] riga : res){
+            Prenotazione p = findById(Integer.parseInt(riga[0]));
+            prenotazioni.add(p);
+        }
+
+        return prenotazioni;
     }
 
 

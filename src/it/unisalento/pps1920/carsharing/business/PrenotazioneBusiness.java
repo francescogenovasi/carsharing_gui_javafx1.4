@@ -166,6 +166,11 @@ public class PrenotazioneBusiness {
         return pren;
     }
 
+    public ArrayList<Prenotazione> getPrenotazioniPerAdmin() throws IOException {
+        IPrenotazioneDAO pDAO = new PrenotazioneDAO();
+        return pDAO.findAllPrenotazioniPerAdmin();
+    }
+
 
 
 }

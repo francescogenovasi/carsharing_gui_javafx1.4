@@ -86,8 +86,10 @@ public class TabellaPrenotazioniPageController{
         dataInizio.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(cellData.getValue().getDataInizio()))));
         TableColumn<Prenotazione, String> dataFine = new TableColumn<>("fine");
         dataFine.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(cellData.getValue().getDataFine()))));
+        TableColumn<Prenotazione, String> pagamento = new TableColumn<>("pagamento");
+        pagamento.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPagamento()));
 
-        tabellaPrenotazioni.getColumns().addAll(idPrenotazione, dataPrenotazione, idCliente, idMezzo, numPostiOcc, idStazPart, idStazArr, idLocalita, dataInizio, dataFine);
+        tabellaPrenotazioni.getColumns().addAll(idPrenotazione, dataPrenotazione, idCliente, idMezzo, numPostiOcc, idStazPart, idStazArr, idLocalita, dataInizio, dataFine, pagamento);
 
 
         idPrenotazione.setCellValueFactory(new PropertyValueFactory<Prenotazione, String>("id"));

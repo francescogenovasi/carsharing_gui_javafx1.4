@@ -103,6 +103,20 @@ public class StrutturaPageController{
     }
 
     @FXML
+    private void loadTuttePrenotazioni() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("tabellaPrenotazioniPage.fxml"));
+        Pane pane = (Pane) loader.load();
+        TabellaPrenotazioniPageController controller = loader.<TabellaPrenotazioniPageController>getController();
+
+        ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(PrenotazioneBusiness.getInstance().getPrenotazioniPerAdmin());
+        controller.setListPrenotazioni(prenotazioni);
+
+
+        rootPaneStrutturaPage.getChildren().setAll(pane);
+        rootPaneStrutturaPage.setPrefSize(1000, 600);
+    }
+
+    @FXML
     private void loadVisualizzaProposte() throws IOException {
         FXMLLoader lo = new FXMLLoader(getClass().getResource("visualizzaProposte.fxml"));
         Pane pane = (Pane) lo.load();

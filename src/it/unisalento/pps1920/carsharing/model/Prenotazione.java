@@ -122,6 +122,14 @@ public class Prenotazione {
         return pagamento;
     }
 
+    public String getPagamento(){
+        if (pagamento){
+            return "effettuato";
+        } else {
+            return "non effettuato";
+        }
+    }
+
     public void setPagamento(boolean pagamento) {
         this.pagamento = pagamento;
     }
@@ -149,4 +157,5 @@ public class Prenotazione {
     public void setCosto(float costo) {
         this.costo = costo;
     }
+
 }
