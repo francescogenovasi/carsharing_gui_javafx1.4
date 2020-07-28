@@ -83,7 +83,16 @@ public class RichiestaBusiness {
         if (res){
             //System.out.println("jihjihihihihihihihiuhihihihihihihihihihhiih: " + r.getId());
             String dest = r.getCliente().getEmail(); //cliente utente id 2 gc.pps
-            String testo = "richiesta id" + r.getId() + "del  " + new Date().toString() + " fatta. In attesa di conferma";
+            String testo = "RICHIESTA DI SHARING INVIATA! \n";
+            testo = testo + "La richiesta con codice richiesta: "+ r.getId() + "\n";
+            testo = testo + "effettuata il: "+DateUtil.stringFromDate(r.getData()) + "\n";
+            testo = testo + "con nizio : "+DateUtil.stringFromDate(r.getProposta().getDataInizio()) + "\n";
+            testo = testo + "Fine : "+DateUtil.stringFromDate(r.getProposta().getDataFine()) + "\n";
+            testo = testo + "Da : "+r.getProposta().getPartenza().getNome() + "\n";
+            testo = testo + "A : "+r.getProposta().getArrivo().getNome() + "\n";
+            testo = testo + "Numero posti prenotati : "+r.getNumPostiRichiesti() + "\n";
+            testo = testo + "Con : "+r.getProposta().getMezzo().getModello().getNome() + " targato: " + r.getProposta().getMezzo().getTarga() + "\n";
+            testo = testo + "è stata fatta con successo \n A presto!";
             MailHelper.getInstance().send(dest, "CLI Richiesta sharing in attesa!", testo);
         }
         return res;
@@ -96,7 +105,16 @@ public class RichiestaBusiness {
 
         //inviare mail di conferma all'utente
         String dest = r.getCliente().getEmail(); //cliente utente id 2 gc.pps
-        String testo = "pren id" + id + ". Confermata il " + new Date().toString() + "la richiesta numero: " + idRichiesta + ".";
+        String testo = "RICHIESTA DI SHARING ACCETTATA! \n";
+        testo = testo + "La richiesta con codice richiesta: "+ r.getId() + "\n";
+        testo = testo + "effettuata il: "+DateUtil.stringFromDate(r.getData()) + "\n";
+        testo = testo + "con nizio : "+DateUtil.stringFromDate(r.getProposta().getDataInizio()) + "\n";
+        testo = testo + "Fine : "+DateUtil.stringFromDate(r.getProposta().getDataFine()) + "\n";
+        testo = testo + "Da : "+r.getProposta().getPartenza().getNome() + "\n";
+        testo = testo + "A : "+r.getProposta().getArrivo().getNome() + "\n";
+        testo = testo + "Numero posti prenotati : "+r.getNumPostiRichiesti() + "\n";
+        testo = testo + "Con : "+r.getProposta().getMezzo().getModello().getNome() + " targato: " + r.getProposta().getMezzo().getTarga() + "\n";
+        testo = testo + "è stata accettata \n A presto!";
         MailHelper.getInstance().send(dest, "CLI Richiesta sharing accettata!", testo);
 
 
@@ -110,7 +128,16 @@ public class RichiestaBusiness {
         if ( !errorePosti ){
             //inviare mail di conferma all'utente
             String dest = r.getCliente().getEmail(); //cliente utente id 2 gc.pps
-            String testo = "purtroppo la richiesta numero: " + idRichiesta + " del " + r.getData() + "è stata rifiutata";
+            String testo = "RICHIESTA DI SHARING RIFIUTATA! \n";
+            testo = testo + "La richiesta con codice richiesta: "+ r.getId() + "\n";
+            testo = testo + "effettuata il: "+DateUtil.stringFromDate(r.getData()) + "\n";
+            testo = testo + "con inizio : "+DateUtil.stringFromDate(r.getProposta().getDataInizio()) + "\n";
+            testo = testo + "Fine : "+DateUtil.stringFromDate(r.getProposta().getDataFine()) + "\n";
+            testo = testo + "Da : "+r.getProposta().getPartenza().getNome() + "\n";
+            testo = testo + "A : "+r.getProposta().getArrivo().getNome() + "\n";
+            testo = testo + "Numero posti prenotati : "+r.getNumPostiRichiesti() + "\n";
+            testo = testo + "Con : "+r.getProposta().getMezzo().getModello().getNome() + " targato: " + r.getProposta().getMezzo().getTarga() + "\n";
+            testo = testo + "è stata rifiutata \n Arrivederci!";
             MailHelper.getInstance().send(dest, "CLI Richiesta sharing rifiutata!", testo);
         }
 
