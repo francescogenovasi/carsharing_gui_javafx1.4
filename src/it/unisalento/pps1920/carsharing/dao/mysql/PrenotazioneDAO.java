@@ -254,4 +254,14 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
         }
     }
 
+    public int[] prenotazioniFromDateEIdMezzo(int idMezzo, String dataInizio, String dataFine){
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT idprenotazione FROM carsharing.prenotazione where mezzo_idmezzo=" + idMezzo + " and dataInizio='"+dataInizio+"' and dataFine='"+dataFine+"';");
+        int[] a = new int[res.size()];
+        for (int i = 0; i < res.size(); i++){
+            String[] riga = res.get(i);
+            a[i] = Integer.parseInt(riga[0]);
+        }
+        return a;
+    }
+
 }

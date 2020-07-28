@@ -10,6 +10,7 @@ import it.unisalento.pps1920.carsharing.model.Accessorio;
 import it.unisalento.pps1920.carsharing.model.Prenotazione;
 import it.unisalento.pps1920.carsharing.model.PropostaCondivisione;
 import it.unisalento.pps1920.carsharing.model.RichiestaCondivisione;
+import it.unisalento.pps1920.carsharing.util.DateUtil;
 import it.unisalento.pps1920.carsharing.util.MailHelper;
 
 import java.io.IOException;
@@ -42,8 +43,12 @@ public class RichiestaBusiness {
         pren.setPartenza(prop.getPartenza());
         pren.setArrivo(prop.getArrivo());
         pren.setLocalita(prop.getLocalita());
-        pren.setDataInizio(prop.getDataInizio());
-        pren.setDataFine(prop.getDataFine());
+        String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(prop.getDataInizio()));
+        String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(prop.getDataFine()));
+        Date inizio = DateUtil.dateTimeFromString(strDataInizio);
+        Date fine = DateUtil.dateTimeFromString(strDataFine);
+        pren.setDataInizio(inizio);
+        pren.setDataFine(fine);
         pren.setIdPropostaCondivisione(prop.getId());
 
 

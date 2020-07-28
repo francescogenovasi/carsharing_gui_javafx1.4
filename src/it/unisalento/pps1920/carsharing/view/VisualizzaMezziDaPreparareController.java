@@ -6,22 +6,22 @@ import it.unisalento.pps1920.carsharing.business.RichiestaBusiness;
 import it.unisalento.pps1920.carsharing.dao.interfaces.IRichiestaCondivisioneDAO;
 import it.unisalento.pps1920.carsharing.dao.mysql.RichiestaCondivisioneDAO;
 import it.unisalento.pps1920.carsharing.model.*;
+import it.unisalento.pps1920.carsharing.util.DateUtil;
 import it.unisalento.pps1920.carsharing.util.Session;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.TilePane;
 import javafx.util.Callback;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 public class VisualizzaMezziDaPreparareController {
     @FXML
@@ -53,147 +53,45 @@ public class VisualizzaMezziDaPreparareController {
         TableColumn<MezzoDaPreparare, Integer> posti = new TableColumn<>("Posti occupati");
         posti.setCellValueFactory(new PropertyValueFactory<>("postiOccupati"));
 
-        //add colonna accessori
-
-        //add colonna stato (pronto, non pronto)
-
-
         tabellaMezziDaPreparare.getColumns().addAll(id, targa, modello, dataInizio, dataFine, posti);
+        //add colonna accessori
+        addButtonAccessori();
+        //add colonna stato (pronto, non pronto)
+        addButtonPronta();
 
         tabellaMezziDaPreparare.setItems(mezzi);
     }
 
-    /* private void addButtonVisualizzaProfilo() {
-        TableColumn<MezzoDaPreparare, Void> colBtn = new TableColumn("Accessori");
+    private void addButtonAccessori() {
+        TableColumn<MezzoDaPreparare, Void> colBtn = new TableColumn("");
 
         Callback<TableColumn<MezzoDaPreparare, Void>, TableCell<MezzoDaPreparare, Void>> cellFactory = new Callback<TableColumn<MezzoDaPreparare, Void>, TableCell<MezzoDaPreparare, Void>>() {
             @Override
             public TableCell<MezzoDaPreparare, Void> call(final TableColumn<MezzoDaPreparare, Void> param) {
                 final TableCell<MezzoDaPreparare, Void> cell = new TableCell<MezzoDaPreparare, Void>() {
 
-                    private final Button btn = new Button("Visualizza Profilo");
+                    private final Button btn = new Button("Visualizza Accessori");
+                    //private final TilePane tp = new TilePane();
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            //PropostaCondivisione data = getTableView().getItems().get(getIndex());
+                            String acc = "";
                             int idMezzo = getTableView().getItems().get(getIndex()).getMezzo().getId();
                             Date dataInizio = getTableView().getItems().get(getIndex()).getDataInizio();
                             Date dataFine = getTableView().getItems().get(getIndex()).getDataFine();
-
-                        });
-                    }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(btn);
-                        }
-                    }
-                };
-                return cell;
-            }
-        };
-
-        colBtn.setCellFactory(cellFactory);
-
-        tabellaRichieste.getColumns().add(colBtn);
-    }*/
-
-    /* private void addButtonVisualizzaProfilo() {
-        TableColumn<TabConfermaRichieste, Void> colBtn = new TableColumn("");
-
-        Callback<TableColumn<TabConfermaRichieste, Void>, TableCell<TabConfermaRichieste, Void>> cellFactory = new Callback<TableColumn<TabConfermaRichieste, Void>, TableCell<TabConfermaRichieste, Void>>() {
-            @Override
-            public TableCell<TabConfermaRichieste, Void> call(final TableColumn<TabConfermaRichieste, Void> param) {
-                final TableCell<TabConfermaRichieste, Void> cell = new TableCell<TabConfermaRichieste, Void>() {
-
-                    private final Button btn = new Button("Visualizza Profilo");
-
-                    {
-                        btn.setOnAction((ActionEvent event) -> {
-                            //PropostaCondivisione data = getTableView().getItems().get(getIndex());
-                            int data = getTableView().getItems().get(getIndex()).getIdRichiesta();
-                            System.out.println("Richiesta selezionata: " + data);
-                            //int idRich = getTableView().getItems().get(getIndex()).getRichiedente().getId();
-                            Cliente c = getTableView().getItems().get(getIndex()).getRichiedente();
-                            try {
-                                AlertBoxProfilo.display("prenotazione", c);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(btn);
-                        }
-                    }
-                };
-                return cell;
-            }
-        };
-
-        colBtn.setCellFactory(cellFactory);
-
-        tabellaRichieste.getColumns().add(colBtn);
-    }
-
-    private void addButtonConfermaSharing() {
-        TableColumn<TabConfermaRichieste, Void> colBtn = new TableColumn("");
-
-        Callback<TableColumn<TabConfermaRichieste, Void>, TableCell<TabConfermaRichieste, Void>> cellFactory = new Callback<TableColumn<TabConfermaRichieste, Void>, TableCell<TabConfermaRichieste, Void>>() {
-            @Override
-            public TableCell<TabConfermaRichieste, Void> call(final TableColumn<TabConfermaRichieste, Void> param) {
-                final TableCell<TabConfermaRichieste, Void> cell = new TableCell<TabConfermaRichieste, Void>() {
-
-                    private final Button btn = new Button("Conferma");
-
-                    {
-                        btn.setOnAction((ActionEvent event) -> {
-                            //PropostaCondivisione data = getTableView().getItems().get(getIndex());
-                            int data = getTableView().getItems().get(getIndex()).getIdRichiesta();
-                            System.out.println("Richiesta selezionata: " + data);
-                            //RichiestaBusiness.getInstance().numeroPostiDisponibili(p.getDataInizio(), p.getDataFine(), p.getMezzo().getTarga()) == 0
-                            IRichiestaCondivisioneDAO rDAO = new RichiestaCondivisioneDAO();
-
-                            RichiestaCondivisione richiesta = null;
-                            try {
-                                richiesta = rDAO.findById(data);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                            try {
-                                if(RichiestaBusiness.getInstance().numeroPostiDisponibili(richiesta.getProposta().getDataInizio(), richiesta.getProposta().getDataFine(), richiesta.getProposta().getMezzo().getId()) - richiesta.getNumPostiRichiesti() < 0 ){
-                                    AlertBox.display("prenotazione", "Purtroppo non ci sono abbastanza posti anche per questa richiesta");
-                                    PrenotazioneBusiness.getInstance().notificaRichiestaRifiutataPerMancanzaPosti(richiesta);
-                                    RichiestaBusiness.getInstance().rifiutaRichiesta(data, true);
-                                    ObservableList<TabConfermaRichieste> rich = FXCollections.observableArrayList(CommonBusiness.getInstance().getRichiesteInAttesa(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())) ;
-                                    setListRichieste(rich);
-                                } else {
-                                    try {
-                                        RichiestaBusiness.getInstance().accettaRichiesta(data);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                    AlertBox.display("prenotazione", "ACCETTATA");
-                                    try {
-                                        ObservableList<TabConfermaRichieste> rich = FXCollections.observableArrayList(CommonBusiness.getInstance().getRichiesteInAttesa(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())) ;
-                                        setListRichieste(rich);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+                            //System.out.println(idMezzo+"jjj"+ DateUtil.fromRomeToLondon(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(dataInizio)))+"jjjjj"+DateUtil.fromRomeToLondon(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(dataFine))));
+                            int[] pren = CommonBusiness.getInstance().prenotazioniFromDateEIdMezzo(idMezzo, DateUtil.fromRomeToLondon(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(dataInizio))), DateUtil.fromRomeToLondon(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(dataFine))));
+                            for (int i = 0; i < pren.length; i++){
+                                System.out.println(pren[i]);
+                                List<Accessorio> a = CommonBusiness.getInstance().getAccessoriPrenotazione(pren[i]);
+                                for (int j = 0; j < a.size(); j++) {
+                                    acc = acc + a.get(j).getNome() + " \n";
                                 }
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                            }
+                            if(acc.equals("")){
+                                AlertBox.display("Accessori", "nessun accessorio");
+                            } else {
+                                AlertBox.display("Accessori", acc);
                             }
 
                         });
@@ -215,36 +113,31 @@ public class VisualizzaMezziDaPreparareController {
 
         colBtn.setCellFactory(cellFactory);
 
-        tabellaRichieste.getColumns().add(colBtn);
+        tabellaMezziDaPreparare.getColumns().add(colBtn);
     }
 
-    private void addButtonRifiutaSharing() {
-        TableColumn<TabConfermaRichieste, Void> colBtn = new TableColumn("");
+    private void addButtonPronta() {
+        TableColumn<MezzoDaPreparare, Void> colBtn = new TableColumn("");
 
-        Callback<TableColumn<TabConfermaRichieste, Void>, TableCell<TabConfermaRichieste, Void>> cellFactory = new Callback<TableColumn<TabConfermaRichieste, Void>, TableCell<TabConfermaRichieste, Void>>() {
+        Callback<TableColumn<MezzoDaPreparare, Void>, TableCell<MezzoDaPreparare, Void>> cellFactory = new Callback<TableColumn<MezzoDaPreparare, Void>, TableCell<MezzoDaPreparare, Void>>() {
             @Override
-            public TableCell<TabConfermaRichieste, Void> call(final TableColumn<TabConfermaRichieste, Void> param) {
-                final TableCell<TabConfermaRichieste, Void> cell = new TableCell<TabConfermaRichieste, Void>() {
+            public TableCell<MezzoDaPreparare, Void> call(final TableColumn<MezzoDaPreparare, Void> param) {
+                final TableCell<MezzoDaPreparare, Void> cell = new TableCell<MezzoDaPreparare, Void>() {
 
-                    private final Button btn = new Button("Rifiuta");
+                    private final Button btn = new Button("Pronta");
+                    //private final TilePane tp = new TilePane();
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            //PropostaCondivisione data = getTableView().getItems().get(getIndex());
-                            int data = getTableView().getItems().get(getIndex()).getIdRichiesta();
-                            System.out.println("Richiesta selezionata: " + data);
+                            int id = getTableView().getItems().get(getIndex()).getId();
+                            CommonBusiness.getInstance().setPronto(id);
+                            ObservableList<MezzoDaPreparare> mez = null;
                             try {
-                                RichiestaBusiness.getInstance().rifiutaRichiesta(data, false);
+                                mez = FXCollections.observableArrayList(CommonBusiness.getInstance().getMezziDaPreparare());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            AlertBox.display("prenotazione", "RIFIUTATA");
-                            try {
-                                ObservableList<TabConfermaRichieste> rich = FXCollections.observableArrayList(CommonBusiness.getInstance().getRichiesteInAttesa(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())) ;
-                                setListRichieste(rich);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            setListMezziDaPreparare(mez);
                         });
                     }
 
@@ -264,6 +157,8 @@ public class VisualizzaMezziDaPreparareController {
 
         colBtn.setCellFactory(cellFactory);
 
-        tabellaRichieste.getColumns().add(colBtn);
-    }*/
+        tabellaMezziDaPreparare.getColumns().add(colBtn);
+    }
+
+
 }

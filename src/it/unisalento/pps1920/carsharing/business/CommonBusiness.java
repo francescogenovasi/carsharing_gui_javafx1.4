@@ -128,6 +128,12 @@ public class CommonBusiness {
         return res;
     }
 
+    public boolean setPronto(int id){
+        IMezzoDaPreparareDAO mz=new MezzoDaPreparareDAO();
+        boolean res = mz.mezzoPronto(id);
+        return res;
+    }
+
 
     public ArrayList<Prenotazione> getPrenotazioniUtente(int id) throws IOException {
         IPrenotazioneDAO pDAO = new PrenotazioneDAO();
@@ -221,7 +227,8 @@ public class CommonBusiness {
         return tDAO.getElencoInAttesa(idProponente);
     }
 
-    /*public int[] prenotazioniFromDateEIdMezzo(){
-        int[] a =
-    }*/
+    public int[] prenotazioniFromDateEIdMezzo(int idMezzo, String dataInizio, String dataFine){
+        IPrenotazioneDAO pDAO = new PrenotazioneDAO();
+        return pDAO.prenotazioniFromDateEIdMezzo(idMezzo, dataInizio, dataFine);
+    }
 }

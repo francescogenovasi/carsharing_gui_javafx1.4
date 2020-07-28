@@ -76,4 +76,10 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
         return res;
     }
 
+    public boolean mezzoPronto(int id){
+        String sql="UPDATE mezzi_da_preparare SET `stato_addetto` = 'Pronto' WHERE idmezzi_da_preparare="+id+";";
+        boolean res =DbConnection.getInstance().eseguiAggiornamento(sql);
+        return res;
+    }
+
 }
