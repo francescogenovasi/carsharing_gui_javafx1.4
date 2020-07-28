@@ -2,12 +2,15 @@ package it.unisalento.pps1920.carsharing.dao.mysql;
 
 import it.unisalento.pps1920.carsharing.DbConnection;
 import it.unisalento.pps1920.carsharing.dao.interfaces.IMezzoDaPreparareDAO;
+import it.unisalento.pps1920.carsharing.model.Localita;
 import it.unisalento.pps1920.carsharing.model.MezzoDaPreparare;
 import it.unisalento.pps1920.carsharing.model.Prenotazione;
+import it.unisalento.pps1920.carsharing.model.Stazione;
 import it.unisalento.pps1920.carsharing.util.DateUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
     @Override
@@ -110,6 +113,43 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
             String[] riga = res2.get(0);
             DbConnection.getInstance().eseguiAggiornamento("DELETE FROM mezzi_da_preparare WHERE idmezzi_da_preparare = " + Integer.parseInt(riga[0]) + ";");
 
+        }
+        return true;
+    }
+
+    @Override
+    public boolean modificaTabella(Date inizio, Date fine, int posti, Stazione arrivo, Stazione partenza, Localita localita, Prenotazione oldPren){
+        //modificare le altre tabelle
+        if(posti != oldPren.getNumPostiOccupati()){
+            int numPostiAggiornati = 0;
+            String strDataInizioVecchia = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(oldPren.getDataInizio()));
+            String strDataFineVecchia = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(oldPren.getDataFine()));
+            ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT posti_occupati FROM mezzi_da_preparare WHERE mezzo_idmezzo = " + oldPren.getMezzo().getId() + " AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizioVecchia) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFineVecchia) +"' ;");
+            if(res.size() == 1){
+                String[] riga = res.get(0);
+                numPostiAggiornati = Integer.parseInt(riga[0])-oldPren.getNumPostiOccupati()+posti;
+            }
+            System.out.println("UPDATE mezzi_da_preparare SET posti_occupati="+numPostiAggiornati+" WHERE mezzo_idmezzo="+oldPren.getMezzo().getId()+" AND dataInizio='"+DateUtil.fromRomeToLondon(strDataInizioVecchia)+"' AND dataFine ='"+DateUtil.fromRomeToLondon(strDataFineVecchia)+"';");
+            DbConnection.getInstance().eseguiAggiornamento("UPDATE mezzi_da_preparare SET posti_occupati="+numPostiAggiornati+" WHERE mezzo_idmezzo="+oldPren.getMezzo().getModello()+" AND dataInizio='"+DateUtil.fromRomeToLondon(strDataInizioVecchia)+"' AND dataFine ='"+DateUtil.fromRomeToLondon(strDataFineVecchia)+"';");
+        }
+        if (inizio != null && fine==null){
+            String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(inizio));
+            String strDataInizioVecchia = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(oldPren.getDataInizio()));
+            String strDataFineVecchia = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(oldPren.getDataFine()));
+            DbConnection.getInstance().eseguiAggiornamento("UPDATE mezzi_da_preparare SET dataInizio='"+strDataInizio+"' WHERE mezzo_idmezzo="+oldPren.getMezzo().getId()+" AND dataInizio='"+DateUtil.fromRomeToLondon(strDataInizioVecchia)+"' AND dataFine ='"+DateUtil.fromRomeToLondon(strDataFineVecchia)+"';");
+        }
+        if ((fine != null) && (inizio==null)){
+            String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(fine));
+            String strDataInizioVecchia = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(oldPren.getDataInizio()));
+            String strDataFineVecchia = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(oldPren.getDataFine()));
+            DbConnection.getInstance().eseguiAggiornamento("UPDATE mezzi_da_preparare SET dataFine='"+strDataFine+"' WHERE mezzo_idmezzo="+oldPren.getMezzo().getId()+" AND dataInizio='"+DateUtil.fromRomeToLondon(strDataInizioVecchia)+"' AND dataFine ='"+DateUtil.fromRomeToLondon(strDataFineVecchia)+"';");
+        }
+        if ((fine != null) && (inizio!=null)){
+            String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(inizio));
+            String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(fine));
+            String strDataInizioVecchia = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(oldPren.getDataInizio()));
+            String strDataFineVecchia = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(oldPren.getDataFine()));
+            DbConnection.getInstance().eseguiAggiornamento("UPDATE mezzi_da_preparare SET dataFine='"+strDataFine+"', dataInizio='"+strDataInizio+"' WHERE mezzo_idmezzo="+oldPren.getMezzo().getId()+" AND dataInizio='"+DateUtil.fromRomeToLondon(strDataInizioVecchia)+"' AND dataFine ='"+DateUtil.fromRomeToLondon(strDataFineVecchia)+"';");
         }
         return true;
     }

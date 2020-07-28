@@ -94,13 +94,17 @@ public class PrenotazioneBusiness {
         IPrenotazioneDAO pDAO = new PrenotazioneDAO();
         IPropostaCondivisioneDAO propDAO = new PropostaCondivisioneDAO();
         PropostaCondivisione prop = propDAO.findById(oldPren.getIdPropostaCondivisione());
-        //int postiDisponibili =  - prop.getNumPostiOccupati();
         //controllo posti disponibili
         System.out.println(oldPren.getMezzo().getModello().getNumPosti() +"-("+ prop.getNumPostiOccupati() +"-"+ oldPren.getNumPostiOccupati() +")-"+ posti +">=" +oldPren.getMezzo().getModello().getNumPosti());
         if (oldPren.getMezzo().getModello().getNumPosti() - (prop.getNumPostiOccupati() - oldPren.getNumPostiOccupati()) - posti >= oldPren.getMezzo().getModello().getNumPosti() ){ //numpostimezzo-numpostioccupati-numpostioccupatidallaprenotazione+numpostinuovapren deve essere minore del numero di posti disponibili in macchina
             return false;
         } else {
-            return pDAO.modificaPrenotazione(inizio, fine, posti, arrivo, partenza, localita, oldPren);
+            if (pDAO.modificaPrenotazione(inizio, fine, posti, arrivo, partenza, localita, oldPren)){
+                new MezzoDaPreparareDAO().modificaTabella(inizio, fine, posti, arrivo, partenza, localita, oldPren);
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 

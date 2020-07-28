@@ -343,7 +343,7 @@ public class PrenotazioneDAO implements IPrenotazioneDAO {
         }
         query = query + " WHERE idprenotazione = " + oldPren.getId() +";";
         System.out.println(query);
-        return true;
+        return DbConnection.getInstance().eseguiAggiornamento(query);
     }
 
 
