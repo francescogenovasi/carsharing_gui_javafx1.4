@@ -48,7 +48,7 @@ public class ModelloDAO implements IModelloDAO {
         return modelli;
     }
 
-
+    @Override
     public Image getFoto(int id) throws IOException {
         String query = "SELECT foto FROM modello WHERE idmodello = " + id + " ;";
         byte[] prova = DbConnection.getInstance().getFoto(query);
@@ -61,19 +61,19 @@ public class ModelloDAO implements IModelloDAO {
         return image;
     }
 
+    @Override
     public boolean salvaModello(Modello m){
         String sql = "INSERT INTO modello (nome, num_posti, dimensione, tipologia, tariffa_base) VALUES ('" + m.getNome() + "', '" + m.getNumPosti() + "', '" + m.getDimensione() + "' , '" + m.getTipologia() + "', " + m.getTariffaBase() + ");";
-        System.out.println(sql);
         boolean res = DbConnection.getInstance().eseguiAggiornamento(sql);
         sql = "SELECT last_insert_id()";
         ArrayList<String[]> res1 = DbConnection.getInstance().eseguiQuery(sql);
         m.setId(Integer.parseInt(res1.get(0)[0]));
         sql="UPDATE modello SET foto=(?) WHERE idmodello="+m.getId()+";";
         DbConnection.getInstance().addFoto(m.getFoto(),sql);
-        System.out.println("id modello inserito:" + m.getId());
         return res;
     }
 
+    @Override
     public int findModelloId(String nome){
         int id = -1;
         ArrayList<String[]> ris = DbConnection.getInstance().eseguiQuery("SELECT * FROM modello WHERE nome='" + nome + "';");

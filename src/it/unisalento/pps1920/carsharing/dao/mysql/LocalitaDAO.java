@@ -30,12 +30,6 @@ public class LocalitaDAO implements ILocalitaDAO {
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM localita;");
         ArrayList<Localita> locs = new ArrayList<Localita>();
         for(String[] riga : res) {
-            /*Localita l = new Localita();
-            l.setId(Integer.parseInt(riga[0]));
-            l.setCitta(riga[1]);
-            l.setLatitudine(Double.parseDouble(riga[2]));
-            l.setLongitudine(Double.parseDouble(riga[3]));*/
-
             Localita l = findById(Integer.parseInt(riga[0]));
             locs.add(l);
         }

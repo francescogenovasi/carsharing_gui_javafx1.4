@@ -34,6 +34,7 @@ public class MezzoDAO implements IMezzoDAO {
             }
             return m;
         }
+
     @Override
     public ArrayList<Mezzo> findAll() throws IOException {
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzo;"); //query
@@ -48,27 +49,18 @@ public class MezzoDAO implements IMezzoDAO {
         return mezzi;
     }
 
-
+    @Override
     public ArrayList<Mezzo> findAllPrenotabili(String dim, String tipologia, Date dataInizio, Date dataFine) throws IOException {//restituisce i modelli che possono essere prenotati
         String q;
-
-        //vedere tutti i mezzi che hanno dimensione e tipologia richiesti
 
         if (dim.equals(null) || dim.equals("-")){
             q = "SELECT * FROM mezzo INNER JOIN modello ON mezzo.modello_idmodello = modello.idmodello WHERE modello.tipologia = '"+ tipologia +"';";
         } else {
             q = "SELECT * FROM mezzo INNER JOIN modello ON mezzo.modello_idmodello = modello.idmodello WHERE modello.tipologia = '"+ tipologia + "' AND modello.dimensione = '" + dim +"';";
         }
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery(q);
 
-        /*if (dim.equals("-")){
-            q = "SELECT * FROM mezzo WHERE postidisponibili >= " + pos + ";";
-        } else {
-            q = "SELECT * FROM mezzo INNER JOIN modello ON mezzo.modello_idmodello = modello.idmodello WHERE modello.dimensione = '" + dim + "' AND mezzo.postidisponibili >= " + pos + ";";
-
-        }*/
-        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery(q); //query
-
-        ArrayList<Mezzo> mezzi = new ArrayList<Mezzo>();//istanziare model con risultati query
+        ArrayList<Mezzo> mezzi = new ArrayList<Mezzo>();
 
         for(String[] riga : res) {
             Mezzo l = findById(Integer.parseInt(riga[0]));
@@ -78,25 +70,16 @@ public class MezzoDAO implements IMezzoDAO {
         ArrayList<MezzoDaPreparare> mezziPrenotati = new MezzoDaPreparareDAO().findAll();
         for (int i = 0; i < mezziPrenotati.size(); i++){
             for (int j = 0; j < mezzi.size(); j++){
-                System.out.println(dataInizio.toString() + " aaaaabbbbbbbbbaaaaa " + mezziPrenotati.get(i).getDataInizio());
                 if (mezziPrenotati.get(i).getMezzo().getId() == mezzi.get(j).getId()){
-                    if (dataInizio.compareTo(mezziPrenotati.get(i).getDataInizio()) >= 0 && dataInizio.compareTo(mezziPrenotati.get(i).getDataFine()) <= 0){ //se la data di inizio si trova nel range della prenotazione già effettuata allora dai errore
-                        //0 ->date uguali; <0 se d minore dell'altra; >0 se l'altra è maggiore di d
-                        //System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee data inizio");
+                    if (dataInizio.compareTo(mezziPrenotati.get(i).getDataInizio()) >= 0 && dataInizio.compareTo(mezziPrenotati.get(i).getDataFine()) <= 0){
                         mezzi.remove(j);
                     } else {
-                        //System.out.println("esattooooooooooooooooooooooooooooo data inizio");
                         if (dataFine.compareTo(mezziPrenotati.get(i).getDataInizio()) >= 0 && dataFine.compareTo(mezziPrenotati.get(i).getDataFine()) <= 0){
-                            //System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee data fine");
                             mezzi.remove(j);
                         } else {
-                            //System.out.println("esattooooooooooooooooooooooooooooo data fine");
-
                             if ((dataInizio.compareTo(mezziPrenotati.get(i).getDataInizio()) <= 0 && dataFine.compareTo(mezziPrenotati.get(i).getDataInizio()) <= 0) || dataInizio.compareTo(mezziPrenotati.get(i).getDataFine()) >= 0 && dataFine.compareTo(mezziPrenotati.get(i).getDataFine()) >= 0){
-                                System.out.println("esattooooooooooooooooooooooooooooo tuttoooooooooooooooooooo");
-                                System.out.println(dataInizio.toString() + " aaaaaaaaaa " + mezziPrenotati.get(i).getDataInizio());
+                                //prenotabile in quell'arco di tempo
                             } else {
-                                System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee tuttoooooooooooo");
                                 mezzi.remove(j);
                             }
                         }
@@ -108,6 +91,7 @@ public class MezzoDAO implements IMezzoDAO {
         return mezzi;
     }
 
+    @Override
     public ArrayList<Mezzo> getMezziOfferta() throws IOException {
 
         String sql="SELECT idmezzo FROM mezzo WHERE offerta='Si';";
@@ -121,7 +105,7 @@ public class MezzoDAO implements IMezzoDAO {
         return mezzi;
     }
 
-
+    @Override
     public boolean salvaMezzo(Mezzo m){
         String sql = "INSERT INTO mezzo (targa, modello_idmodello, motorizzazione, offerta) VALUES ('" + m.getTarga() + "', '" + m.getModello().getId() + "' , '" + m.getMotorizzazione() + "', '"+m.getOfferta()+"');";
         System.out.println(sql);
@@ -133,6 +117,7 @@ public class MezzoDAO implements IMezzoDAO {
         return res;
     }
 
+    @Override
     public int findMezzoId(String targa){
         int id = -1;
         ArrayList<String[]> ris = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzo WHERE targa='" + targa + "';");

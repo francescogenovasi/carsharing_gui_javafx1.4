@@ -95,38 +95,25 @@ public class PrenotazioneDAO implements IPrenotazioneDAO{
         String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataInizio()));
         String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataFine()));
 
-
-        /* float costo = p.getMezzo().getModello().getTariffaBase();
-        //il costo dello sharing è dato dalla tariffa base sommato al costo di ogni accessorio scelto
-        for (int i=0; i<a.size(); i++){
-            costo = costo + a.get(i).getCosto();
-        }*/
-
         p.setCosto(costo);
 
-
-        //String sql = "INSERT INTO prenotazione VALUES (NULL, '"+strDataPrenotazione+"',"+p.getCliente().getId()+","+p.getMezzo().getId()+","+p.getNumPostiOccupati()+","+p.getPartenza().getId()+","+p.getArrivo().getId()+","+p.getLocalita().getId()+",'"+strDataInizio+"','"+strDataFine+"');";
         String sql = "INSERT INTO prenotazione VALUES (NULL, '"+strDataPrenotazione+"',"+p.getCliente().getId()+","+p.getMezzo().getId()+","+p.getNumPostiOccupati()+","+p.getPartenza().getId()+","+p.getArrivo().getId()+","+p.getLocalita().getId()+",'"+strDataInizio+"','"+strDataFine+ "', " + p.getIdPropostaCondivisione() + ", " + p.getCosto() + ", 0, 1);";
 
-        System.out.println(sql);
         DbConnection.getInstance().eseguiAggiornamento(sql);
 
         sql = "SELECT last_insert_id()";
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery(sql);
         p.setId(Integer.parseInt(res.get(0)[0]));
-        System.out.println("id prenotazione inserita:" + p.getId());
 
         String sql_acc;
         for (int i=0; i<a.size(); i++){
             sql_acc = "INSERT INTO pren_acc VALUES (" + p.getId() + ", " + a.get(i).getId() + ");";
-            System.out.println(sql_acc);
             DbConnection.getInstance().eseguiAggiornamento(sql_acc);
         }
 
         if (nuovoInserimento){
             DbConnection.getInstance().eseguiAggiornamento("INSERT INTO mezzi_da_preparare VALUES (NULL, '"+ p.getMezzo().getId()+"', '" + strDataInizio + "', '" + strDataFine + "', "+ p.getNumPostiOccupati() + ", 'Non Pronto', 'Non partito')");
         } else {
-            System.out.println("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = " + p.getMezzo().getId() + " AND dataInizio = '" + strDataInizio + "' AND dataFine = '" + strDataFine +"' AND stato_addetto = 'Non Pronto' ;");
             ArrayList<String[]> res1 = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = " + p.getMezzo().getId() + " AND dataInizio = '" + strDataInizio + "' AND dataFine = '" + strDataFine +"' AND stato_addetto = 'Non Pronto' ;");
             if(res1.size() == 1){
                 String[] riga = res1.get(0);
@@ -143,78 +130,11 @@ public class PrenotazioneDAO implements IPrenotazioneDAO{
         }
     }
 
-    /*@Override
-    public ArrayList<Prenotazione> ricercaConFiltri(Stazione partenza, Stazione arrivo, Localita localita, int numPosti, Date inizio, Date fine, Modello modello, String dimensione, String motorizzazione, String tipologia) throws IOException {
-        ArrayList<Prenotazione> prenotazioni = new ArrayList<Prenotazione>();
-
-        //SELECT * FROM prenotazione inner join mezzo on prenotazione.mezzo_idmezzo = mezzo.idmezzo where mezzo.postidisponibili<6;
-        String query = "SELECT * FROM (prenotazione INNER JOIN mezzo ON prenotazione.mezzo_idmezzo = mezzo.idmezzo) INNER JOIN modello ON mezzo.modello_idmodello = modello.idmodello WHERE mezzo.postidisponibili >= " + numPosti;
-
-        if ((partenza != (null))){
-            query = query + " AND idstazione_partenza = " + partenza.getId();
-        }
-        if ((arrivo != (null))){
-            query = query + " AND idstazione_arrivo = " + arrivo.getId();
-        }
-        if ((localita != (null))){
-            query = query + " AND localita_idlocalita = " + localita.getId();
-        }
-
-        if ((inizio != (null))){//inizio.toString()
-            query = query + " AND dataInizio >= STR_TO_DATE('" + DateUtil.fromRomeToLondon(DateUtil.stringFromDate(inizio)) + "', '%Y-%m-%d %H:%i:%s')";
-            //System.out.println(DateUtil.stringFromDate(inizio));
-            inizio = DateUtil.modificaOrarioData(inizio, "23", "59");
-            //System.out.println(DateUtil.stringFromDate(inizio));
-            query = query + " AND dataInizio <= STR_TO_DATE('" + DateUtil.fromRomeToLondon(DateUtil.stringFromDate(inizio)) + "', '%Y-%m-%d %H:%i:%s')";
-        } else {
-            Date d = new Date();
-            query = query + " AND dataInizio >= STR_TO_DATE('" + DateUtil.fromRomeToLondon(DateUtil.stringFromDate(d)) + "', '%Y-%m-%d %H:%i:%s')";
-        }
-        if ((fine != (null))){
-            query = query + " AND dataFine = '" + DateUtil.dateTimeFromString(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(fine))).toString() + "'";
-        }
-
-        if ((modello != (null))){
-            query = query + " AND mezzo.modello_idmodello = " + modello.getId();
-        }
-        if ((dimensione != (null))){
-            query = query + " AND modello.dimensione = '" + dimensione + "'";
-        }
-        if ((motorizzazione != (null))){
-            query = query + " AND mezzo.motorizzazione = '" + motorizzazione + "'";
-        }
-        if ((tipologia != (null))){
-            query = query + " AND modello.tipologia = '" + tipologia + "'";
-        }
-        query = query + " AND prenotazionevalida = 1;";
-
-        System.out.println(query);
-
-        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery(query);
-        //ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM prenotazione");
-
-
-        if (res.size() > 0){//
-            for (String[] riga : res){
-                Prenotazione p = findById(Integer.parseInt(riga[0]));
-                prenotazioni.add(p);
-            }
-        } else {
-            AlertBox.display("Errore ricerca", "nessun elemento corrisponde ai criteri di ricerca");
-        }
-
-
-        return prenotazioni;
-    }*/
-
-
     @Override
     public ArrayList<Prenotazione> ricercaPerCliente(int id) throws IOException {
         ArrayList<Prenotazione> prenotazioni = new ArrayList<Prenotazione>();
 
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM prenotazione WHERE cliente_idcliente=" + id + " AND dataInizio >= '"+DateUtil.fromRomeToLondon(DateUtil.stringFromDate(new Date()))+"'AND prenotazionevalida=1;");
-        System.out.println("SELECT * FROM prenotazione WHERE cliente_idcliente=" + id + " AND dataInizio >= ' "+DateUtil.fromRomeToLondon(DateUtil.stringFromDate(new Date()))+" ' AND prenotazionevalida=1;");
-
         for (String[] riga : res){
             Prenotazione p = findById(Integer.parseInt(riga[0]));
             prenotazioni.add(p);
@@ -236,7 +156,6 @@ public class PrenotazioneDAO implements IPrenotazioneDAO{
 
     @Override
     public int getNumeroClientiSharing(int idProposta){
-        System.out.println("SELECT count(*) FROM (SELECT * FROM prenotazione WHERE idproposta_condivisione = " + idProposta + " AND prenotazionevalida=1) AS a;");
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT count(*) FROM (SELECT * FROM prenotazione WHERE idproposta_condivisione = " + idProposta + " AND prenotazionevalida=1) AS a;");
         if (res.size() == 1){
             String[] riga = res.get(0);
@@ -246,6 +165,7 @@ public class PrenotazioneDAO implements IPrenotazioneDAO{
         }
     }
 
+    @Override
     public void correggiCosto(int idProposta, boolean aggiunta) throws IOException { //se aggiungo/eliminano clienti allo sharing allora il costo varia
         int clientiPrima = getNumeroClientiSharing(idProposta);
         int clientiDopo;
@@ -270,6 +190,7 @@ public class PrenotazioneDAO implements IPrenotazioneDAO{
         }
     }
 
+    @Override
     public int[] prenotazioniFromDateEIdMezzo(int idMezzo, String dataInizio, String dataFine){
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT idprenotazione FROM carsharing.prenotazione where mezzo_idmezzo=" + idMezzo + " and dataInizio='"+dataInizio+"' and dataFine='"+dataFine+"';");
         int[] a = new int[res.size()];
@@ -284,8 +205,6 @@ public class PrenotazioneDAO implements IPrenotazioneDAO{
     public boolean setPrenotazioneInvalida(int idPrenotazione){
         return DbConnection.getInstance().eseguiAggiornamento("UPDATE prenotazione SET prenotazionevalida=0 WHERE idprenotazione = "+ idPrenotazione+";");
     }
-
-
 
     public ArrayList<Prenotazione> getPrenotazioniPerOperatore(Utente u) throws IOException {
         ArrayList<Prenotazione> pren = new ArrayList<Prenotazione>();
@@ -356,7 +275,6 @@ public class PrenotazioneDAO implements IPrenotazioneDAO{
             preceduto = true;
         }
         query = query + " WHERE idprenotazione = " + oldPren.getId() +";";
-        System.out.println(query);
         return DbConnection.getInstance().eseguiAggiornamento(query);
     }
 
@@ -416,19 +334,16 @@ public class PrenotazioneDAO implements IPrenotazioneDAO{
                 preceduto = true;
             }
             query = query + " WHERE idprenotazione = " + a[i] +";";
-            System.out.println(query);
             DbConnection.getInstance().eseguiAggiornamento(query);
         }
         return true;
     }
-
 
     @Override
     public ArrayList<Prenotazione> findAllPrenotazioniPerAdmin() throws IOException {
         ArrayList<Prenotazione> prenotazioni = new ArrayList<Prenotazione>();
 
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM prenotazione WHERE prenotazionevalida=1;");
-        System.out.println("SELECT * FROM prenotazione WHERE prenotazionevalida=1;");
 
         for (String[] riga : res){
             Prenotazione p = findById(Integer.parseInt(riga[0]));

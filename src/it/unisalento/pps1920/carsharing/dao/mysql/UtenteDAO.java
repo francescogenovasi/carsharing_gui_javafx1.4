@@ -11,8 +11,7 @@ import it.unisalento.pps1920.carsharing.model.Utente;
 import java.util.ArrayList;
 
 public class UtenteDAO implements IUtenteDAO {
-
-
+    @Override
     public Utente ricercaLog(String username, String password){
         Utente utd = new Utente();
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT idutente, username, password, email FROM utente WHERE username = '" + username + "' AND password= '" + password + "';");
@@ -28,40 +27,35 @@ public class UtenteDAO implements IUtenteDAO {
         }
     }
 
+    @Override
     public boolean ricercaEmail(String email){
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM utente WHERE email = '" + email + "' ;");
         if(res.size() == 1){
-            System.out.println("ATTENTO EMAIL USATA");
             return false;
         }else{
-            System.out.println("EMAIL NON USATA");
             return true;
         }
     }
 
+    @Override
     public boolean ricercaUsername(String username){
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM utente WHERE username = '" + username + "' ;");
         if(res.size() == 1){
-            System.out.println("ATTENTO USER USATO");
             return false;
         }else{
-            System.out.println("USER NON USATO");
             return true;
         }
     }
 
+    @Override
     public boolean salvaRegistrazioneUtente(Utente u){
-        //boolean res = DbConnection.getInstance().eseguiAggiornamento("INSERT INTO utente (username, password, email) VALUES ('"+username+"','"+password+"' ,'"+email+"') ;");
         String sql = "INSERT INTO utente (idutente, username, password, email) VALUES (NULL, '" + u.getUsername() + "', '" + u.getPassword() + "', '" + u.getEmail() + "');";
-        System.out.println(sql);
         boolean res1 = DbConnection.getInstance().eseguiAggiornamento(sql);
         sql = "SELECT last_insert_id()";
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery(sql);
         u.setId(Integer.parseInt(res.get(0)[0]));
-        System.out.println("id utente inserito:" + u.getId());
         return res1;
     }
-
 
     @Override
     public Utente findById(int id) {

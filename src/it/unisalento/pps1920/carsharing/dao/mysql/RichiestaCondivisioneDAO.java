@@ -15,25 +15,18 @@ public class RichiestaCondivisioneDAO implements IRichiestaCondivisioneDAO {
     public boolean salvaRichiesta(RichiestaCondivisione r, List<Accessorio> a) {
         String strDataPrenotazione = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(r.getData()));
 
-
-
-        //String sql = "INSERT INTO prenotazione VALUES (NULL, '"+strDataPrenotazione+"',"+p.getCliente().getId()+","+p.getMezzo().getId()+","+p.getNumPostiOccupati()+","+p.getPartenza().getId()+","+p.getArrivo().getId()+","+p.getLocalita().getId()+",'"+strDataInizio+"','"+strDataFine+"');";
         String sql = "INSERT INTO richiesta_condivisione VALUES (NULL, '"+strDataPrenotazione+"',"+r.getProposta().getId()+","+r.getCliente().getId()+", "+r.getNumPostiRichiesti()+", '"+r.getStato()+"');";
 
-        System.out.println(sql);
         boolean res1 = DbConnection.getInstance().eseguiAggiornamento(sql);
 
         sql = "SELECT last_insert_id()";
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery(sql);
         r.setId(Integer.parseInt(res.get(0)[0]));
-        System.out.println("id richiesta inserita:" + r.getId());
 
         String sql_acc;
 
         for (int i=0; i<a.size(); i++){
-            //System.out.println("richiesta: " + r.getId() + " accessorio: " + a.get(i).getId());
             sql_acc = "INSERT INTO rich_acc VALUES (" + r.getId() + ", " + a.get(i).getId() + ");";
-            System.out.println(sql_acc);
             DbConnection.getInstance().eseguiAggiornamento(sql_acc);
         }
 
@@ -93,7 +86,6 @@ public class RichiestaCondivisioneDAO implements IRichiestaCondivisioneDAO {
         String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(dataFine));
 
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = " + idMezzo + " AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) + "';");
-        System.out.println("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = " + idMezzo + " AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) + "';");
         if (res.size()==1){
             String[] riga = res.get(0);
             IMezzoDAO mDAO = new MezzoDAO();

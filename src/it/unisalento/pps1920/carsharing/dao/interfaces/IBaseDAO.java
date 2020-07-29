@@ -5,7 +5,5 @@ import java.util.ArrayList;
 
 public interface IBaseDAO<T>{
     public T findById(int id) throws IOException;
-
     public ArrayList<T> findAll() throws IOException;
-
 }

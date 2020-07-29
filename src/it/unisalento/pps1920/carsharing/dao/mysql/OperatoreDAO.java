@@ -40,7 +40,7 @@ public class OperatoreDAO implements IOperatoreDAO {
     public ArrayList<Operatore> findAll() {
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM operatore;");
 
-        ArrayList<Operatore> operatori = new ArrayList<Operatore>(); //istanziare model con risultati query
+        ArrayList<Operatore> operatori = new ArrayList<Operatore>();
 
         for(String[] riga : res) {
             Operatore o = findById(Integer.parseInt(riga[0]));
@@ -53,13 +53,11 @@ public class OperatoreDAO implements IOperatoreDAO {
     @Override
     public boolean salvaRegistrazioneOperatore(Operatore o){
         String sql = "INSERT INTO operatore (utente_idutente, stazione_idstazione) VALUES (" + o.getId() + ", " + o.getIdstazione() + ");";
-        System.out.println(sql);
         boolean res = DbConnection.getInstance().eseguiAggiornamento(sql);
-        System.out.println("id operatore inserito:" + o.getId());
         return res;
     }
 
-
+    @Override
     public Utente findIdOperatore(int id) {
         Utente u = null;
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT O.utente_idutente, U.username, U.password, U.email FROM operatore AS O INNER JOIN utente as U  ON U.idutente = O.utente_idutente WHERE O.utente_idutente = "+id+";");
@@ -75,6 +73,7 @@ public class OperatoreDAO implements IOperatoreDAO {
         return u;
     }
 
+    @Override
     public ArrayList<Utente> findAllFormaUtente() {
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT O.utente_idutente, U.username, U.password, U.email FROM operatore AS O INNER JOIN utente as U  ON U.idutente = O.utente_idutente ;");
 
@@ -87,7 +86,5 @@ public class OperatoreDAO implements IOperatoreDAO {
 
         return ut;
     }
-
-
 
 }

@@ -8,4 +8,6 @@ import java.util.ArrayList;
 
 public interface IModelloDAO extends IBaseDAO<Modello> {
     public Image getFoto(int id) throws IOException;
+    public boolean salvaModello(Modello m);
+    public int findModelloId(String nome);
 }

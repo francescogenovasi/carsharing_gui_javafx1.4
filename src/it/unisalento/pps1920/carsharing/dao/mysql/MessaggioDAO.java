@@ -12,6 +12,7 @@ import java.util.Date;
 
 public class MessaggioDAO implements IMessaggioDAO {
 
+    @Override
     public Messaggio findById(int id){
         Messaggio m = null;
         MessaggioDAO mezz=new MessaggioDAO();
@@ -31,6 +32,8 @@ public class MessaggioDAO implements IMessaggioDAO {
         }
         return m;
     }
+
+    @Override
     public ArrayList<Messaggio> findAll(){
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM messaggi;"); //query
 
@@ -44,12 +47,14 @@ public class MessaggioDAO implements IMessaggioDAO {
         return mess;
     }
 
+    @Override
     public boolean ScriviMessaggio(Messaggio m){
         String sql="INSERT INTO messaggi (testo, stato, mittente, destinatario, dataInvio) VALUES ('"+m.getTesto()+"', '"+m.getStato()+"','"+m.getMittente().getId()+"', '"+m.getDestinatario().getId()+"', '"+m.getDatainvio()+"');";
         boolean res=DbConnection.getInstance().eseguiAggiornamento(sql);
         return res;
     }
 
+    @Override
     public ArrayList<Messaggio> getMessaggiDaLeggere(Utente u){
 
         ArrayList<Messaggio> messaggiRicevuti = new ArrayList<Messaggio>();
@@ -64,6 +69,7 @@ public class MessaggioDAO implements IMessaggioDAO {
         return messaggiRicevuti;
     }
 
+    @Override
     public boolean setLetto(Messaggio m){
         String sql="UPDATE `messaggi` SET `stato` = 'Letto' WHERE (`idmessaggi` = '"+m.getIdmessaggi()+"');";
         boolean res=DbConnection.getInstance().eseguiAggiornamento(sql);

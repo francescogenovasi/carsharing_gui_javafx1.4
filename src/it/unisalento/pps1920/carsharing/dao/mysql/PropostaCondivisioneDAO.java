@@ -65,26 +65,13 @@ public class PropostaCondivisioneDAO implements IPropostaCondivisioneDAO {
         String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataInizio()));
         String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataFine()));
 
-
-
-        //String sql = "INSERT INTO prenotazione VALUES (NULL, '"+strDataPrenotazione+"',"+p.getCliente().getId()+","+p.getMezzo().getId()+","+p.getNumPostiOccupati()+","+p.getPartenza().getId()+","+p.getArrivo().getId()+","+p.getLocalita().getId()+",'"+strDataInizio+"','"+strDataFine+"');";
         String sql = "INSERT INTO proposta_condivisione VALUES (NULL, '"+strDataPrenotazione+"',"+p.getCliente().getId()+","+p.getMezzo().getId()+","+p.getNumPostiOccupati()+","+p.getPartenza().getId()+","+p.getArrivo().getId()+","+p.getLocalita().getId()+",'"+strDataInizio+"','"+strDataFine+"', 1);";
 
-        System.out.println(sql);
         DbConnection.getInstance().eseguiAggiornamento(sql);
 
         sql = "SELECT last_insert_id()";
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery(sql);
         p.setId(Integer.parseInt(res.get(0)[0]));
-        System.out.println("id proposta inserita:" + p.getId());
-
-        /*String sql_acc;
-
-         for (int i=0; i<a.size(); i++){
-            sql_acc = "INSERT INTO pren_acc VALUES (" + p.getId() + ", " + a.get(i).getId() + ");";
-            System.out.println(sql_acc);
-            DbConnection.getInstance().eseguiAggiornamento(sql_acc);
-        }*/
     }
 
     @Override
@@ -121,7 +108,6 @@ public class PropostaCondivisioneDAO implements IPropostaCondivisioneDAO {
     public ArrayList<PropostaCondivisione> ricercaConFiltri(Stazione partenza, Stazione arrivo, Localita localita, int numPosti, Date inizio, Date fine, Modello modello, String dimensione, String motorizzazione, String tipologia) throws IOException {
         ArrayList<PropostaCondivisione> proposte = new ArrayList<PropostaCondivisione>();
 
-        //SELECT * FROM prenotazione inner join mezzo on prenotazione.mezzo_idmezzo = mezzo.idmezzo where mezzo.postidisponibili<6;
         String query = "SELECT * FROM (proposta_condivisione INNER JOIN mezzo ON proposta_condivisione.mezzo_idmezzo = mezzo.idmezzo) INNER JOIN modello ON mezzo.modello_idmodello = modello.idmodello WHERE propostavalida=1";
 
         if ((partenza != (null))){
@@ -136,9 +122,7 @@ public class PropostaCondivisioneDAO implements IPropostaCondivisioneDAO {
 
         if ((inizio != (null))){//inizio.toString()
             query = query + " AND dataInizio >= STR_TO_DATE('" + DateUtil.fromRomeToLondon(DateUtil.stringFromDate(inizio)) + "', '%Y-%m-%d %H:%i:%s')";
-            //System.out.println(DateUtil.stringFromDate(inizio));
             inizio = DateUtil.modificaOrarioData(inizio, "23", "59");
-            //System.out.println(DateUtil.stringFromDate(inizio));
             query = query + " AND dataInizio <= STR_TO_DATE('" + DateUtil.fromRomeToLondon(DateUtil.stringFromDate(inizio)) + "', '%Y-%m-%d %H:%i:%s')";
         } else {
             Date d = new Date();
@@ -160,13 +144,8 @@ public class PropostaCondivisioneDAO implements IPropostaCondivisioneDAO {
         if ((tipologia != (null))){
             query = query + " AND modello.tipologia = '" + tipologia + "'";
         }
-        //query = query + " AND prenotazionevalida = 1;";
-
-        System.out.println(query);
 
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery(query);
-        //ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM prenotazione");
-
 
         if (res.size() > 0){//
             for (String[] riga : res){
@@ -183,8 +162,6 @@ public class PropostaCondivisioneDAO implements IPropostaCondivisioneDAO {
         }
 
         for (int i = 0; i < proposte.size(); i++){
-            System.out.println("mod :" + proposte.get(i).getMezzo().getModello().getNome() + "tot: " + proposte.get(i).getMezzo().getModello().getNumPosti() + " posti occupati: " + proposte.get(i).getNumPostiOccupati() + " posti richiesti: " + numPosti);
-            System.out.println(proposte.get(i).getMezzo().getModello().getNumPosti() + " - " + proposte.get(i).getNumPostiOccupati() + " < " + numPosti);
             if (( proposte.get(i).getMezzo().getModello().getNumPosti() - proposte.get(i).getNumPostiOccupati() ) < numPosti /*|| ( proposte.get(i).getMezzo().getModello().getNumPosti() - proposte.get(i).getNumPostiOccupati() ) == 0*/){
                 a[i]= proposte.get(i).getId();
             }
@@ -222,6 +199,7 @@ public class PropostaCondivisioneDAO implements IPropostaCondivisioneDAO {
         }
     }
 
+    @Override
     public boolean modificaTabella(Date inizio, Date fine, int posti, Stazione arrivo, Stazione partenza, Localita localita, Prenotazione oldPren) throws IOException {
         PropostaCondivisione prop = findById(oldPren.getIdPropostaCondivisione());
 

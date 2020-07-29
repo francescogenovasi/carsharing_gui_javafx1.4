@@ -40,6 +40,7 @@ public class AmministratoreDAO implements IAmministratoreDAO {
         return amministratori;
     }
 
+    @Override
     public boolean checkAmministratore(int id){
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM amministratore WHERE utente_idutente = " + id + ";");
         if (res.size() == 1){
@@ -48,7 +49,7 @@ public class AmministratoreDAO implements IAmministratoreDAO {
         return false;
     }
 
-
+    @Override
     public Utente findIdAmministratore(int id) {
         Utente u = null;
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT amministratore.utente_idutente, utente.username, utente.password, utente.email FROM amministratore INNER JOIN utente ON utente.idutente = amministratore.utente_idutente WHERE amministratore.utente_idutente = " + id + ";");
@@ -65,6 +66,7 @@ public class AmministratoreDAO implements IAmministratoreDAO {
         return u;
     }
 
+    @Override
     public ArrayList<Utente> findAllFormaUtente() {
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT A.utente_idutente, U.username, U.password, U.email FROM amministratore AS A INNER JOIN utente as U  ON U.idutente = A.utente_idutente"); //query SELECT C.utente_idutente, U.username, U.password, U.email FROM cliente AS C INNER JOIN utente as U  ON U.idutente = C.utente_idutente
 
@@ -77,8 +79,5 @@ public class AmministratoreDAO implements IAmministratoreDAO {
 
         return ut;
     }
-
-
-
 
 }

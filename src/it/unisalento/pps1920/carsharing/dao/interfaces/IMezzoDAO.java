@@ -10,4 +10,5 @@ public interface IMezzoDAO extends IBaseDAO<Mezzo> {
     public ArrayList<Mezzo> findAllPrenotabili(String dim, String tipologia, Date dataInizio, Date dataFine) throws IOException;
     public int findMezzoId(String targa);
     public ArrayList<Mezzo> getMezziOfferta() throws IOException;
+    public boolean salvaMezzo(Mezzo m);
 }

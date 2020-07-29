@@ -8,4 +8,5 @@ public interface IAccessorioDAO extends IBaseDAO<Accessorio>{
     public int findAccessorioId(String nome);
     public boolean salvaAccessorio(Accessorio a);
     public ArrayList<Accessorio> getAccessoriPrenotazione(int idpren);
+    public ArrayList<Accessorio> getAccessoriRichiesta(int idRichiesta);
 }

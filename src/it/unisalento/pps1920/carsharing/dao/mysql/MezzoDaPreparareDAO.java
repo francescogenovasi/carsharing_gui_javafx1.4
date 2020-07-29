@@ -32,6 +32,7 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
         }
         return m;
     }
+
     @Override
     public ArrayList<MezzoDaPreparare> findAll() throws IOException {
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzi_da_preparare;"); //query
@@ -72,6 +73,7 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
         return mezziDaPreparare;
     }
 
+    @Override
     public boolean mezzoPartito(int a[], int id){
         int pagato=1;
         ArrayList<String[]> res = new ArrayList<String[]>();
@@ -94,6 +96,7 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
         }
     }
 
+    @Override
     public boolean mezzoPronto(int id){
         String sql="UPDATE mezzi_da_preparare SET `stato_addetto` = 'Pronto' WHERE idmezzi_da_preparare="+id+";";
         boolean res =DbConnection.getInstance().eseguiAggiornamento(sql);
@@ -105,7 +108,6 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
         //decrementa il numero di posti dalla tabella mezzi_da_preparare
         String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataInizio()));
         String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataFine()));
-        System.out.println("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = " + p.getMezzo().getId() + " AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato_addetto = 'Non Pronto' ;");
         ArrayList<String[]> res2 = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = " + p.getMezzo().getId() + " AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato_addetto = 'Non Pronto' ;");
         if(res2.size() == 1){
             String[] riga = res2.get(0);
@@ -121,7 +123,6 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
     public boolean eliminaRecord(Prenotazione p){
         String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataInizio()));
         String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataFine()));
-        System.out.println("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = " + p.getMezzo().getId() + " AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato_addetto = 'Non Pronto' ;");
         ArrayList<String[]> res2 = DbConnection.getInstance().eseguiQuery("SELECT * FROM mezzi_da_preparare WHERE mezzo_idmezzo = " + p.getMezzo().getId() + " AND dataInizio = '" + DateUtil.fromRomeToLondon(strDataInizio) + "' AND dataFine = '" + DateUtil.fromRomeToLondon(strDataFine) +"' AND stato_addetto = 'Non Pronto' ;");
         if(res2.size() == 1){
             String[] riga = res2.get(0);
@@ -143,7 +144,6 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
                 String[] riga = res.get(0);
                 numPostiAggiornati = Integer.parseInt(riga[0])-oldPren.getNumPostiOccupati()+posti;
             }
-            System.out.println("UPDATE mezzi_da_preparare SET posti_occupati="+numPostiAggiornati+" WHERE mezzo_idmezzo="+oldPren.getMezzo().getId()+" AND dataInizio='"+DateUtil.fromRomeToLondon(strDataInizioVecchia)+"' AND dataFine ='"+DateUtil.fromRomeToLondon(strDataFineVecchia)+"';");
             DbConnection.getInstance().eseguiAggiornamento("UPDATE mezzi_da_preparare SET posti_occupati="+numPostiAggiornati+" WHERE mezzo_idmezzo="+oldPren.getMezzo().getId()+" AND dataInizio='"+DateUtil.fromRomeToLondon(strDataInizioVecchia)+"' AND dataFine ='"+DateUtil.fromRomeToLondon(strDataFineVecchia)+"';");
         }
         if (inizio != null && fine==null){
@@ -168,6 +168,7 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
         return true;
     }
 
+    @Override
     public boolean setPagato (int[] a) throws IOException {  //Contiene le cose per trovare una prenotazione
         Prenotazione p=new Prenotazione();
         boolean ress = false;
@@ -179,7 +180,7 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
         return ress;
     }
 
-
+    @Override
     public int[] prenotazioniFromDateEIdMezzo2(int idMezzo, String dataInizio, String dataFine){
         dataFine=DateUtil.fromRomeToLondon(dataFine);
         dataInizio=DateUtil.fromRomeToLondon(dataInizio);
@@ -193,6 +194,5 @@ public class MezzoDaPreparareDAO implements IMezzoDaPreparareDAO {
         }
         return a;
     }
-
 
 }

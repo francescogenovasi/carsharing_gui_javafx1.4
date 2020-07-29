@@ -28,7 +28,7 @@ public class AddettoDAO implements IAddettoDAO {
 
     @Override
     public ArrayList<Addetto> findAll() { //potrebbe non funzionare, potrebbe mancare qualche inner join
-        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM addetto;"); //query: SELECT A.utente_idutente, U.username, U.password, U.email FROM addetto AS A INNER JOIN utente as U  ON U.idutente = A.utente_idutente
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM addetto;");
 
         ArrayList<Addetto> addetti = new ArrayList<Addetto>(); //istanziare model con risultati query
 
@@ -40,15 +40,14 @@ public class AddettoDAO implements IAddettoDAO {
         return addetti;
     }
 
+    @Override
     public boolean salvaRegistrazioneAddetto(Addetto a){
-        //boolean res = DbConnection.getInstance().eseguiAggiornamento("INSERT INTO utente (username, password, email) VALUES ('"+username+"','"+password+"' ,'"+email+"') ;");
         String sql = "INSERT INTO addetto (utente_idutente, stazione_idstazione) VALUES (" + a.getId() + ", " + a.getIdstazione() + ");";
-        System.out.println(sql);
         boolean res = DbConnection.getInstance().eseguiAggiornamento(sql);
-        System.out.println("id addetto inserito:" + a.getId());
         return res;
     }
 
+    @Override
     public boolean checkAddetto(int id){
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM addetto WHERE utente_idutente = " + id + ";");
         if (res.size() == 1){
@@ -57,8 +56,7 @@ public class AddettoDAO implements IAddettoDAO {
         return false;
     }
 
-
-
+    @Override
     public Utente findIdAddetto(int id) {
         Utente u = null;
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT A.utente_idutente, U.username, U.password, U.email FROM addetto AS A INNER JOIN utente as U  ON U.idutente = A.utente_idutente WHERE A.utente_idutente = "+id+";");
@@ -74,6 +72,7 @@ public class AddettoDAO implements IAddettoDAO {
         return u;
     }
 
+    @Override
     public ArrayList<Utente> findAllFormaUtente() {
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT A.utente_idutente, U.username, U.password, U.email FROM addetto AS A INNER JOIN utente as U  ON U.idutente = A.utente_idutente ;");
 

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class TabConfermaDAO implements ITabConfermaDAO {
+    @Override
     public ArrayList<TabConfermaRichieste> getElencoInAttesa(int idClienteProponente) throws IOException {
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT R.idrichiesta_condivisione, R.cliente_idcliente, P.dataInizio, P.dataFine, P.idstazione_partenza, P.idstazione_arrivo, P.localita_idlocalita, P.mezzo_idmezzo, R.posti_richiesti from proposta_condivisione AS P INNER JOIN richiesta_condivisione AS R ON P.idproposta_condivisione = R.idproposta_condivisione WHERE P.cliente_idcliente = "+ idClienteProponente +" AND R.stato='Attesa';");
         ArrayList<TabConfermaRichieste> richieste = new ArrayList<TabConfermaRichieste>();
@@ -43,11 +44,9 @@ public class TabConfermaDAO implements ITabConfermaDAO {
             t.setMezzo(mezzo);
 
             t.setNumPostiOccupati(Integer.parseInt(riga[8]));
-            //System.out.println(t.getIdProponente() + " " + t.getIdRichiedente() + " kninininininininininininin ");
 
             richieste.add(t);
         }
-        //System.out.println(" kninininininininininininin ");
         return richieste;
     }
 

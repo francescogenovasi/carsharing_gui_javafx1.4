@@ -37,14 +37,14 @@ public class AccessorioDAO implements IAccessorioDAO {
         return acc;
     }
 
+    @Override
     public boolean salvaAccessorio(Accessorio a){
-        //boolean res = DbConnection.getInstance().eseguiAggiornamento("INSERT INTO utente (username, password, email) VALUES ('"+username+"','"+password+"' ,'"+email+"') ;");
         String sql = "INSERT INTO accessorio (idaccessorio, nome, postioccupati, costo) VALUES ( null, '" + a.getNome() + "', " + a.getPostiOccupati() + ", " + a.getCosto() + ");";
-        System.out.println(sql);
         boolean res = DbConnection.getInstance().eseguiAggiornamento(sql);
         return res;
     }
 
+    @Override
     public int findAccessorioId(String nome){
         int id = -1;
         ArrayList<String[]> ris = DbConnection.getInstance().eseguiQuery("SELECT * FROM accessorio WHERE nome='" + nome + "';");
@@ -55,6 +55,7 @@ public class AccessorioDAO implements IAccessorioDAO {
         return id;
     }
 
+    @Override
     public ArrayList<Accessorio> getAccessoriPrenotazione(int idPren){
         ArrayList<Accessorio> acc = new ArrayList<Accessorio>();
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM pren_acc WHERE prenotazione_idprenotazione=" + idPren + ";");
@@ -65,6 +66,7 @@ public class AccessorioDAO implements IAccessorioDAO {
         return acc;
     }
 
+    @Override
     public ArrayList<Accessorio> getAccessoriRichiesta(int idRichiesta){
         ArrayList<Accessorio> acc = new ArrayList<Accessorio>();
         ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM rich_acc WHERE idrichiesta_condivisione = " + idRichiesta + ";");
