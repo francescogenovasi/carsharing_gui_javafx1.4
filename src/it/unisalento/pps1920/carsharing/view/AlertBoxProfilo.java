@@ -26,11 +26,11 @@ public class AlertBoxProfilo {
         window.setMinWidth(250);
 
         Label label = new Label();
-        label.setText(c.getNome() + " " +c.getCognome());
+        label.setText("Nome: " + c.getNome() + " Cognome: " +c.getCognome());
         Label label2 = new Label();
-        label2.setText(c.getTelefono() + " " +c.getEta());
+        label2.setText("Telefono: " + c.getTelefono() + " Età: " +c.getEta());
         Label label3 = new Label();
-        label3.setText(c.getCap() + " " +c.getCitta() + " " + c.getIndirizzo());
+        label3.setText("CAP: " + c.getCap() + " Città: " +c.getCitta() + " Indirizzo: " + c.getIndirizzo());
         Image image=CommonBusiness.getInstance().getFotoCliente(c.getId());
         imageProfilo.setImage(image);
         Button closeButton = new Button("Chiudi");
