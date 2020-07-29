@@ -289,6 +289,20 @@ public class PrenotazioneDAO implements IPrenotazioneDAO{
         return a;
     }
 
+    public int visualPrenSimili(Prenotazione p){
+
+        String strDataInizio = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataInizio()));
+        String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(p.getDataFine()));
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery("SELECT * FROM prenotazione WHERE dataFine = '"+strDataFine+"' AND dataInizio = '"+strDataInizio+"' AND localita_idlocalita="+p.getLocalita().getId()+" AND idstazione_partenza="+p.getPartenza().getId()+" AND idstazione_arrivo="+p.getArrivo().getId()+" ;");
+        if (res!=null){
+            if(res.size()!=0){
+                return 1;
+            }
+        }
+
+        return 0;
+    }
+
     @Override
     public boolean modificaAltrePrenotazioni(Date inizio, Date fine, int posti, Stazione arrivo, Stazione partenza, Localita localita, Prenotazione oldPren){
         int[] a = prenotazioniFromIdProposta(oldPren.getIdPropostaCondivisione());

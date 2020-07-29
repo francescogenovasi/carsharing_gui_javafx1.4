@@ -216,6 +216,11 @@ public class PrenotazioneBusiness {
         return pDAO.findAllPrenotazioniPerAdmin();
     }
 
+    public int chechPrenSimili(Prenotazione p){
+        IPrenotazioneDAO pDAO= new PrenotazioneDAO();
+        return pDAO.visualPrenSimili(p);
+    }
+
 
 
 }

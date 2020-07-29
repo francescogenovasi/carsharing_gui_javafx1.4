@@ -2,6 +2,7 @@ package it.unisalento.pps1920.carsharing.view;
 
 import it.unisalento.pps1920.carsharing.business.AccessorioBusiness;
 import it.unisalento.pps1920.carsharing.business.CommonBusiness;
+import it.unisalento.pps1920.carsharing.business.PrenotazioneBusiness;
 import it.unisalento.pps1920.carsharing.business.RicercaBusiness;
 import it.unisalento.pps1920.carsharing.dao.interfaces.IMezzoDAO;
 import it.unisalento.pps1920.carsharing.dao.mysql.MezzoDAO;
@@ -233,6 +234,7 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
             error = true;
         } else {
             //sono stati inseriti tutti i campi
+
             inizio = DateUtil.convertToDateFromLocalDate(dataInizio.getValue());
             inizio = DateUtil.modificaOrarioData(inizio, oraInizio.getValue(), minutoInizio.getValue());
             fine = DateUtil.convertToDateFromLocalDate(dataFine.getValue());
@@ -254,10 +256,10 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
         }
 
 
-        if (error == false){
+        if (error == false) {
             Prenotazione p = new Prenotazione();
             p.setData(new Date());
-            if (CommonBusiness.getInstance().checkCliente(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){ //se cliente allora prendi l'id e mandalo, se addetto allora prendi le cose dalla label
+            if (CommonBusiness.getInstance().checkCliente(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())) { //se cliente allora prendi l'id e mandalo, se addetto allora prendi le cose dalla label
                 p.setCliente(CommonBusiness.getInstance().getCliente(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId()));//prendo il cliente da passare alla prenotazione
             } else {
                 p.setCliente(cli);
@@ -271,23 +273,31 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
             p.setPagamento(false);
             p.setPronta(false);
 
-            dim = dimensioneAuto.getValue();
 
-            ObservableList<Mezzo> mezzi = (ObservableList<Mezzo>) FXCollections.observableArrayList(RicercaBusiness.getInstance().mezziPrenotabili(dim, tipoMezzo, p.getDataInizio(), p.getDataFine()));
-            if(mezzi.size()==0){
-                AlertBox.display("Nuova proposta", "Nessun mezzo disponibile della tipologia richiesta!");
-            } else {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("confermaPrenotazione.fxml"));
-                Pane pane = (Pane) loader.load();
-                ConfermaPrenotazioneController controller = loader.<ConfermaPrenotazioneController>getController();
-
-                controller.initialize(p, dimensioneAuto.getValue(), acc, tipoMezzo, mezzi);//passa la prenotazione incompleta (manca mezzo)
-
-                rootPanePropostaFormPage.getChildren().setAll(pane);
-                rootPanePropostaFormPage.setPrefSize(1000, 600);
+            //Qui controllo
+            int prensimili = PrenotazioneBusiness.getInstance().chechPrenSimili(p);
+            if (prensimili == 1) {
+                AlertBox.display("Prenotazioni Simili", "Attenzione, Esistono delle prenotazioni simili a quella desiderata. Controllare la tabella delle prenotazioni");
             }
 
-        }
+
+                dim = dimensioneAuto.getValue();
+
+                ObservableList<Mezzo> mezzi = (ObservableList<Mezzo>) FXCollections.observableArrayList(RicercaBusiness.getInstance().mezziPrenotabili(dim, tipoMezzo, p.getDataInizio(), p.getDataFine()));
+                if (mezzi.size() == 0) {
+                    AlertBox.display("Nuova proposta", "Nessun mezzo disponibile della tipologia richiesta!");
+                } else {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("confermaPrenotazione.fxml"));
+                    Pane pane = (Pane) loader.load();
+                    ConfermaPrenotazioneController controller = loader.<ConfermaPrenotazioneController>getController();
+
+                    controller.initialize(p, dimensioneAuto.getValue(), acc, tipoMezzo, mezzi);//passa la prenotazione incompleta (manca mezzo)
+
+                    rootPanePropostaFormPage.getChildren().setAll(pane);
+                    rootPanePropostaFormPage.setPrefSize(1000, 600);
+                }
+
+            }
     }
 
     @FXML
