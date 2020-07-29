@@ -64,7 +64,7 @@ public class AggiuntaMezzoController {
                     aggiuntaMezzo = MezzoBusiness.getInstance().salvaAggiuntaMezzo(m);
                     if (aggiuntaMezzo) {
                         AlertBox.display("Aggiunta Mezzo", "Aggiunta mezzo avvenuta con successo");
-                        Pane pane = FXMLLoader.load(getClass().getResource("homePage.fxml"));
+                        Pane pane = FXMLLoader.load(getClass().getResource("tabsRicercaPage.fxml"));
                         rootAggiungiMezzoPane.getChildren().setAll(pane);
                     } else {
                         AlertBox.display("Aggiunta Mezzo", "Aggiunta mezzo fallita, riprovare");

@@ -92,7 +92,7 @@ public class AggiuntaModelloController {
                 aggiuntaModello = ModelloBusiness.getInstance().salvaAggiuntaModello(m);
                 if (aggiuntaModello) {
                     AlertBox.display("Aggiunta Modello", "Aggiunta modello avvenuta con successo");
-                    Pane pane = FXMLLoader.load(getClass().getResource("homePage.fxml"));
+                    Pane pane = FXMLLoader.load(getClass().getResource("tabsRicercaPage.fxml"));
                     rootAggiungiModelloPane.getChildren().setAll(pane);
                 } else {
                     AlertBox.display("Aggiunta Modello", "Aggiunta modello fallita, riprovare");
