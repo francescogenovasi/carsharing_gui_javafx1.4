@@ -107,7 +107,10 @@ public class TabellaPrenotazioniPageController{
 
         addButtonElimina();
 
-        addButtonModifica();
+        //addButtonModifica();
+        if (CommonBusiness.getInstance().checkCliente(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
+            addButtonModifica();
+        }
 
 
 
