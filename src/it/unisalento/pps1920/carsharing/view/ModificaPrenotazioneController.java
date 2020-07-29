@@ -135,16 +135,16 @@ public class ModificaPrenotazioneController {
 
                 //ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(CommonBusiness.getInstance().getPrenotazioni());
                 //controller.setListPrenotazioni(prenotazioni);
-                if (CommonBusiness.getInstance().checkAmministratore(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
+                /*if (CommonBusiness.getInstance().checkAmministratore(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
                     ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(CommonBusiness.getInstance().getPrenotazioni());
                     controller.setListPrenotazioni(prenotazioni);
-                } else {
+                } else {*/
                     if (CommonBusiness.getInstance().checkCliente(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
                         ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(CommonBusiness.getInstance().getPrenotazioniUtente(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId()));
                         controller.setListPrenotazioni(prenotazioni);
-                    } else {
-                    }
-                }
+                    } /*else {
+                    }*/
+                //}
 
                 rootPaneModificaPrenotazione.getChildren().setAll(pane);
                 rootPaneModificaPrenotazione.setPrefSize(1000, 600);
@@ -160,16 +160,16 @@ public class ModificaPrenotazioneController {
 
             //ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(CommonBusiness.getInstance().getPrenotazioni());
             //controller.setListPrenotazioni(prenotazioni);
-            if (CommonBusiness.getInstance().checkAmministratore(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
+            /*if (CommonBusiness.getInstance().checkAmministratore(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
                 ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(CommonBusiness.getInstance().getPrenotazioni());
                 controller.setListPrenotazioni(prenotazioni);
-            } else {
+            } else {*/
                 if (CommonBusiness.getInstance().checkCliente(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
                     ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(CommonBusiness.getInstance().getPrenotazioniUtente(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId()));
                     controller.setListPrenotazioni(prenotazioni);
-                } else {
+                } /*else {
                 }
-            }
+            }*/
 
             rootPaneModificaPrenotazione.getChildren().setAll(pane);
             rootPaneModificaPrenotazione.setPrefSize(1000, 600);
