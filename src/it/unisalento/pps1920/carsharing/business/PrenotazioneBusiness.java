@@ -160,7 +160,7 @@ public class PrenotazioneBusiness {
 
                             if ((dataInizio.compareTo(mezziPrenotati.get(i).getDataInizio()) <= 0 && dataFine.compareTo(mezziPrenotati.get(i).getDataInizio()) <= 0) || dataFine.compareTo(mezziPrenotati.get(i).getDataFine()) >= 0 && dataFine.compareTo(mezziPrenotati.get(i).getDataFine()) >= 0){
                                 System.out.println("esattooooooooooooooooooooooooooooo tuttoooooooooooooooooooo");
-                                System.out.println(fine.toString() + " aaaaaaaaaa " + mezziPrenotati.get(i).getDataInizio());
+                                //System.out.println(fine.toString() + " aaaaaaaaaa " + mezziPrenotati.get(i).getDataInizio());
                                 error = false;
                             } else {
                                 System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee tuttoooooooooooo");
