@@ -177,10 +177,26 @@ public class PropostaCondivisioneDAO implements IPropostaCondivisioneDAO {
             AlertBox.display("Errore ricerca", "nessun elemento corrisponde ai criteri di ricerca");
         }
 
+        int[] a = new int[proposte.size()];
+        for (int i = 0; i<proposte.size(); i++){
+            a[i]=0;
+        }
+
         for (int i = 0; i < proposte.size(); i++){
-            System.out.println("mod :" + proposte.get(i).getMezzo().getModello().getNumPosti() + " posti occupati: " + proposte.get(i).getNumPostiOccupati() + " posti richiesti: " + numPosti);
-            if (( proposte.get(i).getMezzo().getModello().getNumPosti() - proposte.get(i).getNumPostiOccupati() ) < numPosti || ( proposte.get(i).getMezzo().getModello().getNumPosti() - proposte.get(i).getNumPostiOccupati() ) == 0){
-                proposte.remove(i);
+            System.out.println("mod :" + proposte.get(i).getMezzo().getModello().getNome() + "tot: " + proposte.get(i).getMezzo().getModello().getNumPosti() + " posti occupati: " + proposte.get(i).getNumPostiOccupati() + " posti richiesti: " + numPosti);
+            System.out.println(proposte.get(i).getMezzo().getModello().getNumPosti() + " - " + proposte.get(i).getNumPostiOccupati() + " < " + numPosti);
+            if (( proposte.get(i).getMezzo().getModello().getNumPosti() - proposte.get(i).getNumPostiOccupati() ) < numPosti /*|| ( proposte.get(i).getMezzo().getModello().getNumPosti() - proposte.get(i).getNumPostiOccupati() ) == 0*/){
+                a[i]= proposte.get(i).getId();
+            }
+        }
+        for (int i = 0; i<a.length; i++){
+            if (a[i]!=0){
+                for (int j = 0; j<proposte.size(); j++){
+                    if (a[i] == proposte.get(j).getId()){
+                        proposte.remove(j);
+                        break;
+                    }
+                }
             }
         }
 

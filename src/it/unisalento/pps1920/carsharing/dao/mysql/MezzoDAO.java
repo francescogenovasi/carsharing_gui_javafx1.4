@@ -29,8 +29,7 @@ public class MezzoDAO implements IMezzoDAO {
                 m.setTarga(riga[1]);
                 Modello modello= mDAO.findById(Integer.parseInt(riga[2]));
                 m.setModello(modello);
-                m.setMotorizzazione(riga[4]);
-
+                m.setMotorizzazione(riga[3]);
             }
             return m;
         }
