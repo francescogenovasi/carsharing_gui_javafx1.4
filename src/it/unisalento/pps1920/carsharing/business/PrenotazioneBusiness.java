@@ -7,6 +7,7 @@ import it.unisalento.pps1920.carsharing.model.*;
 import it.unisalento.pps1920.carsharing.util.DateUtil;
 import it.unisalento.pps1920.carsharing.util.MailHelper;
 import it.unisalento.pps1920.carsharing.util.PdfHelper;
+import it.unisalento.pps1920.carsharing.view.AlertBox;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -122,6 +123,65 @@ public class PrenotazioneBusiness {
         IPrenotazioneDAO pDAO = new PrenotazioneDAO();
         IPropostaCondivisioneDAO propDAO = new PropostaCondivisioneDAO();
         PropostaCondivisione prop = propDAO.findById(oldPren.getIdPropostaCondivisione());
+
+
+        //controllo che le nuove date siano esatte
+        ArrayList<MezzoDaPreparare> mezziPrenotati = new MezzoDaPreparareDAO().findAll(); //prendo tutti i mezzi da preparare
+        for (int i = 0; i < mezziPrenotati.size(); i++){ //toglo la vecchia prenotazione
+            if (mezziPrenotati.get(i).getMezzo().getId() == oldPren.getMezzo().getId()){
+                mezziPrenotati.remove(i);
+                break;
+            }
+        }
+        Date dataInizio = oldPren.getDataInizio();
+        Date dataFine = oldPren.getDataFine();
+        if (inizio!=null){
+            dataInizio = inizio;
+        }
+        if (fine!=null){
+            dataFine = fine;
+        }
+        boolean error = false;
+        for (int i = 0; i < mezziPrenotati.size(); i++){ //scorro i mezzi gia prenotati
+            //for (int j = 0; j < mezzi.size(); j++){
+                System.out.println(dataInizio.toString()+  " aaaaabbbbbbbbbaaaaa " + mezziPrenotati.get(i).getDataInizio());
+                if (mezziPrenotati.get(i).getMezzo().getId() == oldPren.getMezzo().getId()){ //se l'id del mezzo della prenotazione è uguale a quello di uno dei mezzi appena presi
+                    if (dataInizio.compareTo(mezziPrenotati.get(i).getDataInizio()) >= 0 && dataInizio.compareTo(mezziPrenotati.get(i).getDataFine()) <= 0){ //se la data di inizio si trova nel range della prenotazione già effettuata allora dai errore
+                        //0 ->date uguali; <0 se d minore dell'altra; >0 se l'altra è maggiore di d
+                        //System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee data inizio");
+                        error = true;
+                    } else {
+                        //System.out.println("esattooooooooooooooooooooooooooooo data inizio");
+                        if (dataInizio.compareTo(mezziPrenotati.get(i).getDataInizio()) >= 0 && dataFine.compareTo(mezziPrenotati.get(i).getDataFine()) <= 0){
+                            //System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee data fine");
+                            error = true;
+                        } else {
+                            //System.out.println("esattooooooooooooooooooooooooooooo data fine");
+
+                            if ((dataInizio.compareTo(mezziPrenotati.get(i).getDataInizio()) <= 0 && dataFine.compareTo(mezziPrenotati.get(i).getDataInizio()) <= 0) || dataFine.compareTo(mezziPrenotati.get(i).getDataFine()) >= 0 && dataFine.compareTo(mezziPrenotati.get(i).getDataFine()) >= 0){
+                                System.out.println("esattooooooooooooooooooooooooooooo tuttoooooooooooooooooooo");
+                                System.out.println(fine.toString() + " aaaaaaaaaa " + mezziPrenotati.get(i).getDataInizio());
+                                error = false;
+                            } else {
+                                System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee tuttoooooooooooo");
+                                error = true;
+                            }
+                        }
+                    }
+                }
+            //}
+        }
+        if (error){
+            //AlertBox.display("BUBUIIHIHIHH", "data non modificabile");
+            return false;
+        } /*else {
+            //AlertBox.display("BUBUIIHIHIHH", "data modificabile");
+        }*/
+
+
+
+
+
         //controllo posti disponibili
         System.out.println(oldPren.getMezzo().getModello().getNumPosti() +"-("+ prop.getNumPostiOccupati() +"-"+ oldPren.getNumPostiOccupati() +")-"+ posti +">=" +oldPren.getMezzo().getModello().getNumPosti());
         if (oldPren.getMezzo().getModello().getNumPosti() - (prop.getNumPostiOccupati() - oldPren.getNumPostiOccupati()) - posti >= oldPren.getMezzo().getModello().getNumPosti() ){ //numpostimezzo-numpostioccupati-numpostioccupatidallaprenotazione+numpostinuovapren deve essere minore del numero di posti disponibili in macchina

@@ -235,7 +235,7 @@ public class PropostaCondivisioneDAO implements IPropostaCondivisioneDAO {
         }
         if (fine != null){
             String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(fine));
-            DbConnection.getInstance().eseguiAggiornamento("UPDATE proposta_condivisione SET dataInizio='"+strDataFine+"' WHERE idproposta_condivisione="+prop.getId()+";");
+            DbConnection.getInstance().eseguiAggiornamento("UPDATE proposta_condivisione SET dataFine='"+strDataFine+"' WHERE idproposta_condivisione="+prop.getId()+";");
         }
         if (arrivo != null){
             DbConnection.getInstance().eseguiAggiornamento("UPDATE proposta_condivisione SET idstazione_arrivo="+arrivo.getId()+" WHERE idproposta_condivisione="+prop.getId()+";");

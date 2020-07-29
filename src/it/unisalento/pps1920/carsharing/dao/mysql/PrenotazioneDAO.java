@@ -324,7 +324,7 @@ public class PrenotazioneDAO implements IPrenotazioneDAO{
                 query = query + ", ";
             }
             String strDataFine = DateUtil.fromRomeToLondon(DateUtil.stringFromDate(fine));
-            query = query + " dataInizio = '"+strDataFine+"' ";
+            query = query + " dataFine = '"+strDataFine+"' ";
             preceduto = true;
         }
         if (posti != oldPren.getNumPostiOccupati()){
