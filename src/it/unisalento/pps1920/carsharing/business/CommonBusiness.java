@@ -118,6 +118,11 @@ public class CommonBusiness {
         return mDAO.getMezziPronti();
     }
 
+    public ArrayList<Mezzo> getMezzi() throws IOException {
+        IMezzoDAO mDAO = new MezzoDAO();
+        return mDAO.findAll();
+    }
+
     public ArrayList<MezzoDaPreparare> getMezziDaPreparare() throws IOException {
         IMezzoDaPreparareDAO mDAO = new MezzoDaPreparareDAO();
         return mDAO.getMezziDaPreparare();

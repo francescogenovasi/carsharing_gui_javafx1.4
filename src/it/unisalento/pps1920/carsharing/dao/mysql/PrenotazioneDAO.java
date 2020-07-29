@@ -54,6 +54,8 @@ public class PrenotazioneDAO implements IPrenotazioneDAO{
 
             if (Integer.parseInt(riga[12]) == 0){
                 p.setPagamento(false);
+            }else{
+                p.setPagamento(true);
             }
         }
         return p;

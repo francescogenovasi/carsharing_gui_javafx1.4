@@ -89,6 +89,7 @@ public class TabellaPrenotazioniPageController{
         TableColumn<Prenotazione, String> pagamento = new TableColumn<>("pagamento");
         pagamento.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPagamento()));
 
+
         tabellaPrenotazioni.getColumns().addAll(idPrenotazione, dataPrenotazione, idCliente, idMezzo, numPostiOcc, idStazPart, idStazArr, idLocalita, dataInizio, dataFine, pagamento);
 
 

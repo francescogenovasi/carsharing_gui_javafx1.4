@@ -15,6 +15,7 @@
               </Pane>
             </content>
           </Tab>
+
           <Tab text="Filtri">
                <content>
                   <Pane fx:id="filtriGeneralePaneTabsRicerca" prefHeight="339.0" prefWidth="600.0">
@@ -25,6 +26,13 @@
                   </Pane>
                </content>
           </Tab>
+
+            <Tab text="Parco Automezzi">
+                <content>
+                    <Pane fx:id="tabellaPaneMezzi" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    </Pane>
+                </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>

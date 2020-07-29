@@ -123,7 +123,7 @@ public class Prenotazione {
     }
 
     public String getPagamento(){
-        if (pagamento){
+        if (pagamento == true){
             return "effettuato";
         } else {
             return "non effettuato";
