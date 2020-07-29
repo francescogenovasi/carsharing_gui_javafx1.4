@@ -31,20 +31,17 @@ public class MailHelper {
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
-        //get Session
         Session session = Session.getDefaultInstance(props,
                 new Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(FROM,PASSWORD);
                     }
                 });
-        //compose message
         try {
             MimeMessage message = new MimeMessage(session);
             message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
             message.setSubject(sub);
             message.setText(msg);
-            //send message
             Transport.send(message);
             System.out.println("message sent successfully");
         } catch (MessagingException e) {

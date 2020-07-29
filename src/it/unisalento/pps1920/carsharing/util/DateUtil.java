@@ -68,63 +68,24 @@ public class DateUtil {
     }
 
     public static String fromRomeToLondon(String oraDaConvertire){
-        /*ZoneId italia = ZoneId.of("Europe/Rome");
-        String str = oraDaConvertire;
-        System.out.println("str: " + str);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime localtDateAndTime = LocalDateTime.parse(str, formatter);
-        ZonedDateTime dateAndTimeInSydney = ZonedDateTime.of(localtDateAndTime, italia );
-
-        System.out.println("Current date and time in a particular timezone : " + dateAndTimeInSydney);
-
-        ZonedDateTime utcDate = dateAndTimeInSydney.withZoneSameInstant(ZoneOffset.UTC);
-
-        System.out.println("Current date and time in UTC : " + utcDate);*/
-        System.out.println("da conv : " + oraDaConvertire);
         String dateformat = "yyyy-MM-dd HH:mm:ss";
         LocalDateTime ldt = LocalDateTime.parse(oraDaConvertire, DateTimeFormatter.ofPattern(dateformat));
-
         ZoneId romeZoneId = ZoneId.of("Europe/Rome");
-        //System.out.println("TimeZone : " + romeZoneId);
-
-        //LocalDateTime + ZoneId = ZonedDateTime
         ZonedDateTime romeZonedDateTime = ldt.atZone(romeZoneId);
-        //System.out.println("Date (Rome) : " + romeZonedDateTime);
-
         ZoneId londonZoneId = ZoneId.of("Europe/London");
-        //System.out.println("TimeZone : " + londonZoneId);
-
         ZonedDateTime londonDateTime = romeZonedDateTime.withZoneSameInstant(londonZoneId);
-        //System.out.println("Date (London) : " + londonDateTime);
-
         DateTimeFormatter format = DateTimeFormatter.ofPattern(dateformat);
-        //System.out.println("\n---DateTimeFormatter---");
-        //System.out.println("Date (Rome) : " + format.format(romeZonedDateTime));
-        System.out.println("Date (London) : " + format.format(londonDateTime));
         return format.format(londonDateTime);
     }
     public static String fromLondonToRome(String oraDaConvertire){
         System.out.println("da conv : " + oraDaConvertire);
         String dateformat = "yyyy-MM-dd HH:mm:ss";
         LocalDateTime ldt = LocalDateTime.parse(oraDaConvertire, DateTimeFormatter.ofPattern(dateformat));
-
         ZoneId londonZoneId = ZoneId.of("Europe/London");
-        //System.out.println("TimeZone : " + romeZoneId);
-
-        //LocalDateTime + ZoneId = ZonedDateTime
         ZonedDateTime londonZonedDateTime = ldt.atZone(londonZoneId);
-        //System.out.println("Date (Rome) : " + romeZonedDateTime);
-
         ZoneId romeZoneId = ZoneId.of("Europe/Rome");
-        //System.out.println("TimeZone : " + londonZoneId);
-
         ZonedDateTime romeDateTime = londonZonedDateTime.withZoneSameInstant(romeZoneId);
-        //System.out.println("Date (London) : " + londonDateTime);
-
         DateTimeFormatter format = DateTimeFormatter.ofPattern(dateformat);
-        //System.out.println("\n---DateTimeFormatter---");
-        //System.out.println("Date (Rome) : " + format.format(romeZonedDateTime));
-        System.out.println("Date (Rome) : " + format.format(romeDateTime));
         return format.format(romeDateTime);
     }
 
