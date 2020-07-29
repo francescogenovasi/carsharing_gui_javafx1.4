@@ -99,7 +99,7 @@ public class PrenotazioneBusiness {
         testoPDF.add("Con : "+p.getMezzo().getModello().getNome() + " targato: " + p.getMezzo().getTarga());
         testoPDF.add("Stampa questo file e presentati in stazione");
         testoPDF.add("A presto :) ");
-        //PdfHelper.getInstance().creaPdf(testoPDF, p.getId()); //todo pdf commentato per non cambiare sempre path
+        PdfHelper.getInstance().creaPdf(testoPDF, p.getId());
 
         return true;
     }

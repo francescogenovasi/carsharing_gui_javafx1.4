@@ -26,7 +26,7 @@ public class DbConnection {
    private DbConnection() { //sing contruttore privato
 	   if(connesso != true)
 			//connetti("test_connection_java", "root", "root1234");
-            connetti("carsharing", "root", "root1234");
+            connetti("carsharing", "root", "root1234"); //todo cambiare crednziali se si cambia db
    }
    
    // Apre la connessione con il Database
@@ -37,7 +37,7 @@ public class DbConnection {
 
          // Carico il driver JDBC per la connessione con il database MySQL
          Class.forName("com.mysql.jdbc.Driver");
-         db = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/" + nomeDB + "?user=" + nomeUtente + "&password=" + pwdUtente+"&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false");
+         db = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/" + nomeDB + "?user=" + nomeUtente + "&password=" + pwdUtente+"&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false"); //todo cambiare db se non è in locale
           //db = DriverManager.getConnection("jdbc:mysql://carsharing.cznvzwojtye3.eu-west-1.rds.amazonaws.com:3306/" + nomeDB + "?user=" + nomeUtente + "&password=" + pwdUtente+"&useLegacyDatetimeCode=false&serverTimezone=UTC&characterEncoding=latin1");
           connesso=true;
          

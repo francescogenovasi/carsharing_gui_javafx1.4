@@ -79,7 +79,7 @@ public class PdfHelper {
             //Saving the document
             /*void save(String fileName)
             Save the document to a file.*/
-            document.save("/Users/francescogenovasi/IdeaProjects/pdf_creati/" + num + ".pdf");
+            document.save("/Users/francescogenovasi/IdeaProjects/pdf_creati/" + num + ".pdf"); //todo cambiare percorso se si cambia macchina
 
             //Closing the document
             /* void close()
@@ -153,7 +153,7 @@ public class PdfHelper {
             //Saving the document
             /*void save(String fileName)
             Save the document to a file.*/
-            document.save("/Users/francescogenovasi/IdeaProjects/pdf_creati/admin.pdf");
+            document.save("/Users/francescogenovasi/IdeaProjects/pdf_creati/admin.pdf"); //todo cambiare percorso se si cambia macchina
 
             //Closing the document
             /* void close()

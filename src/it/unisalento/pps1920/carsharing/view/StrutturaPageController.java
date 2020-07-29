@@ -124,7 +124,7 @@ public class StrutturaPageController{
         for (int i = 0; i < pren.size(); i++){
             testo.add("ID: " + pren.get(i).getId() + " dal " + DateUtil.fromRomeToLondon(DateUtil.stringFromDate(pren.get(i).getDataInizio())) + " al " + DateUtil.fromRomeToLondon(DateUtil.stringFromDate(pren.get(i).getDataFine())) + " di " + pren.get(i).getCliente().getUsername() + ". Pagamento: " + pren.get(i).getPagamento());
         }
-        //PdfHelper.getInstance().creaPdfAdmin(testo); //todo pdf commentato per non cambiare sempre path
+        PdfHelper.getInstance().creaPdfAdmin(testo);
     }
 
     @FXML
