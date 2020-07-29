@@ -65,7 +65,6 @@ public class VisualizzaMezziDaPreparareController {
                 final TableCell<MezzoDaPreparare, Void> cell = new TableCell<MezzoDaPreparare, Void>() {
 
                     private final Button btn = new Button("Visualizza Accessori");
-                    //private final TilePane tp = new TilePane();
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
@@ -73,7 +72,6 @@ public class VisualizzaMezziDaPreparareController {
                             int idMezzo = getTableView().getItems().get(getIndex()).getMezzo().getId();
                             Date dataInizio = getTableView().getItems().get(getIndex()).getDataInizio();
                             Date dataFine = getTableView().getItems().get(getIndex()).getDataFine();
-                            //System.out.println(idMezzo+"jjj"+ DateUtil.fromRomeToLondon(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(dataInizio)))+"jjjjj"+DateUtil.fromRomeToLondon(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(dataFine))));
                             int[] pren = CommonBusiness.getInstance().prenotazioniFromDateEIdMezzo(idMezzo, DateUtil.fromRomeToLondon(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(dataInizio))), DateUtil.fromRomeToLondon(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(dataFine))));
                             for (int i = 0; i < pren.length; i++){
                                 System.out.println(pren[i]);
@@ -119,7 +117,6 @@ public class VisualizzaMezziDaPreparareController {
                 final TableCell<MezzoDaPreparare, Void> cell = new TableCell<MezzoDaPreparare, Void>() {
 
                     private final Button btn = new Button("Pronta");
-                    //private final TilePane tp = new TilePane();
 
                     {
                         btn.setOnAction((ActionEvent event) -> {

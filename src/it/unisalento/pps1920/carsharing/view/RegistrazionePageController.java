@@ -18,13 +18,11 @@ import java.io.IOException;
 
 public class RegistrazionePageController{
 
-    //dopo initialize va fatto il controllo e salvati i dati di sessione
     private static final String VALORE_NULLO = "-";
 
     private boolean checkFieldsError;
     private boolean registrazioneCliente;
 
-    // Alex Modifiche
     @FXML
     private TextField usernameField;
     @FXML
@@ -37,10 +35,6 @@ public class RegistrazionePageController{
     private ImageView imageCliente = new ImageView();
     @FXML
     private Button buttonFoto;
-    /* @FXML
-    private Label wrongEmail;
-    @FXML
-    private Label wrongUsername; */
     @FXML
     private Label wrongPassword;
     @FXML
@@ -68,9 +62,7 @@ public class RegistrazionePageController{
     ObservableList<String> etaList = FXCollections.observableArrayList(CommonBusiness.getInstance().getEta());
 
     public void initialize() {
-        //wrongEmail.setVisible(false);
         wrongPassword.setVisible(false);
-        //wrongUsername.setVisible(false);
         passRegistrazione.setVisible(false);
         failRegistrazione.setVisible(false);
         etaList.add(VALORE_NULLO);
@@ -97,25 +89,13 @@ public class RegistrazionePageController{
         String checkPassword = checkPasswordField.getText();
 
         if (password.equals(checkPassword)) { //controllo se le password corrispondono
-            //RegistrazioneBusiness utenteBusiness = new RegistrazioneBusiness();
-            //int value = 10;
 
-            //value = utenteBusiness.registrazione(c);//username, password, email
             if (!CommonBusiness.getInstance().checkUsername(usernameField.getText())) {
-                //wrongUsername.setVisible(true); //vuol dire che esiste gia quell'username se la funzione registrazioneBusiness ritorna 1
                 AlertBox.display("Registrazione", "Username gia utilizzato");
             }
             if (!CommonBusiness.getInstance().checkEmail(emailField.getText())) {
-                //wrongEmail.setVisible(true); //vuol dire che esiste gia quella email se la funzione registrazioneBusiness ritorna 2
                 AlertBox.display("Registrazione", "Email gia utilizzata");
             }
-            /* if (value == 3) {
-                 failRegistrazione.setVisible(true);   //vuol dire che la registrazione è fallita
-            }
-            if (value == 4) {
-                wrongEmail.setVisible(true);    //Trovate sia mail che username che corrispondono
-                wrongUsername.setVisible(true);
-            } */
             if( (eta.getValue().equals(VALORE_NULLO)) || (nome.getText() == null) || (cognome.getText() == null) || (emailField.getText() == null) || (usernameField.getText() == null)
                     || (citta.getText() == null) || (indirizzo.getText() == null) || (cap.getText() == null) || (telefono.getText() == null)
                     || (passwordField.getText() == null) || (checkPasswordField.getText() == null) ){ //controllo sui campi
@@ -140,8 +120,6 @@ public class RegistrazionePageController{
             }
 
             if (CommonBusiness.getInstance().checkUsername(usernameField.getText()) && CommonBusiness.getInstance().checkEmail(emailField.getText()) && checkFieldsError) { // campi tutti presenti (metto variabile e vedo se è false o true
-                //passRegistrazione.setVisible(true); //vuol dire che la registrazione è stata eseguita con successo
-                //buttonRegistrazione.setVisible(false);
                 c.setNome(nome.getText());
                 c.setCognome(cognome.getText());
                 c.setCitta(citta.getText());

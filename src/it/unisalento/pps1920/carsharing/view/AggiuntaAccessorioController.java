@@ -44,14 +44,11 @@ public class AggiuntaAccessorioController {
         centesimi.add(VALORE_NULLO);
         centesimiCombo.setItems(centesimi);
         centesimiCombo.getSelectionModel().select(centesimi.size()-1);
-
-
     }
 
 
     @FXML
     private void aggiungiAccessorio() throws IOException {
-        //"" scrivo, cancello ma lascio nome vuoto mentre null non scrivo niente
         if (nome.getText().equals("") || nome.getText().equals(null) || postiOccupati.getValue().equals(VALORE_NULLO) || euroCombo.getValue().equals(VALORE_NULLO) || centesimiCombo.getValue().equals(VALORE_NULLO)){
             AlertBox.display("Aggiunta Accessorio", "Campi mancanti");
         } else {
@@ -59,8 +56,6 @@ public class AggiuntaAccessorioController {
             a.setNome(nome.getText());
             a.setPostiOccupati(Integer.parseInt(postiOccupati.getValue()));
             a.setCosto(Float.parseFloat(euroCombo.getValue() + "." + centesimiCombo.getValue()));
-
-            //System.out.println("accessorio: " + " " + a.getNome() + " " + a.getCosto() + " " + a.getPostiOccupati());
 
             if (AccessorioBusiness.getInstance().findIdAccessorio(a.getNome()) == -1){ //significa che non ci sono accessori con quel nome
                 aggiuntaAccessorio = AccessorioBusiness.getInstance().salvaAggiuntaAccessorio(a);

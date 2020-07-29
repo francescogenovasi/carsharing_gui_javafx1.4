@@ -86,10 +86,7 @@ public class VisualizzaRichiesteController {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            //PropostaCondivisione data = getTableView().getItems().get(getIndex());
                             int data = getTableView().getItems().get(getIndex()).getIdRichiesta();
-                            System.out.println("Richiesta selezionata: " + data);
-                            //int idRich = getTableView().getItems().get(getIndex()).getRichiedente().getId();
                             Cliente c = getTableView().getItems().get(getIndex()).getRichiedente();
                             try {
                                 AlertBoxProfilo.display("prenotazione", c);
@@ -130,10 +127,7 @@ public class VisualizzaRichiesteController {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            //PropostaCondivisione data = getTableView().getItems().get(getIndex());
                             int data = getTableView().getItems().get(getIndex()).getIdRichiesta();
-                            System.out.println("Richiesta selezionata: " + data);
-                            //RichiestaBusiness.getInstance().numeroPostiDisponibili(p.getDataInizio(), p.getDataFine(), p.getMezzo().getTarga()) == 0
                             IRichiestaCondivisioneDAO rDAO = new RichiestaCondivisioneDAO();
 
                             RichiestaCondivisione richiesta = null;
@@ -202,9 +196,7 @@ public class VisualizzaRichiesteController {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            //PropostaCondivisione data = getTableView().getItems().get(getIndex());
                             int data = getTableView().getItems().get(getIndex()).getIdRichiesta();
-                            System.out.println("Richiesta selezionata: " + data);
                             try {
                                 RichiestaBusiness.getInstance().rifiutaRichiesta(data, false);
                             } catch (IOException e) {

@@ -19,7 +19,6 @@ public class HomePageController{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("loginPage.fxml"));
         Pane pane = (Pane) loader.load();
         LoginPageController controller = loader.<LoginPageController>getController();
-        //controller.setText1(getEnteredText());
         rootPaneHomePage.getChildren().setAll(pane);
         rootPaneHomePage.setPrefSize(1000, 600);
     }
@@ -29,7 +28,6 @@ public class HomePageController{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("registrazionePage.fxml"));
         Pane pane = (Pane) loader.load();
         RegistrazionePageController controller = loader.<RegistrazionePageController>getController();
-        //controller.setText1(getEnteredText());
         rootPaneHomePage.getChildren().setAll(pane);
         rootPaneHomePage.setPrefSize(1000, 600);
     }

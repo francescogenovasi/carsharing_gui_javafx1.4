@@ -19,23 +19,17 @@ import java.io.IOException;
 
 public class LoginPageController{
 
-    //dopo initialize va fatto il controllo e salvati i dati di sessione
-
-
-    // Alex Modifiche
     @FXML
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
     @FXML
     private Label wrongAccess;
-    // Fine Alex Modifiche
 
     @FXML
     private Pane rootPaneLoginPage;
     @FXML
     private void loadStruttura() throws IOException {
-        //Alex Modifiche
         String username=usernameField.getText();
         String password=passwordField.getText();
         LoginBusiness utenteBusiness = new LoginBusiness();
@@ -47,7 +41,7 @@ public class LoginPageController{
             rootPaneLoginPage.getChildren().setAll(pane);
             rootPaneLoginPage.setPrefSize(1000, 600);
         }else{
-            wrongAccess.setVisible(true); //Qui appare una scritta dove dice che i dati inseriti sono errati. Inizialmente è invisibile, sta nel login Page.fxml
+            wrongAccess.setVisible(true);
         }
     }
 

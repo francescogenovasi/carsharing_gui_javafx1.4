@@ -17,7 +17,6 @@ public class AlertBox {
         window.setMinWidth(250);
 
         Label label = new Label();
-        //label.setPrefWidth(200);
         label.setText(message);
         Button closeButton = new Button("Chiudi");
         closeButton.setOnAction(e -> window.close());

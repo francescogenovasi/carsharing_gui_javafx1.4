@@ -69,8 +69,6 @@ public class RichiestaCondivisioneController {
 
     public void initialize(PropostaCondivisione p) throws IOException {
         prop = p;
-        //System.out.println("aaaaaaaaaaaaaaaa: ijijijijijijijjijij: " + p.getId());
-        //System.out.println("bbbbbbbbbbbbbbbb: ijijijijijijijjijij: " + CommonBusiness.getInstance().getIdPrenFromIdPropCon(p.getId()));
         acc = FXCollections.observableArrayList(CommonBusiness.getInstance().getAccessoriPrenotazione(CommonBusiness.getInstance().getIdPrenFromIdPropCon(p.getId())));
         partenza.setText(p.getPartenza().getNome());
         arrivo.setText(p.getArrivo().getNome());
@@ -107,7 +105,6 @@ public class RichiestaCondivisioneController {
                 public void handle(ActionEvent e)
                 {
                     if (cb.isSelected()){
-                        //System.out.println(cb.getText() + " selezionato con id " + AccessorioBusiness.getInstance().findIdAccessorio(cb.getText()));
                         Accessorio acc_selected = null;
                         try {
                             acc_selected = CommonBusiness.getInstance().getAccessorio(AccessorioBusiness.getInstance().findIdAccessorio(cb.getText()));
@@ -116,7 +113,6 @@ public class RichiestaCondivisioneController {
                         }
                         accessoriAggiunti.add(acc_selected);
                     } else {
-                        //System.out.println(cb.getText() + " deselezionato con id " + AccessorioBusiness.getInstance().findIdAccessorio(cb.getText()));
                         for (int i=0; i<accessoriAggiunti.size(); i++){
                             if (accessoriAggiunti.get(i).getId() == AccessorioBusiness.getInstance().findIdAccessorio(cb.getText())){
                                 accessoriAggiunti.remove(i);
@@ -155,8 +151,6 @@ public class RichiestaCondivisioneController {
                 r.setData(prop.getData());
                 r.setProposta(prop);
                 r.setNumPostiRichiesti(Integer.parseInt(postiCombo.getValue()));
-
-                //salvare accessori aggiunti dalla richiesta di condivisione e poi una volta confermata la richiesta aggiungerli alla prenotazione
 
                 boolean inserimentoRichiesta = RichiestaBusiness.getInstance().inviaRichiestaCondivisione(r, accessoriAggiunti);
 

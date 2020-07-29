@@ -88,8 +88,6 @@ public class StrutturaPageController{
         Pane pane = (Pane) loader.load();
         TabellaPrenotazioniPageController controller = loader.<TabellaPrenotazioniPageController>getController();
 
-        //ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(CommonBusiness.getInstance().getPrenotazioni());
-        //controller.setListPrenotazioni(prenotazioni);
         if (CommonBusiness.getInstance().checkAmministratore(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
             ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(CommonBusiness.getInstance().getPrenotazioni());
             controller.setListPrenotazioni(prenotazioni);
@@ -143,7 +141,6 @@ public class StrutturaPageController{
 
     @FXML
     private void loadVisualizzaMezziDaPreparare() throws IOException {
-        //System.out.println("nisnifijfisjisdjijfdsijsdfijfdsijfdijidfsjfjdifjdsijjfijifdsjifjsdij");
         FXMLLoader lo = new FXMLLoader(getClass().getResource("visualizzaMezziDaPreparare.fxml"));
         Pane pane = (Pane) lo.load();
         VisualizzaMezziDaPreparareController controller = lo.<VisualizzaMezziDaPreparareController>getController();
@@ -214,9 +211,6 @@ public class StrutturaPageController{
     public void initialize() {
         if (CommonBusiness.getInstance().checkAmministratore(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
             menuAdmin.setVisible(true);
-            //menuAddetto.setVisible(true);
-            //menuOperatore.setVisible(true);
-            //menuCliente.setVisible(true);
         } else {
             if (CommonBusiness.getInstance().checkAddetto(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
                 menuAddetto.setVisible(true);

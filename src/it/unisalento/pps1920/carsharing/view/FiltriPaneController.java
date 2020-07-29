@@ -60,14 +60,6 @@ public class FiltriPaneController{
     private ComboBox<String> tipologia;
     @FXML
     private ComboBox<String> motorizzazione;
-    /*@FXML
-    private ComboBox<String> oraInizio;
-    @FXML
-    private ComboBox<String> minutiInizio;
-    @FXML
-    private ComboBox<String> oraFine;
-    @FXML
-    private ComboBox<String> minutiFine;*/
 
 
     ObservableList<Stazione> stazioni = (ObservableList<Stazione>) FXCollections.observableArrayList(CommonBusiness.getInstance().getStazioni());
@@ -100,14 +92,6 @@ public class FiltriPaneController{
         arrivo.getSelectionModel().select(stazioni.size()-1);
         localita.setItems(localitas);
         localita.getSelectionModel().select(localitas.size()-1);
-        /*oraInizio.setItems(CommonBusiness.getInstance().getOre());
-        oraInizio.getSelectionModel().select(0);
-        minutiInizio.setItems(CommonBusiness.getInstance().getMinuti());
-        minutiInizio.getSelectionModel().select(0);
-        oraFine.setItems(CommonBusiness.getInstance().getOre());
-        oraFine.getSelectionModel().select(0);
-        minutiFine.setItems(CommonBusiness.getInstance().getMinuti());
-        minutiFine.getSelectionModel().select(0);*/
         modello.setItems(modelli);
         modello.getSelectionModel().select(modelli.size()-1);
         dimensioneAuto.setItems(dimensioni);
@@ -117,30 +101,13 @@ public class FiltriPaneController{
         motorizzazione.setItems(motore);
         motorizzazione.getSelectionModel().select(motore.size()-1);
 
-        //set data odierna in dataInizio e data tra una settimana in dataFine di default
-        //dataInizio.setValue(DateUtil.convertToLocalDateFromDate(d));
-
         dataInizio.setValue(null);
         dataInizio.setPromptText("Inizio");
         dataFine.setValue(null);
         dataFine.setPromptText("Fine");
 
-        /*dd.setTime(d);
-        dd.add(Calendar.DATE, 7);//date, month, year
-        dataFine.setValue(DateUtil.convertToLocalDateFromDate(dd.getTime()));*/
-
-        //ricerca auto con almeno un posto
-        //posti.add("1");
-        /*for (int i = 1; i <= CommonBusiness.getInstance().maxPostiPrenotabili(); i++){
-            posti.add("" + i + "");
-        }*/
         numPosti.setItems(posti);
         numPosti.getSelectionModel().select(0);
-        /*if (CommonBusiness.getInstance().maxPostiPrenotabili() < 1){
-            //popup impossibile effettuare prenotazioni
-            AlertBox.display("title", "nessuma macchina disponibile");
-            pos = 1;
-        }*/
 
     }
 
@@ -173,14 +140,6 @@ public class FiltriPaneController{
     }
 
     public void risultatiFiltri() throws ParseException, IOException {
-        //numero posti almeno uno per forza quindi valore di default se non modificato
-        /*if (CommonBusiness.getInstance().maxPostiPrenotabili() < 1){
-            //popup impossibile effettuare prenotazioni
-            AlertBox.display("title", "nessuna macchina disponibile");
-            pos = 1;
-        } else {
-            pos = Integer.parseInt(numPosti.getValue());
-        }*/
         pos = Integer.parseInt(numPosti.getValue());
 
         System.out.println("-------------------");
@@ -198,7 +157,6 @@ public class FiltriPaneController{
             System.out.println("localita: " + localita.getValue().getCitta());
         }
 
-        //if ((DateUtil.onlyDateFromDate(DateUtil.convertToDateFromLocalDate(dataInizio.getValue())).equals(DateUtil.onlyDateFromDate(d)))){
         if ((dataInizio.getValue() == (null))){
             inizio = null; //oggetto ala query, inizio prende data attuale altrimenti perde info sull'ora di partenza e se sono le 14 mostra anche le prenotazioni precedenti alle 14
             System.out.println("data inizio: nullaaaaa" /*+ DateUtil.stringFromDate(inizio)*/);
@@ -207,15 +165,6 @@ public class FiltriPaneController{
             System.out.println("dataa inizio: " + DateUtil.stringFromDate(DateUtil.convertToDateFromLocalDate(dataInizio.getValue()))); //elemento alla query
         }
 
-        /*dd.setTime(d);
-        dd.add(Calendar.DATE, 7);*///date, month, year
-        //System.out.println("data fine: " + dataFine.getValue());
-        /*if (dataFine.getValue() == (null)){
-            System.out.println("fine null test");
-        } else {
-            System.out.println("data ok");
-        }*/
-        //if (!(DateUtil.onlyDateFromDate(DateUtil.convertToDateFromLocalDate(dataFine.getValue())).equals(DateUtil.onlyDateFromDate(dd.getTime())))){
         if (!(dataFine.getValue() == (null))){
             fine = DateUtil.convertToDateFromLocalDate(dataFine.getValue()); //oggetto ala query
             System.out.println("data fine: " + dataFine.getValue());
@@ -239,9 +188,7 @@ public class FiltriPaneController{
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("visualizzaProposte.fxml"));
         Pane pane = (Pane) loader.load();
-        //TabellaPrenotazioniPageController controller = loader.<TabellaPrenotazioniPageController>getController();
-        //ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(RicercaBusiness.getInstance().cercaConFiltri(part, arr, loc, pos, inizio, fine, mod, dim, mot, tip));
-        //controller.setListPrenotazioni(prenotazioni);
+
         VisualizzaProposteController controller = loader.<VisualizzaProposteController>getController();
         ObservableList<PropostaCondivisione> proposte = (ObservableList<PropostaCondivisione>) FXCollections.observableArrayList(RicercaBusiness.getInstance().cercaConFiltri(part, arr, loc, pos, inizio, fine, mod, dim, mot, tip));
         controller.setListProposte(proposte, false);

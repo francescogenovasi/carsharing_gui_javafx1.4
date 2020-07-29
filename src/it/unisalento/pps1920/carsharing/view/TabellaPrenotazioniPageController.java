@@ -34,16 +34,12 @@ public class TabellaPrenotazioniPageController{
     @FXML
     private Pane rootPaneTabellaPrenotazioniPage;
 
-
-
-    //ObservableList<Prenotazione> prenotazioni = (ObservableList<Prenotazione>) FXCollections.observableArrayList(new PrenotazioneDAO().findAll()); //FXCollections.observableArrayList();
     ObservableList<Prenotazione> prenotazioni = FXCollections.observableArrayList(); //FXCollections.observableArrayList();
 
     public void setListPrenotazioni(ObservableList<Prenotazione> pren){
         prenotazioni = pren;
         //initialize();
         TableColumn idPrenotazione = new TableColumn("ID");
-        //TableColumn dataPrenotazione= new TableColumn("Data Prenotazione");
         TableColumn<Prenotazione, String> dataPrenotazione= new TableColumn<Prenotazione, String>("Data Prenotazione");
         TableColumn<Prenotazione, String> idCliente = new TableColumn<Prenotazione, String>("Username Cliente");
         TableColumn<Prenotazione, String> idMezzo = new TableColumn<Prenotazione, String>("Targa Mezzo");
@@ -51,8 +47,6 @@ public class TabellaPrenotazioniPageController{
         TableColumn<Prenotazione, String> idStazPart = new TableColumn<Prenotazione, String>("Stazione Partenza");
         TableColumn<Prenotazione, String> idStazArr = new TableColumn<Prenotazione, String>("Stazione Arrivo");
         TableColumn<Prenotazione, String> idLocalita = new TableColumn<Prenotazione, String>("Localita");
-        //TableColumn dataInizio = new TableColumn("Data Inizio");
-        //TableColumn dataFine = new TableColumn("Data Fine");
 
         float idPrenotazioneWidth = 50;
         float dataPrenotazioneWidth = 200;
@@ -73,10 +67,7 @@ public class TabellaPrenotazioniPageController{
         idStazPart.setPrefWidth(idStazPartWidth);
         idStazArr.setPrefWidth(idStazArrWidth);
         idLocalita.setPrefWidth(idLocalitaWidth);
-        //dataInizio.setPrefWidth(dataInizioWidth);
-        //dataFine.setPrefWidth(dataFineWidth);
 
-//idPrenotazioneWidth + dataPrenotazioneWidth + idClienteWidth + idMezzoWidth + numPostiOccWidth + idStazPartWidth + idStazArrWidth + idLocalitaWidth + dataInizioWidth + dataFineWidth
         float prefWidth = 900;
         float prefHeight = 400;
 
@@ -101,13 +92,9 @@ public class TabellaPrenotazioniPageController{
         idStazPart.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPartenza().getNome()));
         idStazArr.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getArrivo().getNome()));
         idLocalita.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLocalita().getCitta()));
-        //dataInizio.setCellValueFactory(new PropertyValueFactory<Prenotazione,String>("dataInizio"));
-        //dataFine.setCellValueFactory(new PropertyValueFactory<Prenotazione,String>("dataFine"));
-
 
         addButtonElimina();
 
-        //addButtonModifica();
         if (CommonBusiness.getInstance().checkCliente(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
             addButtonModifica();
         }
@@ -131,7 +118,6 @@ public class TabellaPrenotazioniPageController{
                 final TableCell<Prenotazione, Void> cell = new TableCell<Prenotazione, Void>() {
 
                     private final Button btn = new Button("Elimina");
-                    //private final TilePane tp = new TilePane();
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
@@ -177,14 +163,12 @@ public class TabellaPrenotazioniPageController{
                 final TableCell<Prenotazione, Void> cell = new TableCell<Prenotazione, Void>() {
 
                     private final Button btn = new Button("Modifica");
-                    //private final TilePane tp = new TilePane();
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             System.out.println("modificare: " + getTableView().getItems().get(getIndex()).getId());
                             if (CommonBusiness.getInstance().propostaUgualeCliente(getTableView().getItems().get(getIndex()).getIdPropostaCondivisione(), ((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
                                 //modificabile
-                                //AlertBox.display("Prenotazioni", "Lo hai proposto tu");
                                 IPrenotazioneDAO pDAO = new PrenotazioneDAO();
                                 try {
                                     Prenotazione p = pDAO.findById(getTableView().getItems().get(getIndex()).getId());

@@ -54,11 +54,9 @@ public class VisualizzaProposteController {
 
          TableColumn<PropostaCondivisione, String> dataInizio = new TableColumn<>("inizio");
          dataInizio.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(cellData.getValue().getDataInizio()))));
-         //dataInizio.setCellValueFactory(new PropertyValueFactory<>("dataInizio"));
 
          TableColumn<PropostaCondivisione, String> dataFine = new TableColumn<>("fine");
          dataFine.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(cellData.getValue().getDataFine()))));
-         //dataFine.setCellValueFactory(new PropertyValueFactory<>("dataFine"));
 
          tabellaProposteAltri.getColumns().addAll(id, cli, mezzo, postiOccupati, partenza, arrivo, localita, dataInizio, dataFine);
 
@@ -81,9 +79,7 @@ public class VisualizzaProposteController {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            //PropostaCondivisione data = getTableView().getItems().get(getIndex());
                             int data = getTableView().getItems().get(getIndex()).getId();
-                            System.out.println("proposta selezionata: " + data);
 
                             FXMLLoader lo = new FXMLLoader(getClass().getResource("richiestaCondivisione.fxml"));
                             Pane pane = null;

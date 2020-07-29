@@ -31,12 +31,6 @@
                         <Font size="27.0" />
                      </font>
                   </Label>
-                  <!-- non eliminare questo commento
-
-                  <TextField fx:id="test1" layoutX="14.0" layoutY="24.0" />
-                  <Button layoutX="172.0" layoutY="24.0" mnemonicParsing="false" onAction="#getEnteredText" text="Button" />
-
-                  -->
                </children>
             </Pane>
          </top>

@@ -105,7 +105,6 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
         minuto.add(VALORE_NULLO);
         dimensioni.add(VALORE_NULLO);
 
-
         //set elementi nelle combobox e selezione default VALORE_NULLO
         partenza.setItems(stazioni);
         partenza.getSelectionModel().select(stazioni.size()-1);
@@ -132,7 +131,6 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
                 public void handle(ActionEvent e)
                 {
                     if (cb.isSelected()){
-                        //System.out.println(cb.getText() + " selezionato con id " + AccessorioBusiness.getInstance().findIdAccessorio(cb.getText()));
                         Accessorio acc_selected = null;
                         try {
                             acc_selected = CommonBusiness.getInstance().getAccessorio(AccessorioBusiness.getInstance().findIdAccessorio(cb.getText()));
@@ -141,7 +139,6 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
                         }
                         acc.add(acc_selected);
                     } else {
-                        //System.out.println(cb.getText() + " deselezionato con id " + AccessorioBusiness.getInstance().findIdAccessorio(cb.getText()));
                         for (int i=0; i<acc.size(); i++){
                             if (acc.get(i).getId() == AccessorioBusiness.getInstance().findIdAccessorio(cb.getText())){
                                 acc.remove(i);
@@ -193,7 +190,6 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
                     public void handle(ActionEvent e)
                     {
                         if (cb.isSelected()){
-                            //System.out.println(cb.getText() + " selezionato con id " + AccessorioBusiness.getInstance().findIdAccessorio(cb.getText()));
                             Accessorio acc_selected = null;
                             try {
                                 acc_selected = CommonBusiness.getInstance().getAccessorio(AccessorioBusiness.getInstance().findIdAccessorio(cb.getText()));
@@ -202,7 +198,6 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
                             }
                             acc.add(acc_selected);
                         } else {
-                            //System.out.println(cb.getText() + " deselezionato con id " + AccessorioBusiness.getInstance().findIdAccessorio(cb.getText()));
                             for (int i=0; i<acc.size(); i++){
                                 if (acc.get(i).getId() == AccessorioBusiness.getInstance().findIdAccessorio(cb.getText())){
                                     acc.remove(i);
@@ -229,15 +224,6 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
     public void nextStep() throws ParseException, IOException {
         error = false;
 
-        //numero posti almeno uno per forza quindi valore di default se non modificato
-        /* if (Integer < 1){
-            //popup impossibile effettuare prenotazioni
-            AlertBox.display("Nuova proposta", "nessuna macchina disponibile");
-            error = true;
-            pos = 1;
-        } else {
-            //pos = Integer.parseInt(numPosti.getValue());
-        }*/
         System.out.println("-------------------");
         System.out.println("Prenotazione:");
 
@@ -279,23 +265,16 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
             }
         }
 
-        /*if (!(dimensioneAuto.getValue().equals(VALORE_NULLO))){
-
-            System.out.println("dimensione: " + dimensioneAuto.getValue()); //elemento alla query
-        }*/
-
 
         if (error == false){
             Prenotazione p = new Prenotazione();
             p.setData(new Date());
-            //p.setCliente(((Cliente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)));
             if (CommonBusiness.getInstance().checkCliente(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){ //se cliente allora prendi l'id e mandalo, se addetto allora prendi le cose dalla label
                 p.setCliente(CommonBusiness.getInstance().getCliente(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId()));//prendo il cliente da passare alla prenotazione
             } else {
                 p.setCliente(cli);
             }
 
-            //p.setNumPostiOccupati(Integer.parseInt(numPosti.getValue()));
             p.setPartenza(part);
             p.setArrivo(arr);
             p.setLocalita(loc);
