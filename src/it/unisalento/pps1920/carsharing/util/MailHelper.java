@@ -43,10 +43,10 @@ public class MailHelper {
             message.setSubject(sub);
             message.setText(msg);
             Transport.send(message);
-            System.out.println("message sent successfully");
+            //System.out.println("message sent successfully");
         } catch (MessagingException e) {
             e.printStackTrace();
-            System.out.println("message not sent");
+            //System.out.println("message not sent");
         }
 
     }

@@ -224,10 +224,6 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
     public void nextStep() throws ParseException, IOException {
         error = false;
 
-        System.out.println("-------------------");
-        System.out.println("Prenotazione:");
-
-
         if ((partenza.getValue().getNome().equals(VALORE_NULLO)) || (arrivo.getValue().getNome().equals(VALORE_NULLO)) || (cliente.getValue().getUsername().equals(VALORE_NULLO))
                 || (localita.getValue().getCitta().equals(VALORE_NULLO)) || (dataInizio.getValue() == null) || (dataFine.getValue() == null) || (oraInizio.getValue().equals(VALORE_NULLO))
                 || (oraFine.getValue().equals(VALORE_NULLO)) || (minutoInizio.getValue().equals(VALORE_NULLO)) || (minutoFine.getValue().equals(VALORE_NULLO))
@@ -239,29 +235,21 @@ public class PropostaFormPageController { //la proposta è sia una proposta che 
             //sono stati inseriti tutti i campi
             inizio = DateUtil.convertToDateFromLocalDate(dataInizio.getValue());
             inizio = DateUtil.modificaOrarioData(inizio, oraInizio.getValue(), minutoInizio.getValue());
-            System.out.println(inizio.toString());
             fine = DateUtil.convertToDateFromLocalDate(dataFine.getValue());
             fine = DateUtil.modificaOrarioData(fine, oraFine.getValue(), minutoFine.getValue());
-            System.out.println(fine.toString());
             Date f = new Date();
             if ((inizio.compareTo(fine) > 0)  || (f.compareTo(inizio) > 0)){//poiche le date sono state sicuramente inserite le posso controllare
                 //maggiore di zero allora la data di fine è precedente alla data di inizio oppure la data di inizio è precedente alla data odierna
-                System.out.println("male");
                 AlertBox.display("Nuova proposta", "ricontrollare date!");
                 error = true;
             } else {
                 cli = cliente.getValue();
-                System.out.println("cliente: " + cliente.getValue().getUsername()); //elemento alla query
                 part = partenza.getValue();
-                System.out.println("partenza: " + partenza.getValue().getNome()); //elemento alla query
                 arr = arrivo.getValue();
-                System.out.println("arrivo: " + arrivo.getValue().getNome()); //elemento alla query
                 loc = localita.getValue();
-                System.out.println("localita: " + localita.getValue().getCitta()); //elemento alla query
 
                 tipoMezzo = tipologiaCombo.getValue();
 
-                System.out.println("tutto ok");
             }
         }
 

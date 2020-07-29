@@ -70,7 +70,6 @@ public class PrenotazioneBusiness {
         testo1 = testo1 + "Buon lavoro!";
         MailHelper.getInstance().send(dest1, "ADD Nuova prenotazione", testo1);
 
-        System.out.println("invio email addetto");
 
         //3. inviare mail di conferma all'utente
         String dest2 = p.getCliente().getEmail();
@@ -87,7 +86,6 @@ public class PrenotazioneBusiness {
         testo = testo + "A presto :) "+ "\n";
         MailHelper.getInstance().send(dest2, "CLI Prenotazione confermata!", testo);
 
-        System.out.println("inviata email cliente");
 
         //4. generare pdf per l'utente
         ArrayList<String> testoPDF = new ArrayList<String>();
@@ -102,7 +100,6 @@ public class PrenotazioneBusiness {
         testoPDF.add("Stampa questo file e presentati in stazione");
         testoPDF.add("A presto :) ");
         //PdfHelper.getInstance().creaPdf(testo, p.getId()); //todo pdf commentato per non cambiare sempre path
-        System.out.println("pdf ok");
 
         return true;
     }

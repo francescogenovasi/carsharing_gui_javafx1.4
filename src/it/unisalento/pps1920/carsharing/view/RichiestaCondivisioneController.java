@@ -78,7 +78,6 @@ public class RichiestaCondivisioneController {
         imageAutoRiepilogo.setImage(CommonBusiness.getInstance().getFotoModello(p.getMezzo().getModello().getId()));
 
         if (p.getMezzo().getModello().getTipologia().equals("Auto")){
-            System.out.println();
             scrollAccessori1.setVisible(true);
             accessoriLabel1.setVisible(true);
         }
@@ -139,14 +138,12 @@ public class RichiestaCondivisioneController {
             AlertBox.display("Richiesta condivisione", "Selezionare posti richiesti");
         } else {
             if (Integer.parseInt(postiCombo.getValue()) > RichiestaBusiness.getInstance().numeroPostiDisponibili(prop.getDataInizio(), prop.getDataFine(), prop.getMezzo().getId())){
-                System.out.println("ghuguhuhhhhuhuh"+Integer.parseInt(postiCombo.getValue()) + ">" + RichiestaBusiness.getInstance().numeroPostiDisponibili(prop.getDataInizio(), prop.getDataFine(), prop.getMezzo().getId()));
                 //errore troppi posti richiesti, non ci sono abbastanza
                 AlertBox.display("Richiesta condivisione", "I posti richiesti non sono disponibili. Selezionare un altra proposta o ridurre il numero di posti richiesti");
             } else {
                 RichiestaCondivisione r = new RichiestaCondivisione();
                 r.setStato("Attesa");
 
-                System.out.println("id: " + ((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId());
                 r.setCliente(CommonBusiness.getInstance().getCliente(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId()));
                 r.setData(prop.getData());
                 r.setProposta(prop);

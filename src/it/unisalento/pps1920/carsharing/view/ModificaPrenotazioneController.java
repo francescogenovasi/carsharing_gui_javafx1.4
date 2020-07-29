@@ -91,21 +91,19 @@ public class ModificaPrenotazioneController {
 
     public void modifica() throws IOException {
         if (dataInizio.getValue() == null || oraInizio.getValue().equals(VALORE_NULLO) || minutoInizio.getValue().equals(VALORE_NULLO) ){
-            System.out.println("data inizio non modificata");
+            //data inizio non modificata
         } else {
             //creo nuova datainizio
             inizio = DateUtil.convertToDateFromLocalDate(dataInizio.getValue());
             inizio = DateUtil.modificaOrarioData(inizio, oraInizio.getValue(), minutoInizio.getValue());
-            System.out.println("nuova data inizio: " + inizio.toString() );
         }
 
         if (dataFine.getValue() == null || oraFine.getValue().equals(VALORE_NULLO) || minutoFine.getValue().equals(VALORE_NULLO) ){
-            System.out.println("data fine non modificata");
+            //data fine non modificata
         } else {
             //creo nuova data fine
             fine = DateUtil.convertToDateFromLocalDate(dataFine.getValue());
             fine = DateUtil.modificaOrarioData(fine, oraFine.getValue(), minutoFine.getValue());
-            System.out.println("nuova data fine: " +fine.toString());
         }
 
         if (!partenza.getValue().getNome().equals(VALORE_NULLO)){
@@ -180,7 +178,6 @@ public class ModificaPrenotazioneController {
                     AlertBox.display("Modifica prenotazione", "Modifica non effettuata. \n Riprovare controllano i campi");
                 }
             } else {
-                System.out.println("nessuna modifica");
                 AlertBox.display("Modifica prenotazione", "Nessuna modifica fatta");
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("tabellaPrenotazioniPage.fxml"));
                 Pane pane = (Pane) loader.load();

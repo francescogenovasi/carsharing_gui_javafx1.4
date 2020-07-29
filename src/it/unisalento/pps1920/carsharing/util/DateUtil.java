@@ -78,7 +78,6 @@ public class DateUtil {
         return format.format(londonDateTime);
     }
     public static String fromLondonToRome(String oraDaConvertire){
-        System.out.println("da conv : " + oraDaConvertire);
         String dateformat = "yyyy-MM-dd HH:mm:ss";
         LocalDateTime ldt = LocalDateTime.parse(oraDaConvertire, DateTimeFormatter.ofPattern(dateformat));
         ZoneId londonZoneId = ZoneId.of("Europe/London");

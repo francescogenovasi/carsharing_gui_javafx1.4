@@ -235,7 +235,7 @@ public class StrutturaPageController{
         }
         rootPaneStrutturaPage.getChildren().setAll(pane);
 
-        System.out.println("si è loggato: " + ((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getUsername());
+        //System.out.println("si è loggato: " + ((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getUsername());
 
 
     }

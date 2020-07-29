@@ -108,12 +108,10 @@ public class MezzoDAO implements IMezzoDAO {
     @Override
     public boolean salvaMezzo(Mezzo m){
         String sql = "INSERT INTO mezzo (targa, modello_idmodello, motorizzazione, offerta) VALUES ('" + m.getTarga() + "', '" + m.getModello().getId() + "' , '" + m.getMotorizzazione() + "', '"+m.getOfferta()+"');";
-        System.out.println(sql);
         boolean res = DbConnection.getInstance().eseguiAggiornamento(sql);
         sql = "SELECT last_insert_id()";
         ArrayList<String[]> res1 = DbConnection.getInstance().eseguiQuery(sql);
         m.setId(Integer.parseInt(res1.get(0)[0]));
-        System.out.println("id modello inserito:" + m.getId());
         return res;
     }
 

@@ -74,7 +74,6 @@ public class VisualizzaMezziDaPreparareController {
                             Date dataFine = getTableView().getItems().get(getIndex()).getDataFine();
                             int[] pren = CommonBusiness.getInstance().prenotazioniFromDateEIdMezzo(idMezzo, DateUtil.fromRomeToLondon(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(dataInizio))), DateUtil.fromRomeToLondon(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(dataFine))));
                             for (int i = 0; i < pren.length; i++){
-                                System.out.println(pren[i]);
                                 List<Accessorio> a = CommonBusiness.getInstance().getAccessoriPrenotazione(pren[i]);
                                 for (int j = 0; j < a.size(); j++) {
                                     acc = acc + a.get(j).getNome() + " \n";

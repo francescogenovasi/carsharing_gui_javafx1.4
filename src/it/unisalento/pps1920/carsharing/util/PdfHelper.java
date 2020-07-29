@@ -69,7 +69,7 @@ public class PdfHelper {
             End some text operations.*/
             contenutopdf.endText();
 
-            System.out.println("Content added");
+            //System.out.println("Content added");
 
             //Closing the content stream
             /*void close()
@@ -86,12 +86,12 @@ public class PdfHelper {
             This will close the underlying COSDocument object.*/
             document.close();
 
-            System.out.println("PDF created");
+            //System.out.println("PDF created");
 
         } catch (IOException e) {
             e.printStackTrace();
 
-            System.out.println("PDF NOT created");
+            //System.out.println("PDF NOT created");
         }
     }
 
@@ -143,7 +143,7 @@ public class PdfHelper {
             End some text operations.*/
             contenutopdf.endText();
 
-            System.out.println("Content added");
+            //System.out.println("Content added");
 
             //Closing the content stream
             /*void close()
@@ -160,12 +160,12 @@ public class PdfHelper {
             This will close the underlying COSDocument object.*/
             document.close();
 
-            System.out.println("PDF created");
+            //System.out.println("PDF created");
 
         } catch (IOException e) {
             e.printStackTrace();
 
-            System.out.println("PDF NOT created");
+            //System.out.println("PDF NOT created");
         }
     }
 

@@ -142,48 +142,36 @@ public class FiltriPaneController{
     public void risultatiFiltri() throws ParseException, IOException {
         pos = Integer.parseInt(numPosti.getValue());
 
-        System.out.println("-------------------");
-        System.out.println("Filtri:");
         if (!(partenza.getValue().getNome().equals(VALORE_NULLO))){
             part = partenza.getValue(); //oggetto ala query
-            System.out.println("partenza: " + partenza.getValue().getNome());
         }
         if (!(arrivo.getValue().getNome().equals(VALORE_NULLO))){
             arr = arrivo.getValue(); //oggetto ala query
-            System.out.println("arrivo: " + arrivo.getValue().getNome());
         }
         if (!(localita.getValue().getCitta().equals(VALORE_NULLO))){
             loc = localita.getValue(); //oggetto ala query
-            System.out.println("localita: " + localita.getValue().getCitta());
         }
 
         if ((dataInizio.getValue() == (null))){
             inizio = null; //oggetto ala query, inizio prende data attuale altrimenti perde info sull'ora di partenza e se sono le 14 mostra anche le prenotazioni precedenti alle 14
-            System.out.println("data inizio: nullaaaaa" /*+ DateUtil.stringFromDate(inizio)*/);
         } else {
             inizio = DateUtil.convertToDateFromLocalDate(dataInizio.getValue()); //oggetto ala query
-            System.out.println("dataa inizio: " + DateUtil.stringFromDate(DateUtil.convertToDateFromLocalDate(dataInizio.getValue()))); //elemento alla query
         }
 
         if (!(dataFine.getValue() == (null))){
             fine = DateUtil.convertToDateFromLocalDate(dataFine.getValue()); //oggetto ala query
-            System.out.println("data fine: " + dataFine.getValue());
         }
         if (!(modello.getValue().getNome().equals(VALORE_NULLO))){
             mod = modello.getValue(); //oggetto ala query
-            System.out.println("modello: " + modello.getValue().getNome());
         }
         if (!(dimensioneAuto.getValue().equals(VALORE_NULLO))){
             dim = dimensioneAuto.getValue(); //oggetto ala query
-            System.out.println("dimensione: " + dimensioneAuto.getValue());
         }
         if (!(tipologia.getValue().equals(VALORE_NULLO))){
             tip = tipologia.getValue(); //oggetto ala query
-            System.out.println("tipologia: " + tipologia.getValue());
         }
         if (!(motorizzazione.getValue().equals(VALORE_NULLO))){
             mot = motorizzazione.getValue(); //oggetto ala query
-            System.out.println("motorizzazione: " + motorizzazione.getValue());
         }
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("visualizzaProposte.fxml"));

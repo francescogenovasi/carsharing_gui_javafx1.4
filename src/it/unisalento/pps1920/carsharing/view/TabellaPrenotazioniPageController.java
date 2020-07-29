@@ -121,7 +121,6 @@ public class TabellaPrenotazioniPageController{
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            System.out.println("cancellare: " + getTableView().getItems().get(getIndex()).getId());
                             try {
                                 Prenotazione p = new PrenotazioneDAO().findById(getTableView().getItems().get(getIndex()).getId());
                                 PrenotazioneBusiness.getInstance().eliminaPrenotazione(p);
@@ -166,7 +165,6 @@ public class TabellaPrenotazioniPageController{
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            System.out.println("modificare: " + getTableView().getItems().get(getIndex()).getId());
                             if (CommonBusiness.getInstance().propostaUgualeCliente(getTableView().getItems().get(getIndex()).getIdPropostaCondivisione(), ((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())){
                                 //modificabile
                                 IPrenotazioneDAO pDAO = new PrenotazioneDAO();
