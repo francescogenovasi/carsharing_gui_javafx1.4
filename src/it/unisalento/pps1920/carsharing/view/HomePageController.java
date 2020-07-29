@@ -35,12 +35,12 @@ public class HomePageController{
     }
 
     public void initialize() {
-        Pane pane = null;
+        Pane pane1 = null;
         try {
-            pane = FXMLLoader.load(getClass().getResource("tabsRicercaPage.fxml"));
+            pane1 = FXMLLoader.load(getClass().getResource("tabsRicercaPage.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        tabsPane.getChildren().setAll(pane);
+        tabsPane.getChildren().setAll(pane1);
     }
 }

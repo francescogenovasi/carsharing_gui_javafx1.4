@@ -9,9 +9,9 @@
    <children>
       <TabPane prefHeight="500" prefWidth="1000" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Offerte">
+          <Tab text="Mezzi in Offerta">
             <content>
-              <Pane fx:id="tabellaPaneTabsRicerca" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <Pane fx:id="tabellaPaneOfferte" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               </Pane>
             </content>
           </Tab>

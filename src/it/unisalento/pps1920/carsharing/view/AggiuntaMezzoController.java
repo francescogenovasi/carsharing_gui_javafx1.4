@@ -20,6 +20,8 @@ public class AggiuntaMezzoController {
     @FXML
     ComboBox<Modello> modello;
     @FXML
+    ComboBox<String> offerta;
+    @FXML
     ComboBox<String> motorizzazione;
     @FXML
     TextField targa;
@@ -28,6 +30,7 @@ public class AggiuntaMezzoController {
 
     ObservableList<String> motor = FXCollections.observableArrayList(CommonBusiness.getInstance().getMotorizzazione());
     ObservableList<Modello> model = FXCollections.observableArrayList(CommonBusiness.getInstance().getModelli());
+    ObservableList<String> offerte=FXCollections.observableArrayList(CommonBusiness.getInstance().getOfferone());
 
 
     public AggiuntaMezzoController() throws IOException {
@@ -40,19 +43,22 @@ public class AggiuntaMezzoController {
         model.add(new Modello(0,VALORE_NULLO,0,null,VALORE_NULLO,VALORE_NULLO, 0));
         modello.setItems(model);
         modello.getSelectionModel().select(model.size()-1);
+        offerte.add(VALORE_NULLO);
+        offerta.setItems(offerte);
+        offerta.getSelectionModel().select(offerte.size()-1);
     }
 
     public void loadMezzo() throws IOException {
-        if (targa.getText().equals("") || modello.getValue().equals(VALORE_NULLO) || motorizzazione.getValue().equals(VALORE_NULLO)){
+        if (targa.getText().equals("") || modello.getValue().equals(VALORE_NULLO) || motorizzazione.getValue().equals(VALORE_NULLO) || offerta.getValue().equals(VALORE_NULLO)){
             AlertBox.display("Aggiunta Mezzo", "Campi mancanti");
         }else{
 
             if(MezzoBusiness.getInstance().checkTarga(targa.getText())) {
                 Mezzo m = new Mezzo();
                 m.setTarga(targa.getText());
-                m.setPostiDisponibili(modello.getValue().getNumPosti());
                 m.setModello(modello.getValue());
                 m.setMotorizzazione(motorizzazione.getValue());
+                m.setOfferta(offerta.getValue());
 
                 if (MezzoBusiness.getInstance().findIdMezzo(m.getTarga()) == -1) {
                     aggiuntaMezzo = MezzoBusiness.getInstance().salvaAggiuntaMezzo(m);

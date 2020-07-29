@@ -30,6 +30,7 @@ public class MezzoDAO implements IMezzoDAO {
                 Modello modello= mDAO.findById(Integer.parseInt(riga[2]));
                 m.setModello(modello);
                 m.setMotorizzazione(riga[3]);
+                m.setOfferta(riga[4]);
             }
             return m;
         }
@@ -107,9 +108,22 @@ public class MezzoDAO implements IMezzoDAO {
         return mezzi;
     }
 
+    public ArrayList<Mezzo> getMezziOfferta() throws IOException {
+
+        String sql="SELECT idmezzo FROM mezzo WHERE offerta='Si';";
+        ArrayList<String[]> res = DbConnection.getInstance().eseguiQuery(sql);
+        ArrayList<Mezzo> mezzi = new ArrayList<Mezzo>();
+
+        for(String[] riga : res) {
+            Mezzo l = findById(Integer.parseInt(riga[0]));
+            mezzi.add(l);
+        }
+        return mezzi;
+    }
+
 
     public boolean salvaMezzo(Mezzo m){
-        String sql = "INSERT INTO mezzo (targa, modello_idmodello, postidisponibili, motorizzazione) VALUES ('" + m.getTarga() + "', '" + m.getModello().getId() + "', '" + m.getPostiDisponibili() + "' , '" + m.getMotorizzazione() + "');";
+        String sql = "INSERT INTO mezzo (targa, modello_idmodello, motorizzazione, offerta) VALUES ('" + m.getTarga() + "', '" + m.getModello().getId() + "' , '" + m.getMotorizzazione() + "', '"+m.getOfferta()+"');";
         System.out.println(sql);
         boolean res = DbConnection.getInstance().eseguiAggiornamento(sql);
         sql = "SELECT last_insert_id()";

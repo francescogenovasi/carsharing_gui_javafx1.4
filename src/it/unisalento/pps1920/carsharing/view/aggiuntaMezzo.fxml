@@ -10,14 +10,19 @@
 <Pane fx:id="rootAggiungiMezzoPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.pps1920.carsharing.view.AggiuntaMezzoController">
     <children>
         <Text layoutX="364.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AGGIUNGI MEZZO" />
-        <TextField fx:id="targa" layoutX="356.0" layoutY="110.0" prefHeight="27.0" prefWidth="107.0" />
-        <Text layoutX="277.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Targa:" />
-        <Text layoutX="277.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modello:" />
-        <ComboBox fx:id="modello" layoutX="444.0" layoutY="200.0" prefHeight="27.0" prefWidth="145.0" />
-        <ComboBox fx:id="motorizzazione" layoutX="444.0" layoutY="247.0" prefHeight="27.0" prefWidth="145.0" />
-        <Text layoutX="277.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motorizzazione:" />
-        <Button id="buttonMezzo" fx:id="buttonMezzo" layoutX="403.0" layoutY="305.0" mnemonicParsing="false" text="Aggiungi Mezzo" onAction="#loadMezzo" />
-        <Button id="buttonHome" fx:id="buttonHome" layoutX="203.0" layoutY="305.0" mnemonicParsing="false" text="Torna alla Home" onAction="#goHome" />
+        <TextField fx:id="targa" layoutX="460.0" layoutY="90.0" prefHeight="27.0" prefWidth="107.0" />
+        <Text layoutX="277.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Targa:" />
+        <Text layoutX="277.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modello:" />
+        <ComboBox fx:id="modello" layoutX="444.0" layoutY="130.0" prefHeight="27.0" prefWidth="145.0" />
+        <ComboBox fx:id="motorizzazione" layoutX="444.0" layoutY="180.0" prefHeight="27.0" prefWidth="145.0" />
+        <Text layoutX="277.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motorizzazione:" />
+
+        <Text layoutX="277.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Offerta:" />
+        <ComboBox fx:id="offerta" layoutX="444.0" layoutY="230.0" prefHeight="27.0" prefWidth="145.0" />
+
+
+        <Button id="buttonMezzo" fx:id="buttonMezzo" layoutX="493.0" layoutY="305.0" mnemonicParsing="false" text="Aggiungi Mezzo" onAction="#loadMezzo" />
+        <Button id="buttonHome" fx:id="buttonHome" layoutX="273.0" layoutY="305.0" mnemonicParsing="false" text="Torna alla Home" onAction="#goHome" />
     </children>
 
 </Pane>

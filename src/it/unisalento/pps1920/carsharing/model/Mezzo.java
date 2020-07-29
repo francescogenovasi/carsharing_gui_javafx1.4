@@ -4,19 +4,19 @@ public class Mezzo {
     private int id;
     private String targa;
     private Modello modello;
-    private int postiDisponibili;
     private String motorizzazione;
+    private String offerta;
 
     public Mezzo(){
 
     }
 
-    public Mezzo(int id, String targa, Modello modello, int postiDisponibili, String motorizzazione) {
+    public Mezzo(int id, String targa, Modello modello, String motorizzazione,String offerta) {
         this.id = id;
         this.targa = targa;
         this.modello = modello;
-        this.postiDisponibili=postiDisponibili;
         this.motorizzazione=motorizzazione;
+        this.offerta=offerta;
     }
 
     public int getId() {
@@ -39,6 +39,14 @@ public class Mezzo {
         return modello;
     }
 
+    public String getOfferta() {
+        return offerta;
+    }
+
+    public void setOfferta(String offerta) {
+        this.offerta = offerta;
+    }
+
     public void setModello(Modello modello) {
         this.modello = modello;
     }
@@ -49,14 +57,6 @@ public class Mezzo {
 
     public void setMotorizzazione(String motorizzazione) {
         this.motorizzazione = motorizzazione;
-    }
-
-    public int getPostiDisponibili() {
-        return postiDisponibili;
-    }
-
-    public void setPostiDisponibili(int postiDisponibili) {
-        this.postiDisponibili = postiDisponibili;
     }
 
     @Override

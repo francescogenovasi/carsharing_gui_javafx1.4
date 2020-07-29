@@ -14,7 +14,7 @@ import java.io.IOException;
 public class TabsRicercaPageController{
 
     @FXML
-    private Pane tabellaPaneTabsRicerca;
+    private Pane tabellaPaneOfferte;
     @FXML
     private Pane filtriPaneTabsRicerca;
     @FXML
@@ -25,7 +25,6 @@ public class TabsRicercaPageController{
         Pane paneFiltri = null;
         Pane paneMezzi =null;
         try {
-            paneTabella = FXMLLoader.load(getClass().getResource("tabellaOffertePane.fxml"));
             paneFiltri = FXMLLoader.load(getClass().getResource("filtriPane.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -34,27 +33,24 @@ public class TabsRicercaPageController{
         FXMLLoader lo = new FXMLLoader(getClass().getResource("tabellaAutomezzi.fxml"));
         paneMezzi = (Pane) lo.load();
         TabellaAutomezziController controller = lo.<TabellaAutomezziController>getController();
-
         ObservableList<Mezzo> mezzo = FXCollections.observableArrayList(CommonBusiness.getInstance().getMezzi()) ;
         controller.setListAutomezzi(mezzo);
-        tabellaPaneTabsRicerca.getChildren().setAll(paneTabella);
+
+
+        FXMLLoader lo2 = new FXMLLoader(getClass().getResource("tabellaOffertePane.fxml"));
+        paneTabella = (Pane) lo2.load();
+        TabellaOffertePaneController controller2 = lo2.<TabellaOffertePaneController>getController();
+        ObservableList<Mezzo> mezzo2 = FXCollections.observableArrayList(CommonBusiness.getInstance().getOffertoneArray()) ;
+        controller2.setListOfferteMezzi(mezzo2);
+
+        tabellaPaneOfferte.getChildren().setAll(paneTabella);
+
         filtriPaneTabsRicerca.getChildren().setAll(paneFiltri);
         tabellaPaneMezzi.getChildren().setAll(paneMezzi);
 
 
     }
 
-    /*@FXML
-    private void loadVisualizzaMezzi() throws IOException {
-        FXMLLoader lo = new FXMLLoader(getClass().getResource("tabellaAutomezzi.fxml"));
-        Pane pane = (Pane) lo.load();
-        TabellaAutomezziController controller = lo.<TabellaAutomezziController>getController();
-
-        ObservableList<Mezzo> mezzo = FXCollections.observableArrayList(CommonBusiness.getInstance().getMezzi()) ;
-        controller.setListAutomezzi(mezzo);
-        rootPaneStrutturaPage.getChildren().setAll(pane);
-        rootPaneStrutturaPage.setPrefSize(1000, 600);
-    }*/
 
     public void nuovaRicerca(){
         Pane paneFiltri = null;
