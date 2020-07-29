@@ -57,18 +57,18 @@ public class RichiestaBusiness {
 
         float costo;
         IPrenotazioneDAO pDAO = new PrenotazioneDAO();
-        int numClientiSharing = pDAO.getNumeroClientiSharing(r.getProposta().getId()) + 1; //clienti che stanno facendo lo sharing + quello che è stato appena confermato
+        int numClientiSharing = pDAO.getNumeroClientiSharing(r.getProposta().getId()) + 1;
 
-        float costoBaseModello = pren.getMezzo().getModello().getTariffaBase() / numClientiSharing; //costo della macchina diviso numero clienti che fannno lo sharing
+        float costoBaseModello = pren.getMezzo().getModello().getTariffaBase() / numClientiSharing;
 
         costo = costoBaseModello;
 
 
         for (int i=0; i<acc.size(); i++){
-            costo = costo + acc.get(i).getCosto(); //aggiunta prezzo accessori
+            costo = costo + acc.get(i).getCosto();
         }
 
-        new PrenotazioneDAO().correggiCosto(r.getProposta().getId(), true); //diminuisce il costo se ci sono piu clienti che fanno lo sharing
+        new PrenotazioneDAO().correggiCosto(r.getProposta().getId(), true);
 
         new PrenotazioneDAO().salvaPrenotazione(pren, acc, costo, false);
 
@@ -88,15 +88,13 @@ public class RichiestaBusiness {
             testo = testo + "si sono aggiunte: "+r.getNumPostiRichiesti()+" persone per un totale di "+numClientiSharing+" persone\n A presto!";
             MailHelper.getInstance().send(dest, "CLI News sullo sharing!", testo);
         }
-        //System.out.println("iddddddddddddddddddddd: " + pren.getId());
         return pren.getId();
     }
 
     public static boolean inviaRichiestaCondivisione(RichiestaCondivisione r, List<Accessorio> a){
         boolean res = new RichiestaCondivisioneDAO().salvaRichiesta(r, a);
         if (res){
-            //System.out.println("jihjihihihihihihihiuhihihihihihihihihihhiih: " + r.getId());
-            String dest = r.getCliente().getEmail(); //cliente utente id 2 gc.pps
+            String dest = r.getCliente().getEmail();
             String testo = "RICHIESTA DI SHARING INVIATA! \n";
             testo = testo + "La richiesta con codice richiesta: "+ r.getId() + "\n";
             testo = testo + "effettuata il: "+DateUtil.stringFromDate(r.getData()) + "\n";
@@ -113,12 +111,12 @@ public class RichiestaBusiness {
     }
 
     public static boolean accettaRichiesta(int idRichiesta) throws IOException {
-        boolean res = new RichiestaCondivisioneDAO().accettaRichiesta(idRichiesta); //setta stato da "Attesa" a "Accettata"
+        boolean res = new RichiestaCondivisioneDAO().accettaRichiesta(idRichiesta);
         RichiestaCondivisione r = new RichiestaCondivisioneDAO().findById(idRichiesta);
         int id = richiestaToPrenotazione(r);
 
         //inviare mail di conferma all'utente
-        String dest = r.getCliente().getEmail(); //cliente utente id 2 gc.pps
+        String dest = r.getCliente().getEmail();
         String testo = "RICHIESTA DI SHARING ACCETTATA! \n";
         testo = testo + "La richiesta con codice richiesta: "+ r.getId() + "\n";
         testo = testo + "effettuata il: "+DateUtil.stringFromDate(r.getData()) + "\n";
@@ -140,8 +138,8 @@ public class RichiestaBusiness {
         RichiestaCondivisione r = new RichiestaCondivisioneDAO().findById(idRichiesta);
 
         if ( !errorePosti ){
-            //inviare mail di conferma all'utente
-            String dest = r.getCliente().getEmail(); //cliente utente id 2 gc.pps
+            //inviare mail all'utente
+            String dest = r.getCliente().getEmail();
             String testo = "RICHIESTA DI SHARING RIFIUTATA! \n";
             testo = testo + "La richiesta con codice richiesta: "+ r.getId() + "\n";
             testo = testo + "effettuata il: "+DateUtil.stringFromDate(r.getData()) + "\n";

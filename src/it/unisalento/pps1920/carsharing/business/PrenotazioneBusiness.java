@@ -27,9 +27,7 @@ public class PrenotazioneBusiness {
     private PrenotazioneBusiness(){}
 
     public static boolean inviaPrenotazione(Prenotazione p, List<Accessorio> a) throws IOException {
-        //logica di business
 
-        //System.out.println("TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT1: " + p.getId()); //id assente
         //1. chiamare il dao prenotazione per salvare la prenotazione
         PropostaCondivisione prop = new PropostaCondivisione();
         prop.setData(p.getData());
@@ -43,7 +41,6 @@ public class PrenotazioneBusiness {
         prop.setDataFine(p.getDataFine());
 
         new PropostaCondivisioneDAO().salvaProposta(prop);
-        //System.out.println("bhuuhuhuhuhuhuhuhhuhhuh: " + prop.getId());
         p.setIdPropostaCondivisione(prop.getId());
 
 
@@ -53,21 +50,12 @@ public class PrenotazioneBusiness {
             costo = costo + a.get(i).getCosto();
         }
 
-        //p.setCosto(costo);
-
 
         new PrenotazioneDAO().salvaPrenotazione(p, a, costo, true);
 
-        //new MezzoDAO().decrementaPosti(p.getMezzo(), p.getNumPostiOccupati());
-
-
-        System.out.println("salvato");
-        //System.out.println("TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT2: " + p.getId());//id presente
-
-
         //2. inviare mail all'addetto del parco automezzi
 
-        String dest1 = p.getPartenza().getAddetto().getEmail();//addetto della stazione di partenza utente id 1
+        String dest1 = p.getPartenza().getAddetto().getEmail();
         String testo1 = "NUOVO MEZZO DA PREPARARE! \n";
         testo1 = testo1 + "Modello: " + p.getMezzo().getModello().getNome() + "\n";
         testo1 = testo1 + "Targa: " + p.getMezzo().getTarga() + "\n";
@@ -85,7 +73,7 @@ public class PrenotazioneBusiness {
         System.out.println("invio email addetto");
 
         //3. inviare mail di conferma all'utente
-        String dest2 = p.getCliente().getEmail(); //cliente utente id 2 gc.pps
+        String dest2 = p.getCliente().getEmail();
         String testo = "Buongiorno! \n ";
         testo = testo + "Codice prenotazione: "+ p.getId() + "\n";
         testo = testo + "Prenotazione effettuata il: "+DateUtil.stringFromDate(p.getData()) + "\n";
@@ -124,9 +112,7 @@ public class PrenotazioneBusiness {
         IPropostaCondivisioneDAO propDAO = new PropostaCondivisioneDAO();
         PropostaCondivisione prop = propDAO.findById(oldPren.getIdPropostaCondivisione());
 
-
-        //controllo che le nuove date siano esatte
-        ArrayList<MezzoDaPreparare> mezziPrenotati = new MezzoDaPreparareDAO().findAll(); //prendo tutti i mezzi da preparare
+        ArrayList<MezzoDaPreparare> mezziPrenotati = new MezzoDaPreparareDAO().findAll();
         for (int i = 0; i < mezziPrenotati.size(); i++){ //toglo la vecchia prenotazione
             if (mezziPrenotati.get(i).getMezzo().getId() == oldPren.getMezzo().getId()){
                 mezziPrenotati.remove(i);
@@ -142,28 +128,17 @@ public class PrenotazioneBusiness {
             dataFine = fine;
         }
         boolean error = false;
-        for (int i = 0; i < mezziPrenotati.size(); i++){ //scorro i mezzi gia prenotati
-            //for (int j = 0; j < mezzi.size(); j++){
-                System.out.println(dataInizio.toString()+  " aaaaabbbbbbbbbaaaaa " + mezziPrenotati.get(i).getDataInizio());
-                if (mezziPrenotati.get(i).getMezzo().getId() == oldPren.getMezzo().getId()){ //se l'id del mezzo della prenotazione è uguale a quello di uno dei mezzi appena presi
-                    if (dataInizio.compareTo(mezziPrenotati.get(i).getDataInizio()) >= 0 && dataInizio.compareTo(mezziPrenotati.get(i).getDataFine()) <= 0){ //se la data di inizio si trova nel range della prenotazione già effettuata allora dai errore
-                        //0 ->date uguali; <0 se d minore dell'altra; >0 se l'altra è maggiore di d
-                        //System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee data inizio");
+        for (int i = 0; i < mezziPrenotati.size(); i++){
+                if (mezziPrenotati.get(i).getMezzo().getId() == oldPren.getMezzo().getId()){
+                    if (dataInizio.compareTo(mezziPrenotati.get(i).getDataInizio()) >= 0 && dataInizio.compareTo(mezziPrenotati.get(i).getDataFine()) <= 0){
                         error = true;
                     } else {
-                        //System.out.println("esattooooooooooooooooooooooooooooo data inizio");
                         if (dataInizio.compareTo(mezziPrenotati.get(i).getDataInizio()) >= 0 && dataFine.compareTo(mezziPrenotati.get(i).getDataFine()) <= 0){
-                            //System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee data fine");
                             error = true;
                         } else {
-                            //System.out.println("esattooooooooooooooooooooooooooooo data fine");
-
                             if ((dataInizio.compareTo(mezziPrenotati.get(i).getDataInizio()) <= 0 && dataFine.compareTo(mezziPrenotati.get(i).getDataInizio()) <= 0) || dataFine.compareTo(mezziPrenotati.get(i).getDataFine()) >= 0 && dataFine.compareTo(mezziPrenotati.get(i).getDataFine()) >= 0){
-                                System.out.println("esattooooooooooooooooooooooooooooo tuttoooooooooooooooooooo");
-                                //System.out.println(fine.toString() + " aaaaaaaaaa " + mezziPrenotati.get(i).getDataInizio());
                                 error = false;
                             } else {
-                                System.out.println("erroreeeeeeeeeeeeeeeeeeeeeeeeeeeee tuttoooooooooooo");
                                 error = true;
                             }
                         }
@@ -172,19 +147,11 @@ public class PrenotazioneBusiness {
             //}
         }
         if (error){
-            //AlertBox.display("BUBUIIHIHIHH", "data non modificabile");
             return false;
-        } /*else {
-            //AlertBox.display("BUBUIIHIHIHH", "data modificabile");
-        }*/
+        }
 
 
-
-
-
-        //controllo posti disponibili
-        System.out.println(oldPren.getMezzo().getModello().getNumPosti() +"-("+ prop.getNumPostiOccupati() +"-"+ oldPren.getNumPostiOccupati() +")-"+ posti +">=" +oldPren.getMezzo().getModello().getNumPosti());
-        if (oldPren.getMezzo().getModello().getNumPosti() - (prop.getNumPostiOccupati() - oldPren.getNumPostiOccupati()) - posti >= oldPren.getMezzo().getModello().getNumPosti() ){ //numpostimezzo-numpostioccupati-numpostioccupatidallaprenotazione+numpostinuovapren deve essere minore del numero di posti disponibili in macchina
+        if (oldPren.getMezzo().getModello().getNumPosti() - (prop.getNumPostiOccupati() - oldPren.getNumPostiOccupati()) - posti >= oldPren.getMezzo().getModello().getNumPosti() ){
             return false;
         } else {
             if (pDAO.modificaPrenotazione(inizio, fine, posti, arrivo, partenza, localita, oldPren)){
@@ -198,44 +165,27 @@ public class PrenotazioneBusiness {
     }
 
     public boolean eliminaPrenotazione(Prenotazione p) throws IOException {
-        //settare prenotazionevalida=0 nella tabella delle prenotazioni
-        // correzione sul costo richiestabusiness 62
 
         IPrenotazioneDAO pDAO = new PrenotazioneDAO();
-        /*decrementare il numero di posti della proposta.
-        se è l'unico allora eliminare il mezzo da mezzi_da_preparare ed eliminare la proposta
-        */
-        System.out.println("numero clienti sharing: " + pDAO.getNumeroClientiSharing(p.getIdPropostaCondivisione()));
         if (pDAO.getNumeroClientiSharing(p.getIdPropostaCondivisione()) > 1 ){
+            new PrenotazioneDAO().correggiCosto(p.getIdPropostaCondivisione(), false);
 
-            /*float costo;
-            int numClientiSharing = pDAO.getNumeroClientiSharing(p.getIdPropostaCondivisione()) - 1; //clienti che stanno facendo lo sharing - quello che è sta eliminando
-
-            float costoBaseModello = p.getMezzo().getModello().getTariffaBase() / numClientiSharing; //costo della macchina diviso numero clienti che fannno lo sharing
-
-            costo = costoBaseModello;*/
-
-            new PrenotazioneDAO().correggiCosto(p.getIdPropostaCondivisione(), false); //diminuisce il costo se ci sono piu clienti che fanno lo sharing
-
-            //decrementa solo il numero di posti dalla proposta
             IPropostaCondivisioneDAO propDAO = new PropostaCondivisioneDAO();
             propDAO.updatePostiProposta(p.getIdPropostaCondivisione(), (-p.getNumPostiOccupati()));
 
-            //decrementa il numero di posti dalla tabella mezzi_da_preparare
             IMezzoDaPreparareDAO mDAO = new MezzoDaPreparareDAO();
             mDAO.updateNumeroPosti(p);
 
 
         } else {
-            //elimina il record della tabella  mezzi_da_preparare e setta proposta invalida
             IMezzoDaPreparareDAO mDAO = new MezzoDaPreparareDAO();
             mDAO.eliminaRecord(p);
             new PropostaCondivisioneDAO().setPropostaInvalida(p.getIdPropostaCondivisione());
         }
         boolean res1 = pDAO.setPrenotazioneInvalida(p.getId());
 
-        // inviare mail di conferma all'utente
-        String dest = p.getCliente().getEmail(); //cliente utente id 2 gc.pps
+        // inviare mail di eliminazione all'utente
+        String dest = p.getCliente().getEmail();
         String testo = "PRENOTAZIONE ELIMINATA! \n";
         testo = testo + "La prenotazione con codice prenotazione: "+ p.getId() + "\n";
         testo = testo + "Prenotazione effettuata il: "+DateUtil.stringFromDate(p.getData()) + "\n";
@@ -252,7 +202,7 @@ public class PrenotazioneBusiness {
     }
 
     public void notificaRichiestaRifiutataPerMancanzaPosti(RichiestaCondivisione r){
-        String dest = r.getCliente().getEmail();//addetto della stazione di partenza utente id 1
+        String dest = r.getCliente().getEmail();
         String testo = "Purtroppo la richiesta " + r.getId() + " del " + r.getData() + " non è andata a buon fine. Qualcuno ha prenotato prima e non ci sono abbastanza posti per soddisfare la richiesta.";
         MailHelper.getInstance().send(dest, "Richiesta rifiutata per posti", testo);
     }
