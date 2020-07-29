@@ -85,7 +85,7 @@ public class RichiestaBusiness {
             testo = testo + "Da : "+p.getPartenza().getNome() + "\n";
             testo = testo + "A : "+p.getArrivo().getNome() + "\n";
             testo = testo + "Con : "+r.getProposta().getMezzo().getModello().getNome() + " targato: " + r.getProposta().getMezzo().getTarga() + "\n";
-            testo = testo + "si sono aggiunte: "+r.getNumPostiRichiesti()+" persone per un totale di "+numClientiSharing+" persone\n A presto!";
+            testo = testo + "si sono aggiunte: "+r.getNumPostiRichiesti()+" persona/e\n A presto!";
             MailHelper.getInstance().send(dest, "CLI News sullo sharing!", testo);
         }
         return pren.getId();
