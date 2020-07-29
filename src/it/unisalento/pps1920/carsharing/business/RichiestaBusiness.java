@@ -74,6 +74,20 @@ public class RichiestaBusiness {
 
         new PropostaCondivisioneDAO().updatePostiProposta(prop.getId(), pren.getNumPostiOccupati());
 
+        int [] a = pDAO.prenotazioniFromIdProposta(pren.getIdPropostaCondivisione());
+
+        for (int i = 0; i < a.length; i++){
+            Prenotazione p = pDAO.findById(a[i]);
+            String dest = p.getCliente().getEmail();
+            String testo = "AGGIUNTO NUOVO CLIENTE ALLO SHARING \n";
+            testo = testo + "Allo sharing del "+ DateUtil.stringFromDate(p.getDataInizio()) + "\n";
+            testo = testo + "fino al : "+ DateUtil.stringFromDate(p.getDataFine()) + "\n";
+            testo = testo + "Da : "+p.getPartenza().getNome() + "\n";
+            testo = testo + "A : "+p.getArrivo().getNome() + "\n";
+            testo = testo + "Con : "+r.getProposta().getMezzo().getModello().getNome() + " targato: " + r.getProposta().getMezzo().getTarga() + "\n";
+            testo = testo + "si sono aggiunte: "+r.getNumPostiRichiesti()+" persone per un totale di "+numClientiSharing+" persone\n A presto!";
+            MailHelper.getInstance().send(dest, "CLI News sullo sharing!", testo);
+        }
         //System.out.println("iddddddddddddddddddddd: " + pren.getId());
         return pren.getId();
     }
