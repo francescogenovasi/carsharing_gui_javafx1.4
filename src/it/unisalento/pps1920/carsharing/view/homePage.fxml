@@ -14,9 +14,9 @@
          <top>
             <Pane BorderPane.alignment="CENTER">
                <children>
-                  <Button layoutX="523.0" layoutY="24.0" mnemonicParsing="false" onAction="#loadLoginPage" text="Login" />
-                  <Button layoutX="583.0" layoutY="24.0" mnemonicParsing="false" onAction="#loadRegistrazionePage" text="Registrazione" />
-                  <Label layoutX="142.0" layoutY="17.0" prefHeight="39.0" prefWidth="330.0" text="Carsharing PPS 2019/2020">
+                  <Button layoutX="10.0" layoutY="24.0" mnemonicParsing="false" onAction="#loadLoginPage" text="Login" prefWidth="90.0" />
+                  <Button layoutX="900.0" layoutY="24.0" mnemonicParsing="false" onAction="#loadRegistrazionePage" text="Registrazione" prefWidth="90.0" />
+                  <Label layoutX="370.0" layoutY="17.0" prefHeight="39.0" prefWidth="330.0" text="Carsharing PPS 19/20">
                      <textFill>
                         <LinearGradient endX="1.0" endY="1.0" startX="0.24761904761904763" startY="0.5285714285714286">
                            <stops>

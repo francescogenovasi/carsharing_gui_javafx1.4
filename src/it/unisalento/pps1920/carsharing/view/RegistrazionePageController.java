@@ -101,22 +101,22 @@ public class RegistrazionePageController{
                     || (passwordField.getText() == null) || (checkPasswordField.getText() == null) ){ //controllo sui campi
                 //almeno uno dei campi è vuoto
                 checkFieldsError = false;
-                AlertBox.display("Registrazione", "campi mancanti");
+                AlertBox.display("Registrazione", "Campi Mancanti");
             }
 
             if( !(isNumeric(cap.getText())) || ((cap.getText()).length() != 5) ){
                 checkFieldsError = false;
-                AlertBox.display("Registrazione", "inserire CAP valido");
+                AlertBox.display("Registrazione", "Inserire CAP valido");
             }
 
             if( !(isNumeric(telefono.getText())) || ((telefono.getText()).length() != 10) ){
                 checkFieldsError = false;
-                AlertBox.display("Registrazione", "inserire telefono valido");
+                AlertBox.display("Registrazione", "Inserire telefono valido");
             }
 
             if(file == null){
                 checkFieldsError = false;
-                AlertBox.display("Registrazione", "inserire Foto");
+                AlertBox.display("Registrazione", "Inserire Foto");
             }
 
             if (CommonBusiness.getInstance().checkUsername(usernameField.getText()) && CommonBusiness.getInstance().checkEmail(emailField.getText()) && checkFieldsError) { // campi tutti presenti (metto variabile e vedo se è false o true

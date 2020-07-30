@@ -37,8 +37,8 @@ public class DbConnection {
 
          // Carico il driver JDBC per la connessione con il database MySQL
          Class.forName("com.mysql.jdbc.Driver");
-          //db = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/" + nomeDB + "?user=" + nomeUtente + "&password=" + pwdUtente+"&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false"); //todo cambiare db se non è in locale
-          db = DriverManager.getConnection("jdbc:mysql://carsharingaws.clxlr0vihwlc.us-east-2.rds.amazonaws.com:3306/" + nomeDB + "?user=" + nomeUtente + "&password=" + pwdUtente+"&useLegacyDatetimeCode=false&serverTimezone=UTC&characterEncoding=latin1&useSSL=false");
+          db = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/" + nomeDB + "?user=" + nomeUtente + "&password=" + pwdUtente+"&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false"); //todo cambiare db se non è in locale
+          //db = DriverManager.getConnection("jdbc:mysql://carsharingaws.clxlr0vihwlc.us-east-2.rds.amazonaws.com:3306/" + nomeDB + "?user=" + nomeUtente + "&password=" + pwdUtente+"&useLegacyDatetimeCode=false&serverTimezone=UTC&characterEncoding=latin1&useSSL=false");
           connesso=true;
          
       } catch (Exception e) {

@@ -8,12 +8,12 @@
 
 <Pane fx:id="rootPaneLoginPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450" prefWidth="900" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unisalento.pps1920.carsharing.view.LoginPageController">
    <children>
-      <Button layoutX="306.0" layoutY="213.0" mnemonicParsing="false" onAction="#loadStruttura" text="Login" />
-      <Label layoutX="236.0" layoutY="74.0" text="Username" />
-      <Label layoutX="236.0" layoutY="110.0" text="Password" />
-      <TextField id="username_field" fx:id="usernameField" layoutX="357.0" layoutY="70.0" promptText="Username" />
-      <Button layoutX="450.0" layoutY="213.0" mnemonicParsing="false" onAction="#loadFirstPage" prefHeight="25.0" prefWidth="131.0" text="Back Home" />
-      <Label id="wrongAccess" fx:id="wrongAccess" layoutX="300.0" layoutY="160.0" style="-fx-text-fill: #CB3234" text="Username o Password errati" visible="false" />
-      <PasswordField fx:id="passwordField" layoutX="357.0" layoutY="105.0" promptText="Password" />
+      <Button layoutX="350.0" layoutY="300.0" mnemonicParsing="false" onAction="#loadStruttura" text="Login" prefWidth="100" />
+      <Label layoutX="350.0" layoutY="190.0" text="Username:" />
+      <Label layoutX="350.0" layoutY="230.0" text="Password:" />
+      <TextField id="username_field" fx:id="usernameField" layoutX="450.0" layoutY="185.0" promptText="Username" prefWidth="200"/>
+      <Button layoutX="550.0" layoutY="300.0" mnemonicParsing="false" onAction="#loadFirstPage" prefHeight="25.0" prefWidth="100" text="Back Home" />
+      <Label id="wrongAccess" fx:id="wrongAccess" layoutX="400.0" layoutY="140.0" style="-fx-text-fill: #CB3234; -fx-font-weight: bold; -fx-font-size: 15" text="Username o Password Errati" visible="false" />
+      <PasswordField fx:id="passwordField" layoutX="450.0" layoutY="225.0" promptText="Password" prefWidth="200" />
    </children>
 </Pane>
