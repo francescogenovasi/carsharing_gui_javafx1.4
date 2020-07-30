@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
@@ -121,13 +122,23 @@ public class VisualizzaMezziDaPreparareController {
                         btn.setOnAction((ActionEvent event) -> {
                             int id = getTableView().getItems().get(getIndex()).getId();
                             CommonBusiness.getInstance().setPronto(id);
-                            ObservableList<MezzoDaPreparare> mez = null;
+                            FXMLLoader lo = new FXMLLoader(getClass().getResource("visualizzaMezziDaPreparare.fxml"));
+                            Pane pane = null;
                             try {
-                                mez = FXCollections.observableArrayList(CommonBusiness.getInstance().getMezziDaPreparare());
+                                pane = (Pane) lo.load();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            setListMezziDaPreparare(mez);
+                            VisualizzaMezziDaPreparareController controller = lo.<VisualizzaMezziDaPreparareController>getController();
+                            ObservableList<MezzoDaPreparare> mezzi = null;
+                            try {
+                                mezzi = FXCollections.observableArrayList(CommonBusiness.getInstance().getMezziDaPreparare());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            controller.setListMezziDaPreparare(mezzi);
+                            rootPaneTabellaMezziDaPreparare.getChildren().setAll(pane);
+                            rootPaneTabellaMezziDaPreparare.setPrefSize(1000, 600);
                         });
                     }
 

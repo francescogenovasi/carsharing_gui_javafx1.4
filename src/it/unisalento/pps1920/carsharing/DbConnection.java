@@ -34,6 +34,7 @@ public class DbConnection {
 
 	  connesso = false;
       try {
+
          // Carico il driver JDBC per la connessione con il database MySQL
          Class.forName("com.mysql.jdbc.Driver");
           //db = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/" + nomeDB + "?user=" + nomeUtente + "&password=" + pwdUtente+"&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false"); //todo cambiare db se non è in locale
