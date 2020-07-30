@@ -151,12 +151,14 @@ public class VisualizzaRichiesteController {
                                         e.printStackTrace();
                                     }
                                     AlertBox.display("prenotazione", "ACCETTATA");
-                                    try {
-                                        ObservableList<TabConfermaRichieste> rich = FXCollections.observableArrayList(CommonBusiness.getInstance().getRichiesteInAttesa(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())) ;
-                                        setListRichieste(rich);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+                                    FXMLLoader lo = new FXMLLoader(getClass().getResource("visualizzaRichieste.fxml"));
+                                    Pane pane = (Pane) lo.load();
+                                    VisualizzaRichiesteController controller = lo.<VisualizzaRichiesteController>getController();
+
+                                    ObservableList<TabConfermaRichieste> rich = FXCollections.observableArrayList(CommonBusiness.getInstance().getRichiesteInAttesa(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())) ;
+                                    controller.setListRichieste(rich);
+                                    rootPaneTabellaRichieste.getChildren().setAll(pane);
+                                    rootPaneTabellaRichieste.setPrefSize(1000, 600);
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -203,12 +205,24 @@ public class VisualizzaRichiesteController {
                                 e.printStackTrace();
                             }
                             AlertBox.display("prenotazione", "RIFIUTATA");
+                            FXMLLoader lo = new FXMLLoader(getClass().getResource("visualizzaRichieste.fxml"));
+                            Pane pane = null;
                             try {
-                                ObservableList<TabConfermaRichieste> rich = FXCollections.observableArrayList(CommonBusiness.getInstance().getRichiesteInAttesa(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId())) ;
-                                setListRichieste(rich);
+                                pane = (Pane) lo.load();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
+                            VisualizzaRichiesteController controller = lo.<VisualizzaRichiesteController>getController();
+
+                            ObservableList<TabConfermaRichieste> rich = null;
+                            try {
+                                rich = FXCollections.observableArrayList(CommonBusiness.getInstance().getRichiesteInAttesa(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)).getId()));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            controller.setListRichieste(rich);
+                            rootPaneTabellaRichieste.getChildren().setAll(pane);
+                            rootPaneTabellaRichieste.setPrefSize(1000, 600);
                         });
                     }
 
