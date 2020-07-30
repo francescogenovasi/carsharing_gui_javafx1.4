@@ -84,12 +84,24 @@ public class MezzoProntoAPartireController {
                                 }
                                 if (res){
                                     AlertBox.display("Mezzo Partito", "PARTITO");
+                                    FXMLLoader lo = new FXMLLoader(getClass().getResource("mezzoProntoAPartire.fxml"));
+                                    Pane pane = null;
                                     try {
-                                        ObservableList<MezzoDaPreparare> mdp = FXCollections.observableArrayList(CommonBusiness.getInstance().getMezziProntiAPartire()) ;
-                                        setListMezziPronti(mdp);
+                                        pane = (Pane) lo.load();
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
+                                    MezzoProntoAPartireController controller = lo.<MezzoProntoAPartireController>getController();
+
+                                    ObservableList<MezzoDaPreparare> mezzoDaPreparare = null;
+                                    try {
+                                        mezzoDaPreparare = FXCollections.observableArrayList(CommonBusiness.getInstance().getMezziProntiAPartire());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    controller.setListMezziPronti(mezzoDaPreparare);
+                                    rootPaneTabellaMezziProntiAPartirePage.getChildren().setAll(pane);
+                                    rootPaneTabellaMezziProntiAPartirePage.setPrefSize(1000, 600);
 
                                 }else{
                                     AlertBox.display("Mezzo Partito", "Errore! Accertarsi che il mezzo sia stato pagato!");
@@ -143,12 +155,24 @@ public class MezzoProntoAPartireController {
                             }
                             if (res){
                                 AlertBox.display("Mezzo Pagato", "PAGATO");
+                                FXMLLoader lo = new FXMLLoader(getClass().getResource("mezzoProntoAPartire.fxml"));
+                                Pane pane = null;
                                 try {
-                                    ObservableList<MezzoDaPreparare> mdp = FXCollections.observableArrayList(CommonBusiness.getInstance().getMezziProntiAPartire()) ;
-                                    setListMezziPronti(mdp);
+                                    pane = (Pane) lo.load();
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
+                                MezzoProntoAPartireController controller = lo.<MezzoProntoAPartireController>getController();
+
+                                ObservableList<MezzoDaPreparare> mezzoDaPreparare = null;
+                                try {
+                                    mezzoDaPreparare = FXCollections.observableArrayList(CommonBusiness.getInstance().getMezziProntiAPartire());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                controller.setListMezziPronti(mezzoDaPreparare);
+                                rootPaneTabellaMezziProntiAPartirePage.getChildren().setAll(pane);
+                                rootPaneTabellaMezziProntiAPartirePage.setPrefSize(1000, 600);
 
                             }
 

@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -74,8 +75,18 @@ public class MessaggiRicevutiController {
                                 boolean res= MessaggiBusiness.getInstance().setLetto(m);
                                 if (res){
                                     AlertBox.display("Messaggio Letto", "LETTO");
-                                    ObservableList<Messaggio> mdl = FXCollections.observableArrayList(MessaggiBusiness.getInstance().getMessaggiDaLeggere(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)))) ;
-                                    setListMessaggi(mdl);
+                                    FXMLLoader lo = new FXMLLoader(getClass().getResource("messaggiRicevuti.fxml"));
+                                    Pane pane = null;
+                                    try {
+                                        pane = (Pane) lo.load();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    MessaggiRicevutiController controller = lo.<MessaggiRicevutiController>getController();
+                                    ObservableList<Messaggio> mess = FXCollections.observableArrayList(MessaggiBusiness.getInstance().getMessaggiDaLeggere(((Utente) Session.getInstance().ottieni(Session.UTENTE_LOGGATO)))) ;
+                                    controller.setListMessaggi(mess);
+                                    rootPaneTabellaMessaggiRicevutiPage.getChildren().setAll(pane);
+                                    rootPaneTabellaMessaggiRicevutiPage.setPrefSize(1000, 600);
 
                                 }
 
