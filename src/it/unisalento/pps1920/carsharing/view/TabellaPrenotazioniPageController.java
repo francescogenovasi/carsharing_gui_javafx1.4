@@ -40,7 +40,7 @@ public class TabellaPrenotazioniPageController{
         prenotazioni = pren;
         //initialize();
         TableColumn idPrenotazione = new TableColumn("ID");
-        TableColumn<Prenotazione, String> dataPrenotazione= new TableColumn<Prenotazione, String>("Data Prenotazione");
+        //TableColumn<Prenotazione, String> dataPrenotazione= new TableColumn<Prenotazione, String>("Data Prenotazione");
         TableColumn<Prenotazione, String> idCliente = new TableColumn<Prenotazione, String>("Username Cliente");
         TableColumn<Prenotazione, String> idMezzo = new TableColumn<Prenotazione, String>("Targa Mezzo");
         TableColumn numPostiOcc = new TableColumn("Numero Posti Occupati");
@@ -60,7 +60,7 @@ public class TabellaPrenotazioniPageController{
         float dataFineWidth = 200;
 
         idPrenotazione.setPrefWidth(idPrenotazioneWidth);
-        dataPrenotazione.setPrefWidth(dataPrenotazioneWidth);
+        //dataPrenotazione.setPrefWidth(dataPrenotazioneWidth);
         idCliente.setPrefWidth(idClienteWidth);
         idMezzo.setPrefWidth(idMezzoWidth);
         numPostiOcc.setPrefWidth(numPostiOccWidth);
@@ -73,6 +73,8 @@ public class TabellaPrenotazioniPageController{
 
         tabellaPrenotazioni.setPrefSize(prefWidth, prefHeight);
 
+        TableColumn<Prenotazione, String> dataPrenotazione = new TableColumn<>("data");
+        dataPrenotazione.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(cellData.getValue().getData()))));
         TableColumn<Prenotazione, String> dataInizio = new TableColumn<>("inizio");
         dataInizio.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.fromRomeToLondon(DateUtil.stringFromDate(cellData.getValue().getDataInizio()))));
         TableColumn<Prenotazione, String> dataFine = new TableColumn<>("fine");
@@ -85,7 +87,7 @@ public class TabellaPrenotazioniPageController{
 
 
         idPrenotazione.setCellValueFactory(new PropertyValueFactory<Prenotazione, String>("id"));
-        dataPrenotazione.setCellValueFactory(new PropertyValueFactory<Prenotazione,String>("data"));
+        //dataPrenotazione.setCellValueFactory(new PropertyValueFactory<Prenotazione,String>("data"));
         idCliente.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCliente().getUsername()));
         idMezzo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMezzo().getTarga()));
         numPostiOcc.setCellValueFactory(new PropertyValueFactory<Prenotazione,String>("numPostiOccupati"));
