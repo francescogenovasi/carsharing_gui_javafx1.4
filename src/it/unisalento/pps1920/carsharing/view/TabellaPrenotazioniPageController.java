@@ -40,7 +40,6 @@ public class TabellaPrenotazioniPageController{
         prenotazioni = pren;
         //initialize();
         TableColumn idPrenotazione = new TableColumn("ID");
-        //TableColumn<Prenotazione, String> dataPrenotazione= new TableColumn<Prenotazione, String>("Data Prenotazione");
         TableColumn<Prenotazione, String> idCliente = new TableColumn<Prenotazione, String>("Username Cliente");
         TableColumn<Prenotazione, String> idMezzo = new TableColumn<Prenotazione, String>("Targa Mezzo");
         TableColumn numPostiOcc = new TableColumn("Numero Posti Occupati");
@@ -60,7 +59,6 @@ public class TabellaPrenotazioniPageController{
         float dataFineWidth = 200;
 
         idPrenotazione.setPrefWidth(idPrenotazioneWidth);
-        //dataPrenotazione.setPrefWidth(dataPrenotazioneWidth);
         idCliente.setPrefWidth(idClienteWidth);
         idMezzo.setPrefWidth(idMezzoWidth);
         numPostiOcc.setPrefWidth(numPostiOccWidth);
